@@ -91,8 +91,8 @@
         </div>
     </header>
 
-    <main class="owner-page-container" style="display: block; opacity: 1; transform: none;">
-        <!-- FOUNDER BIOGRAPHY -->
+    <main class="owner-page-container">
+        <!-- FOUNDER BIOGRAPHY SECTION -->
         <section class="founder-monograph">
             <div class="monograph-grid">
                 <div class="portrait-column">
@@ -161,9 +161,8 @@
             </div>
 
             <div class="venues-grid-interactive">
-                <!-- Cabang 1: Icon -->
-                <!-- Ganti baris onclick Cabang Icon dengan ini -->
-                    <div class="venue-card" onclick="openMapModal('Cabang Icon (Billiard & Café Lounge)', 'https://www.google.com/maps?q=-6.229389,106.660139&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/nV2gKwvfXHfuQzXAA')">
+                <!-- Cabang 1: Icon (Koordinat Akurat) -->
+                <div class="venue-card" onclick="openMapModal('Cabang Icon (Billiard & Café Lounge)', 'https://www.google.com/maps?q=-6.229389,106.660139&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/nV2gKwvfXHfuQzXAA')">
                     <div class="vc-badge">BILLIARD & CAFÉ LOUNGE</div>
                     <div class="vc-body">
                         <div class="vc-icon">🎱</div>
@@ -253,7 +252,7 @@
         </section>
     </main>
 
-    <!-- INTERACTIVE MAP MODAL -->
+    <!-- INTERACTIVE MAP PREVIEW MODAL -->
     <div id="interactiveMapModal" class="luxe-modal-backdrop">
         <div class="map-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -342,6 +341,7 @@
         </div>
     </footer>
 
+    <!-- ENGINE SCRIPTS -->
     <script src="app.js"></script>
 </body>
 </html>
