@@ -1,5 +1,5 @@
 /* ==========================================================================
-   TiTik PADEL — MASTER DESIGN SYSTEM & POSITION FIX
+   TiTik PADEL — MASTER DESIGN SYSTEM & LAYER FIX
    ========================================================================== */
 
 :root {
@@ -86,19 +86,7 @@ body {
     padding: 0px;
 }
 
-div {
-    display: block;
-    unicode-bidi: isolate;
-}
-
-/* CONTAINER UTAMA */
-.container-luxury {
-    max-width: 1240px;
-    width: 100%;
-    margin: 0 auto;
-    padding: 0 20px;
-}
-
+/* KONTROL SISTEM LAYER UTAMA */
 .page-layer {
     display: none;
     opacity: 0;
@@ -285,6 +273,7 @@ body.light-theme .luxury-navbar {
 .mobile-nav-item.active { color: var(--c-court-green); }
 
 /* HERO & SECTIONS */
+.container-luxury { max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 20px; }
 .hero-sanctuary { position: relative; max-width: 1240px; width: 100%; margin: 0 auto; padding: 60px 20px 40px 20px; }
 .hero-backdrop-glow { position: absolute; top: 0; right: 10%; width: 380px; height: 380px; background: radial-gradient(circle, var(--c-court-green-glow) 0%, rgba(0,0,0,0) 70%); pointer-events: none; z-index: -1; }
 .hero-eyebrow { display: flex; align-items: center; flex-wrap: wrap; gap: 14px; margin-bottom: 20px; }
