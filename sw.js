@@ -1,4 +1,4 @@
-const CACHE_NAME = 'titikpadel-app-v4';
+const CACHE_NAME = 'titikpadel-tangerang-v5';
 const STATIC_ASSETS = [
   './index.html',
   './style.css',

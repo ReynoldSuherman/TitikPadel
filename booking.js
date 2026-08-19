@@ -1,37 +1,29 @@
 /**
- * TiTik PADEL - BOOKING ENGINE & SPLIT BILL REAL-TIME CALCULATOR
+ * TiTik PADEL - TANGERANG ARENA BOOKING & PRO RACKET CALCULATOR
  */
 
 const COURTS_DATA = [
     {
         id: 'court-01',
-        name: 'Court 01 — TiTik Obsidian Panoramic',
+        name: 'Court 01 — TiTik Tangerang Center Court',
         type: 'indoor',
         turf: 'Mondo Supercourt XN Blue',
-        specs: '12mm Seamless Panoramic Glass ✦ 800 Lux LED',
-        pricePerPeriod: {
-            morning: 300000,
-            afternoon: 350000,
-            night: 420000
-        }
+        specs: '12mm Panoramic Glass ✦ 800 Lux LED Pro',
+        pricePerPeriod: { morning: 300000, afternoon: 350000, night: 420000 }
     },
     {
         id: 'court-02',
         name: 'Court 02 — TiTik Sanctuary Semi-Outdoor',
         type: 'outdoor',
         turf: 'Official WPT Anti-Glare Green',
-        specs: 'High Canopy Roof ✦ Natural Cross-Breeze Ventilation',
-        pricePerPeriod: {
-            morning: 250000,
-            afternoon: 300000,
-            night: 380000
-        }
+        specs: 'High Canopy Shaded ✦ Natural Airflow',
+        pricePerPeriod: { morning: 250000, afternoon: 300000, night: 380000 }
     }
 ];
 
 const PROMO_CODES = {
     'TITIKFIRST': { discountRate: 0.15, label: 'Diskon 15% Pemain Pertama TiTik' },
-    'SENOPATIPADEL': { discountRate: 0.10, label: 'Diskon Komunitas 10%' },
+    'TANGERANGPADEL': { discountRate: 0.10, label: 'Diskon Komunitas Tangerang 10%' },
     'TITIKCAFE': { discountRate: 0.10, label: 'Promo Bundling Café 10%' }
 };
 
@@ -61,10 +53,12 @@ let bookingState = {
     activeFilter: 'all',
     selectedSlots: [],
     addons: {
-        racket: 0,
+        racket_std: 0,
+        racket_vertex: 0,
+        racket_viper: 0,
+        racket_bela: 0,
         balls: 0,
-        cafepack: 0,
-        coach: 0
+        cafepack: 0
     },
     promoApplied: null,
     splitPlayers: 4,
@@ -92,7 +86,7 @@ function initLiveClock() {
         const hrs = String(now.getHours()).padStart(2, '0');
         const mins = String(now.getMinutes()).padStart(2, '0');
         const secs = String(now.getSeconds()).padStart(2, '0');
-        clockEl.textContent = `SENOPATI ${hrs}:${mins}:${secs} WIB`;
+        clockEl.textContent = `TANGERANG ${hrs}:${mins}:${secs} WIB`;
     }
     update();
     setInterval(update, 1000);
@@ -382,18 +376,24 @@ function updateLiveManifest() {
 
     const courtSubtotal = bookingState.selectedSlots.reduce((acc, slot) => acc + slot.price, 0);
 
-    const racketCost = (bookingState.addons.racket || 0) * 40000;
+    // Calculate Prices for Specific Pro-Tier Rackets
+    const racketStdCost = (bookingState.addons.racket_std || 0) * 40000;
+    const racketVertexCost = (bookingState.addons.racket_vertex || 0) * 95000;
+    const racketViperCost = (bookingState.addons.racket_viper || 0) * 110000;
+    const racketBelaCost = (bookingState.addons.racket_bela || 0) * 115000;
     const ballsCost = (bookingState.addons.balls || 0) * 55000;
     const cafeCost = (bookingState.addons.cafepack || 0) * 75000;
-    const coachCost = (bookingState.addons.coach || 0) * 250000;
-    const addonsSubtotal = racketCost + ballsCost + cafeCost + coachCost;
+
+    const addonsSubtotal = racketStdCost + racketVertexCost + racketViperCost + racketBelaCost + ballsCost + cafeCost;
 
     if (addonsSubtotal > 0) {
         let addonDesc = [];
-        if (bookingState.addons.racket > 0) addonDesc.push(`${bookingState.addons.racket}x Raket`);
+        if (bookingState.addons.racket_std > 0) addonDesc.push(`${bookingState.addons.racket_std}x Std Racket`);
+        if (bookingState.addons.racket_vertex > 0) addonDesc.push(`${bookingState.addons.racket_vertex}x Vertex Pro`);
+        if (bookingState.addons.racket_viper > 0) addonDesc.push(`${bookingState.addons.racket_viper}x Viper Pro`);
+        if (bookingState.addons.racket_bela > 0) addonDesc.push(`${bookingState.addons.racket_bela}x Bela Pro`);
         if (bookingState.addons.balls > 0) addonDesc.push(`${bookingState.addons.balls}x Bola`);
         if (bookingState.addons.cafepack > 0) addonDesc.push(`${bookingState.addons.cafepack}x TiTik Café`);
-        if (bookingState.addons.coach > 0) addonDesc.push(`${bookingState.addons.coach}x Coach`);
         sumAddons.textContent = `${addonDesc.join(', ')} (Rp ${addonsSubtotal.toLocaleString('id-ID')})`;
     } else {
         sumAddons.textContent = 'Rp 0';
@@ -438,7 +438,9 @@ function updateBreadcrumbs() {
 
     b1.className = 'step-badge active';
     b2.className = `step-badge ${bookingState.selectedSlots.length > 0 ? 'active' : ''}`;
-    b3.className = `step-badge ${(bookingState.addons.racket > 0 || bookingState.addons.balls > 0 || bookingState.addons.cafepack > 0 || bookingState.addons.coach > 0) ? 'active' : ''}`;
+    
+    const hasAddons = Object.values(bookingState.addons).some(v => v > 0);
+    b3.className = `step-badge ${hasAddons ? 'active' : ''}`;
     b4.className = `step-badge ${bookingState.selectedSlots.length > 0 ? 'active' : ''}`;
 }
 
@@ -483,7 +485,7 @@ function proceedBookingSubmission() {
     if (btnWA) {
         btnWA.onclick = () => {
             const waMessage = encodeURIComponent(
-                `Halo Concierge TiTik Padel Senopati,\n\nSaya ingin konfirmasi pembayaran reservasi:\n` +
+                `Halo Concierge TiTik Padel Tangerang,\n\nSaya ingin konfirmasi pembayaran reservasi:\n` +
                 `• Nama: ${name}\n` +
                 `• No WA: ${phone}\n` +
                 `• Lapangan: ${bookingState.selectedCourt.name}\n` +

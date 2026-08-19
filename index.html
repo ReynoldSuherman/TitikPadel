@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>TiTik Padel — Court, Sanctuary & Match Café</title>
+    <title>TiTik Padel Tangerang — Court, Sanctuary & Match Café</title>
     
-    <!-- PWA & Mobile Meta -->
+    <!-- PWA Meta -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#090C0F">
     <meta name="mobile-web-app-capable" content="yes">
@@ -19,7 +19,7 @@
     <!-- Dependencies -->
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     
-    <!-- Inline Theme Persistence Check (Anti-Flicker) -->
+    <!-- Theme Persistence Anti-Flicker -->
     <script>
         (function() {
             const savedTheme = localStorage.getItem('titik_theme_mode') || 'dark';
@@ -34,13 +34,13 @@
 
     <div class="noise-overlay" aria-hidden="true"></div>
 
-    <!-- PERSISTENT AUDIO ELEMENT -->
-    <audio id="globalAudio" loop preload="auto"></audio>
+    <!-- AUDIO PLAYER ELEMENT -->
+    <audio id="globalAudio" preload="auto"></audio>
 
     <!-- ANNOUNCEMENT BANNER -->
     <div class="top-marquee">
         <div class="marquee-track">
-            <span>✦ TITIK PADEL CLUB & CAFÉ ✦ PANORAMIC TOURNAMENT COURTS ✦ ARTISAN ESPRESSO & SMOOTHIE BAR ✦ SENOPATI SANCTUARY ✦ TITIK PADEL CLUB & CAFÉ</span>
+            <span>✦ TITIK PADEL TANGERANG ✦ PANORAMIC TOURNAMENT COURTS ✦ ARTISAN ESPRESSO & MATCH CAFÉ ✦ TANGERANG SANCTUARY ✦ PRO-TIER RACKETS AVAILABLE</span>
         </div>
     </div>
 
@@ -49,29 +49,38 @@
         <div class="nav-inner">
             <a href="javascript:void(0)" onclick="navigateTo('sanctuary')" class="brand-signature">
                 <div class="logo-wrapper">
-                    <img src="Logo/Logo_Padel.svg" alt="TiTik Padel Logo" class="brand-svg-logo" onerror="this.onerror=null; this.src='Logo/logo.png';">
+                    <!-- Crisp Vector Padel Logo SVG -->
+                    <svg class="brand-svg-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="6" width="34" height="42" rx="17" stroke="#000000" stroke-width="4.5"/>
+                        <circle cx="23" cy="20" r="2.5" fill="#000000"/>
+                        <circle cx="16" cy="27" r="2.5" fill="#000000"/>
+                        <circle cx="30" cy="27" r="2.5" fill="#000000"/>
+                        <circle cx="23" cy="34" r="2.5" fill="#000000"/>
+                        <path d="M32 41L52 61" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M44 53L53 44" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
+                    </svg>
                 </div>
                 <div class="brand-text">
                     <span class="brand-title">TiTik<span>.PADEL</span></span>
-                    <span class="brand-tagline">COURT & SOCIAL CAFÉ</span>
+                    <span class="brand-tagline">TANGERANG ARENA & CAFÉ</span>
                 </div>
             </a>
 
-            <!-- Navigation Links (Layer Switches) -->
+            <!-- Navigation Links -->
             <nav class="nav-menu">
                 <button onclick="navigateTo('sanctuary')" class="nav-link active" data-nav="sanctuary"><span>01</span> Sanctuary & Café</button>
                 <button onclick="navigateTo('booking')" class="nav-link" data-nav="booking"><span>02</span> Reserve Court</button>
-                <button onclick="navigateTo('founder')" class="nav-link" data-nav="founder"><span>03</span> Founder & Story</button>
+                <button onclick="navigateTo('founder')" class="nav-link" data-nav="founder"><span>03</span> Founder & Branches</button>
             </nav>
 
             <div class="nav-actions">
-                <!-- Playlist Controller Button -->
+                <!-- Playlist Controller -->
                 <button id="openMusicModalBtn" class="btn-editorial" style="padding: 7px 14px; cursor: pointer;">
                     <span class="btn-dot" id="musicPulseDot"></span>
-                    <span id="navTrackTitle" class="btn-text">🎵 Hiper Funtime</span>
+                    <span id="navTrackTitle" class="btn-text">🎵 Shuffle Music</span>
                 </button>
 
-                <!-- Fresh Theme Switcher -->
+                <!-- Theme Switcher -->
                 <button id="themeToggle" class="btn-editorial" style="padding: 7px 12px; cursor: pointer;" title="Ganti Mode Warna">
                     <span>🌓 Theme</span>
                 </button>
@@ -97,9 +106,9 @@
         <div class="mobile-nav-drawer" id="mobileDrawer">
             <button onclick="navigateTo('sanctuary'); closeMobileMenu();" class="mobile-nav-item active" data-nav-mobile="sanctuary">01. Sanctuary & Café</button>
             <button onclick="navigateTo('booking'); closeMobileMenu();" class="mobile-nav-item" data-nav-mobile="booking">02. Reserve Court</button>
-            <button onclick="navigateTo('founder'); closeMobileMenu();" class="mobile-nav-item" data-nav-mobile="founder">03. Founder & Story</button>
+            <button onclick="navigateTo('founder'); closeMobileMenu();" class="mobile-nav-item" data-nav-mobile="founder">03. Founder & Branches</button>
             <div class="mobile-drawer-socials">
-                <span>Direct Socials:</span>
+                <span>Direct Links:</span>
                 <div class="drawer-social-icons">
                     <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club</a>
                     <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Founder</a>
@@ -113,24 +122,23 @@
          PAGE LAYER 01: SANCTUARY & CAFÉ (HOME)
          ========================================================================== -->
     <div id="layer-sanctuary" class="page-layer active">
-        <!-- Hero Section -->
         <section class="hero-sanctuary">
             <div class="hero-backdrop-glow"></div>
             
             <div class="hero-content">
                 <div class="hero-eyebrow">
                     <span class="badge-pill">Urban Padel Sanctuary & Café Lounge</span>
-                    <span class="coords">6°13'42.2"S 106°48'33.1"E</span>
+                    <span class="coords">6°10'30.5"S 106°38'20.2"E • TANGERANG</span>
                 </div>
 
                 <h1 class="hero-display-title">
                     Titik Temu Permainan, <br>
-                    <em>Kebugaran, & Kopi</em> <span class="text-glow">Berkelas.</span>
+                    <em>Kebugaran, & Kopi</em> <span class="text-glow">di Tangerang.</span>
                 </h1>
 
                 <div class="hero-split-desc">
                     <p class="lead-text">
-                        <strong>TiTik Padel</strong> adalah ruang terkurasi di Senopati di mana presisi olahraga berstandar internasional bersanding harmonis dengan atmosfer <em>specialty coffee shop</em>, nutrisi atletik, dan komunitas modern yang dinamis.
+                        <strong>TiTik Padel Tangerang</strong> menghadirkan arena padel modern berstandar FIP internasional yang dipadukan dengan atmosfer <em>specialty coffee shop</em>, nutrisi pemulihan atletik, dan fasilitas komunitas berkelas.
                     </p>
                     <div class="hero-cta-cluster">
                         <button onclick="navigateTo('booking')" class="btn-luxe-solid">Reservasi Lapangan &rarr;</button>
@@ -144,7 +152,7 @@
                 <div class="stat-card">
                     <span class="stat-mono">FACILITY 01</span>
                     <h3>Panoramic Glass Courts</h3>
-                    <p>Rumput sintetis Mondo Supercourt XN & pencahayaan LED bebas silau.</p>
+                    <p>Rumput sintetis Mondo Supercourt XN & pencahayaan LED anti-glare.</p>
                 </div>
                 <div class="stat-card highlight-cafe">
                     <span class="stat-mono">FACILITY 02</span>
@@ -158,13 +166,13 @@
                 </div>
                 <div class="stat-card">
                     <span class="stat-mono">FACILITY 04</span>
-                    <h3>Pro Equipment Hub</h3>
-                    <p>Rental raket Bullpadel & Head Padel official tournament balls.</p>
+                    <h3>Pro Racket Rental</h3>
+                    <p>Sewa raket pro tier: Babolat Technical Viper, Bullpadel Vertex, & Wilson Bela.</p>
                 </div>
             </div>
         </section>
 
-        <!-- Café Section -->
+        <!-- Café Feature -->
         <section id="cafe-section" class="cafe-feature-section">
             <div class="container-luxury">
                 <div class="section-tag-line">
@@ -176,7 +184,7 @@
                         <span class="badge-pill cafe-badge">Specialty Café & Recovery Lounge</span>
                         <h2 class="section-heading-serif">TiTik Match Café: Lebih dari Sekadar Ruang Tunggu.</h2>
                         <p class="cafe-p">
-                            Dirancang dengan interior natural batu travertine dan kayu jati gelap, TiTik Café menyajikan asupan nutrisi seimbang untuk performa atletik maupun obrolan santai pasca pertandingan.
+                            Menyajikan asupan nutrisi seimbang, artisan espresso Arabika pilihan, dan kudapan bernutrisi untuk pemulihan stamina atletik maupun obrolan santai pasca pertandingan di Tangerang.
                         </p>
 
                         <div class="cafe-menu-highlights">
@@ -191,14 +199,14 @@
                             <div class="menu-item-row">
                                 <div class="menu-lead">
                                     <span class="menu-title">The Smash Protein Shake</span>
-                                    <span class="menu-desc">Whey isolate / plant protein, pisang ambon, almond butter & madu murni.</span>
+                                    <span class="menu-desc">Whey isolate, pisang ambon, almond butter & madu murni.</span>
                                 </div>
                                 <span class="menu-tag">Muscle Recovery</span>
                             </div>
 
                             <div class="menu-item-row">
                                 <div class="menu-lead">
-                                    <span class="menu-title">Truffle Egg & Avocado Sourdough</span>
+                                    <span class="menu-title">Truffle Egg Avocado Sourdough</span>
                                     <span class="menu-desc">Roti sourdough fermentasi 36 jam dengan scramble egg lembut.</span>
                                 </div>
                                 <span class="menu-tag">Brunch Delight</span>
@@ -206,7 +214,7 @@
                         </div>
 
                         <div class="cafe-timing-bar">
-                            <span>🕒 <strong>Jam Operasional Café:</strong> Setiap Hari 06.00 — 23.00 WIB (Terbuka untuk Umum & Pemain)</span>
+                            <span>🕒 <strong>Jam Operasional:</strong> Setiap Hari 06.00 — 23.00 WIB (Terbuka untuk Umum & Pemain)</span>
                         </div>
                     </div>
 
@@ -234,7 +242,7 @@
             </div>
         </section>
 
-        <!-- Social Media Hub -->
+        <!-- Social Channels -->
         <section class="main-socials-section">
             <div class="container-luxury">
                 <div class="channels-head text-center">
@@ -249,7 +257,7 @@
                             <div class="sh-icon">📸</div>
                             <div>
                                 <span class="sh-title">Instagram Resmi TiTik Padel</span>
-                                <span class="sh-sub">@titikpadel_id &bull; Highlight, foto event & turnamen</span>
+                                <span class="sh-sub">@titikpadel_id &bull; Highlight & Open Play Schedule</span>
                             </div>
                         </div>
                         <span class="sh-arrow">&nearr;</span>
@@ -260,7 +268,7 @@
                             <div class="sh-icon">👤</div>
                             <div>
                                 <span class="sh-title">Instagram Founder</span>
-                                <span class="sh-sub">@sukitnguyen_ &bull; Personal story & ventures</span>
+                                <span class="sh-sub">@sukitnguyen_ &bull; Personal Story & Lifestyle</span>
                             </div>
                         </div>
                         <span class="sh-arrow">&nearr;</span>
@@ -271,18 +279,18 @@
                             <div class="sh-icon">💬</div>
                             <div>
                                 <span class="sh-title">WhatsApp Concierge Desk</span>
-                                <span class="sh-sub">+62 812-3456-7890 &bull; Reservasi prioritas & private coach</span>
+                                <span class="sh-sub">+62 812-3456-7890 &bull; Fast-response booking</span>
                             </div>
                         </div>
                         <span class="sh-arrow">&nearr;</span>
                     </a>
 
-                    <a href="https://maps.google.com" target="_blank" class="social-hub-card" rel="noopener">
+                    <a href="https://maps.app.goo.gl/kdDccKDmGGsueLwP8" target="_blank" class="social-hub-card" rel="noopener">
                         <div class="sh-left">
                             <div class="sh-icon">📍</div>
                             <div>
-                                <span class="sh-title">Petunjuk Arah Google Maps</span>
-                                <span class="sh-sub">Senopati Sanctuary, Jakarta Selatan</span>
+                                <span class="sh-title">Lokasi TiTik Padel Arena</span>
+                                <span class="sh-sub">Tangerang Flagship Arena &bull; Google Maps</span>
                             </div>
                         </div>
                         <span class="sh-arrow">&nearr;</span>
@@ -297,7 +305,7 @@
                 <div>
                     <span class="section-tag-line" style="color: var(--c-court-green);">// SIAP BERMAIN HARI INI?</span>
                     <h3 class="cta-title">Pilih Slot Waktu & Court Favorit Anda Sekarang</h3>
-                    <p class="cta-desc">Ketersediaan real-time dengan sistem reservasi pintar. Split-bill per pemain & konfirmasi WhatsApp kilat.</p>
+                    <p class="cta-desc">Ketersediaan real-time dengan kalkulator split-bill & konfirmasi WhatsApp kilat.</p>
                 </div>
                 <button onclick="navigateTo('booking')" class="btn-luxe-solid cta-btn">Buka Mesin Booking &rarr;</button>
             </div>
@@ -305,23 +313,22 @@
     </div>
 
     <!-- ==========================================================================
-         PAGE LAYER 02: BOOKING ENGINE
+         PAGE LAYER 02: BOOKING ENGINE (PRO RACKETS & SMART CALCULATOR)
          ========================================================================== -->
     <div id="layer-booking" class="page-layer">
         <main class="booking-engine-wrapper">
-            <!-- Step Breadcrumb -->
             <div class="engine-steps-bar">
                 <div class="step-badge active" id="badgeStep1"><span>01</span> Tanggal & Lapangan</div>
                 <div class="step-line"></div>
                 <div class="step-badge" id="badgeStep2"><span>02</span> Jam Bermain</div>
                 <div class="step-line"></div>
-                <div class="step-badge" id="badgeStep3"><span>03</span> Extra & Café</div>
+                <div class="step-badge" id="badgeStep3"><span>03</span> Pro Gear & Café</div>
                 <div class="step-line"></div>
                 <div class="step-badge" id="badgeStep4"><span>04</span> Checkout</div>
             </div>
 
             <div class="engine-main-grid">
-                <!-- Left Interactive Workspace -->
+                <!-- Left Panel -->
                 <div class="workspace-panel">
                     <!-- Step 1: Date Ribbon -->
                     <section class="panel-box">
@@ -348,7 +355,7 @@
                         <div class="panel-head">
                             <div class="head-left">
                                 <span class="step-indicator">STEP 02</span>
-                                <h2>Pilih Arena Lapangan TiTik</h2>
+                                <h2>Pilih Arena Lapangan TiTik Tangerang</h2>
                             </div>
                             <div class="court-filter-toggle">
                                 <button class="filter-btn active" data-filter="all">Semua</button>
@@ -401,33 +408,86 @@
                         </div>
                     </section>
 
-                    <!-- Step 4: Addons -->
+                    <!-- Step 4: Pro Addons (Rackets & Bundles) -->
                     <section class="panel-box">
                         <div class="panel-head">
                             <div class="head-left">
                                 <span class="step-indicator">STEP 04</span>
-                                <h2>Tambahan Gear & TiTik Café Perk</h2>
-                                <p class="panel-sub">Sewa raket pro grade atau tambahkan voucher paket recovery café.</p>
+                                <h2>Sewa Raket Pro-Tier & Paket Café</h2>
+                                <p class="panel-sub">Pilihan raket kelas turnamen dengan power & spin tinggi.</p>
                             </div>
                         </div>
 
                         <div class="addons-grid-luxe">
-                            <div class="luxe-addon-card" data-addon-id="racket">
+                            <!-- Standard Racket -->
+                            <div class="luxe-addon-card" data-addon-id="racket_std">
                                 <div class="addon-left-meta">
                                     <div class="addon-icon-sym">🎾</div>
                                     <div class="addon-detail">
-                                        <h4>Bullpadel Hack 03 / Vertex 04</h4>
-                                        <p>Sewa raket carbon pro grade, new grip & wrist strap.</p>
+                                        <h4>Standard Club Racket (Bullpadel / Nox Entry)</h4>
+                                        <p>Cocok untuk pemula, kontrol seimbang & nyaman.</p>
                                         <span class="addon-fee">+Rp 40.000 / raket</span>
                                     </div>
                                 </div>
                                 <div class="qty-counter">
-                                    <button type="button" class="btn-qty minus" data-target="racket" aria-label="Kurangi raket">-</button>
-                                    <span class="qty-val" id="qty-racket">0</span>
-                                    <button type="button" class="btn-qty plus" data-target="racket" aria-label="Tambah raket">+</button>
+                                    <button type="button" class="btn-qty minus" data-target="racket_std">-</button>
+                                    <span class="qty-val" id="qty-racket_std">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_std">+</button>
                                 </div>
                             </div>
 
+                            <!-- Pro Tier 1: Bullpadel Vertex -->
+                            <div class="luxe-addon-card" data-addon-id="racket_vertex">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">⭐</div>
+                                    <div class="addon-detail">
+                                        <h4>Bullpadel Vertex 04 Pro 2026</h4>
+                                        <p>Carbon Xtend 12K, Topspin texture & extreme power.</p>
+                                        <span class="addon-fee">+Rp 95.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_vertex">-</button>
+                                    <span class="qty-val" id="qty-racket_vertex">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_vertex">+</button>
+                                </div>
+                            </div>
+
+                            <!-- Pro Tier 2: Babolat Technical Viper -->
+                            <div class="luxe-addon-card" data-addon-id="racket_viper">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🔥</div>
+                                    <div class="addon-detail">
+                                        <h4>Babolat Technical Viper Carbon</h4>
+                                        <p>Raket Juan Lebrón edition, maximum explosive smash power.</p>
+                                        <span class="addon-fee">+Rp 110.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_viper">-</button>
+                                    <span class="qty-val" id="qty-racket_viper">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_viper">+</button>
+                                </div>
+                            </div>
+
+                            <!-- Pro Tier 3: Wilson Bela Pro -->
+                            <div class="luxe-addon-card" data-addon-id="racket_bela">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🏆</div>
+                                    <div class="addon-detail">
+                                        <h4>Wilson Bela Pro V2 (Fernando Belasteguín)</h4>
+                                        <p>Premium 3K Carbon, solid feel & tournament precision.</p>
+                                        <span class="addon-fee">+Rp 115.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_bela">-</button>
+                                    <span class="qty-val" id="qty-racket_bela">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_bela">+</button>
+                                </div>
+                            </div>
+
+                            <!-- Balls -->
                             <div class="luxe-addon-card" data-addon-id="balls">
                                 <div class="addon-left-meta">
                                     <div class="addon-icon-sym">🥫</div>
@@ -438,12 +498,13 @@
                                     </div>
                                 </div>
                                 <div class="qty-counter">
-                                    <button type="button" class="btn-qty minus" data-target="balls" aria-label="Kurangi bola">-</button>
+                                    <button type="button" class="btn-qty minus" data-target="balls">-</button>
                                     <span class="qty-val" id="qty-balls">0</span>
-                                    <button type="button" class="btn-qty plus" data-target="balls" aria-label="Tambah bola">+</button>
+                                    <button type="button" class="btn-qty plus" data-target="balls">+</button>
                                 </div>
                             </div>
 
+                            <!-- Cafe Pack -->
                             <div class="luxe-addon-card" data-addon-id="cafepack">
                                 <div class="addon-left-meta">
                                     <div class="addon-icon-sym">☕</div>
@@ -454,25 +515,9 @@
                                     </div>
                                 </div>
                                 <div class="qty-counter">
-                                    <button type="button" class="btn-qty minus" data-target="cafepack" aria-label="Kurangi cafe pack">-</button>
+                                    <button type="button" class="btn-qty minus" data-target="cafepack">-</button>
                                     <span class="qty-val" id="qty-cafepack">0</span>
-                                    <button type="button" class="btn-qty plus" data-target="cafepack" aria-label="Tambah cafe pack">+</button>
-                                </div>
-                            </div>
-
-                            <div class="luxe-addon-card" data-addon-id="coach">
-                                <div class="addon-left-meta">
-                                    <div class="addon-icon-sym">🏆</div>
-                                    <div class="addon-detail">
-                                        <h4>Certified Coach / Sparing Pro (1 Jam)</h4>
-                                        <p>Bimbingan taktik Bandeja, Vibora & rally position.</p>
-                                        <span class="addon-fee">+Rp 250.000 / sesi</span>
-                                    </div>
-                                </div>
-                                <div class="qty-counter">
-                                    <button type="button" class="btn-qty minus" data-target="coach" aria-label="Kurangi coach">-</button>
-                                    <span class="qty-val" id="qty-coach">0</span>
-                                    <button type="button" class="btn-qty plus" data-target="coach" aria-label="Tambah coach">+</button>
+                                    <button type="button" class="btn-qty plus" data-target="cafepack">+</button>
                                 </div>
                             </div>
                         </div>
@@ -484,7 +529,7 @@
                     <div class="concierge-card">
                         <div class="concierge-header">
                             <div class="concierge-badge">TITIK CONCIERGE TICKET</div>
-                            <span class="live-pulse">LIVE QUOTE</span>
+                            <span class="live-pulse">TANGERANG ARENA</span>
                         </div>
 
                         <div class="manifest-table">
@@ -503,7 +548,7 @@
                                 </div>
                             </div>
                             <div class="manifest-item">
-                                <span class="m-lbl">Gear, Café & Coach</span>
+                                <span class="m-lbl">Gear & Café Perks</span>
                                 <span class="m-val" id="summaryAddons">Rp 0</span>
                             </div>
                         </div>
@@ -520,9 +565,9 @@
                             <div class="split-head">
                                 <span>👥 Split Bill per Pemain</span>
                                 <div class="split-counter">
-                                    <button type="button" class="btn-split" id="splitMinus" aria-label="Kurangi orang">-</button>
+                                    <button type="button" class="btn-split" id="splitMinus">-</button>
                                     <span id="splitPlayerCount">4</span> Orang
-                                    <button type="button" class="btn-split" id="splitPlus" aria-label="Tambah orang">+</button>
+                                    <button type="button" class="btn-split" id="splitPlus">+</button>
                                 </div>
                             </div>
                             <div class="split-result">
@@ -537,7 +582,7 @@
                                 <span id="calcSubtotalCourt">Rp 0</span>
                             </div>
                             <div class="price-line">
-                                <span>Subtotal Perlengkapan & Café</span>
+                                <span>Subtotal Gear & Café</span>
                                 <span id="calcSubtotalAddons">Rp 0</span>
                             </div>
                             <div class="price-line discount" id="discountLine" style="display: none;">
@@ -572,7 +617,7 @@
 
                             <div class="input-stacked">
                                 <label for="clientNotes">Catatan untuk TiTik Concierge</label>
-                                <input type="text" id="clientNotes" placeholder="Contoh: Siapkan raket sebelum jam 19.00">
+                                <input type="text" id="clientNotes" placeholder="Contoh: Siapkan raket Wilson Bela sebelum main">
                             </div>
 
                             <button type="submit" id="btnSubmitBooking" class="btn-submit-luxe" disabled>
@@ -589,7 +634,7 @@
             </div>
         </main>
 
-        <!-- Mobile Floating Booking Action Bar -->
+        <!-- Mobile Floating Action Bar -->
         <div class="mobile-booking-floating-bar" id="mobileFloatingBar">
             <div class="floating-left">
                 <span class="floating-label">Total Tagihan (<span id="mobileSlotCount">0 Jam</span>)</span>
@@ -602,7 +647,7 @@
     </div>
 
     <!-- ==========================================================================
-         PAGE LAYER 03: FOUNDER MONOGRAPH
+         PAGE LAYER 03: FOUNDER STORY & GOOGLE MAPS LOCATIONS
          ========================================================================== -->
     <div id="layer-founder" class="page-layer">
         <main class="owner-page-container">
@@ -612,7 +657,7 @@
                         <div class="portrait-frame">
                             <img src="./founder.png" alt="Sukit Nguyen - Founder of TiTik Padel" class="founder-photo crisp-logo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop';">
                             <div class="portrait-caption">
-                                <span class="caption-tag">PORTRAIT // SENOPATI 2026</span>
+                                <span class="caption-tag">PORTRAIT // TANGERANG 2026</span>
                                 <span class="caption-name">Founder & Managing Principal</span>
                             </div>
                         </div>
@@ -625,28 +670,28 @@
                         
                         <h1 class="monograph-heading">
                             Menemukan "Titik" di Mana <br>
-                            <em>Olahraga, Estetika, & Kopi</em> Bertemu.
+                            <em>Olahraga, Biliar, & Kopi</em> Bertemu.
                         </h1>
 
                         <p class="narrative-lead">
-                            "Seorang pengusaha serta Ahli dalam bermain Biliard yang kebetulan memiliki Usaha Tempat Main biliard yang megah dengan point sell tambahannya yaitu di cafe, serta memiliki Cafe yang digabung dengan toko Vape dan memiliki beberapa cabang yaitu: Tebet, Vilnius, dan Otista. Kini terjun ke dalam dunia padel sebagai tantangan barunya karena kecintaannya pada eksplorasi dan tantangan baru."
+                            "Seorang pengusaha serta Ahli dalam bermain Biliard yang kebetulan memiliki Usaha Tempat Main biliard yang megah dengan point sell tambahannya yaitu di cafe, serta memiliki Cafe yang digabung dengan toko Vape dan memiliki beberapa cabang yaitu: Tebet, Vilnus, dan Otista. Kini terjun ke dalam dunia padel di Tangerang sebagai tantangan barunya karena kecintaannya pada eksplorasi dan tantangan baru."
                         </p>
 
                         <div class="biography-blocks">
                             <div class="bio-chunk">
                                 <h4>Filosofi di Balik TiTik Padel</h4>
-                                <p>Berasal dari perpaduan kecintaan terhadap olahraga berakurasi tinggi dan apresiasi terhadap kultur specialty café Jakarta. TiTik Padel dirancang bukan sekadar sebagai fasilitas olahraga komersial yang bising, melainkan urban sanctuary dengan detail material kaca panoramic, turf empuk peredam benturan, dan sajian nutrisi café yang mendukung pemulihan stamina.</p>
+                                <p>Berasal dari perpaduan kecintaan terhadap olahraga berakurasi tinggi dan apresiasi terhadap kultur specialty café. TiTik Padel Tangerang dirancang bukan sekadar sebagai fasilitas olahraga biasa, melainkan urban sanctuary dengan detail material kaca panoramic, turf empuk peredam benturan, dan sajian nutrisi café yang mendukung pemulihan stamina.</p>
                             </div>
                             <div class="bio-chunk">
-                                <h4>Ekosistem & Multi-Branch Presence</h4>
-                                <p>Dengan latar belakang ekspansi unit usaha café-vape terkemuka di <strong>Tebet, Vilnius, dan Otista</strong>, dedikasi terhadap kenyamanan ruang sosial dan standardisasi layanan premium diintegrasikan secara penuh ke dalam atmosfer TiTik Padel Arena.</p>
+                                <h4>Ekosistem Usaha Terpadu</h4>
+                                <p>Dengan pengalaman mengelola jaringan billiard lounge megah serta café-vape di Jakarta & Tangerang, standardisasi pelayanan ramah, penyediaan gear profesional, dan kenyamanan pengunjung menjadi prioritas utama.</p>
                             </div>
                         </div>
 
                         <div class="founder-metrics-strip">
                             <div class="f-metric">
-                                <span class="f-val">MULTI</span>
-                                <span class="f-lbl">Branch Café & Lounge Network</span>
+                                <span class="f-val">4 HUB</span>
+                                <span class="f-lbl">Network & Lounge Presence</span>
                             </div>
                             <div class="f-metric">
                                 <span class="f-val">FIP-01</span>
@@ -661,46 +706,88 @@
                 </div>
             </section>
 
-            <!-- Channels Hub -->
+            <!-- INTEGRATED GOOGLE MAPS LOCATIONS (TEBET, VILNUS, OTISTA, ICON) -->
             <section class="digital-channels-section">
                 <div class="channels-head">
-                    <span class="section-subtitle">DIRECT CONTACT & MEDIA</span>
-                    <h2>Official Social Channels & Founder Contact</h2>
-                    <p>Terhubung langsung dengan tim TiTik Padel atau pantau aktivitas harian melalui media sosial resmi di bawah ini.</p>
+                    <span class="section-subtitle">NETWORK & VENUE LOCATIONS</span>
+                    <h2>Jaringan Cabang & Lokasi Google Maps</h2>
+                    <p>Buka peta presisi ke setiap lokasi cabang usaha biliar, café-vape, dan arena padel kami melalui tautan resmi Google Maps di bawah ini.</p>
                 </div>
 
                 <div class="luxe-channels-grid">
-                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank" class="channel-card highlight" rel="noopener">
+                    <!-- Branch 1: Icon (Flagship Arena Tangerang) -->
+                    <a href="https://maps.app.goo.gl/kdDccKDmGGsueLwP8" target="_blank" class="channel-card highlight" rel="noopener">
+                        <div class="ch-left">
+                            <div class="ch-glyph">IC</div>
+                            <div class="ch-info">
+                                <span class="ch-title">TiTik Padel Arena (Icon Tangerang)</span>
+                                <span class="ch-handle">Arena Utama Tangerang &bull; Buka Google Maps Navigasi</span>
+                            </div>
+                        </div>
+                        <div class="ch-action">
+                            <span>Petunjuk Arah</span>
+                            <span class="arrow-sym">&nearr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Branch 2: Tebet -->
+                    <a href="https://maps.app.goo.gl/dcUe6igKkZok5yjV7" target="_blank" class="channel-card" rel="noopener">
+                        <div class="ch-left">
+                            <div class="ch-glyph">TB</div>
+                            <div class="ch-info">
+                                <span class="ch-title">Cabang Tebet (Billiard Lounge & Café Vape)</span>
+                                <span class="ch-handle">Tebet, Jakarta Selatan &bull; Buka Google Maps</span>
+                            </div>
+                        </div>
+                        <div class="ch-action">
+                            <span>Buka Maps</span>
+                            <span class="arrow-sym">&nearr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Branch 3: Vilnus -->
+                    <a href="https://maps.app.goo.gl/fUMSxkwsN2GngxLZ6" target="_blank" class="channel-card" rel="noopener">
+                        <div class="ch-left">
+                            <div class="ch-glyph">VL</div>
+                            <div class="ch-info">
+                                <span class="ch-title">Cabang Vilnus (Billiard & Match Hub)</span>
+                                <span class="ch-handle">Area Vilnus &bull; Buka Google Maps</span>
+                            </div>
+                        </div>
+                        <div class="ch-action">
+                            <span>Buka Maps</span>
+                            <span class="arrow-sym">&nearr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Branch 4: Otista -->
+                    <a href="https://maps.app.goo.gl/mcgZ7GxjF6Wy5B4TA" target="_blank" class="channel-card" rel="noopener">
+                        <div class="ch-left">
+                            <div class="ch-glyph">OT</div>
+                            <div class="ch-info">
+                                <span class="ch-title">Cabang Otista (Café & Community Space)</span>
+                                <span class="ch-handle">Otista Raya &bull; Buka Google Maps</span>
+                            </div>
+                        </div>
+                        <div class="ch-action">
+                            <span>Buka Maps</span>
+                            <span class="arrow-sym">&nearr;</span>
+                        </div>
+                    </a>
+
+                    <!-- Social: Instagram Owner -->
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" class="channel-card" rel="noopener">
                         <div class="ch-left">
                             <div class="ch-glyph">IG</div>
                             <div class="ch-info">
-                                <span class="ch-title">Instagram Resmi TiTik Padel</span>
-                                <span class="ch-handle">@titikpadel_id &bull; Jadwal open play, turnamen & update arena</span>
-                            </div>
-                        </div>
-                        <span class="ch-arrow">&nearr;</span>
-                    </a>
-
-                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" class="channel-card" rel="noopener">
-                        <div class="ch-left">
-                            <div class="ch-glyph">SN</div>
-                            <div class="ch-info">
                                 <span class="ch-title">Instagram Pribadi Founder</span>
-                                <span class="ch-handle">@sukitnguyen_ &bull; Personal journey, lifestyle & ventures</span>
+                                <span class="ch-handle">@sukitnguyen_ &bull; Follow personal journey & stories</span>
                             </div>
                         </div>
-                        <span class="ch-arrow">&nearr;</span>
-                    </a>
-
-                    <a href="https://wa.me/6281234567890" target="_blank" class="channel-card" rel="noopener">
-                        <div class="ch-left">
-                            <div class="ch-glyph">WA</div>
-                            <div class="ch-info">
-                                <span class="ch-title">WhatsApp Concierge Desk</span>
-                                <span class="ch-handle">+62 812-3456-7890 &bull; Reservasi prioritas & konsultasi coaching</span>
-                            </div>
+                        <div class="ch-action">
+                            <span>Lihat Profil</span>
+                            <span class="arrow-sym">&nearr;</span>
                         </div>
-                        <span class="ch-arrow">&nearr;</span>
                     </a>
                 </div>
             </section>
@@ -708,7 +795,7 @@
     </div>
 
     <!-- ==========================================================================
-         MODALS & DIALOGS
+         MODALS (PLAYLIST, QR CODE, RECEIPT)
          ========================================================================== -->
     <!-- Playlist Modal -->
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
@@ -716,7 +803,7 @@
             <div class="sheet-indicator-bar"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div>
-                    <span class="step-indicator">// SENOPATI MATCHPLAY AMBIENCE</span>
+                    <span class="step-indicator">// TANGERANG MATCHPLAY PLAYLIST</span>
                     <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
                 </div>
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
@@ -736,7 +823,7 @@
         </div>
     </div>
 
-    <!-- QR Code Download Modal -->
+    <!-- Static QR Code Download Modal -->
     <div id="qrModal" class="luxe-modal-backdrop">
         <div class="luxe-modal-sheet" style="max-width: 360px;">
             <div class="sheet-indicator-bar"></div>
@@ -754,7 +841,7 @@
         </div>
     </div>
 
-    <!-- Booking Confirmation Receipt Modal -->
+    <!-- Booking WhatsApp Modal -->
     <div id="bookingModal" class="luxe-modal-backdrop">
         <div class="luxe-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -780,12 +867,12 @@
         <div class="footer-top">
             <div class="footer-brand">
                 <span class="f-title">TiTik Padel</span>
-                <span class="f-sub">Court, Sanctuary & Specialty Café &bull; Senopati, Jakarta</span>
+                <span class="f-sub">Court, Sanctuary & Specialty Café &bull; Tangerang Arena</span>
             </div>
             <div class="footer-links">
                 <a href="javascript:void(0)" onclick="navigateTo('sanctuary')">Home</a>
                 <a href="javascript:void(0)" onclick="navigateTo('booking')">Direct Booking</a>
-                <a href="javascript:void(0)" onclick="navigateTo('founder')">Founder Profile</a>
+                <a href="javascript:void(0)" onclick="navigateTo('founder')">Founder & Locations</a>
                 <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
                 <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Desk</a>
             </div>
@@ -796,7 +883,7 @@
         </div>
     </footer>
 
-    <!-- APP ENGINE SCRIPTS -->
+    <!-- ENGINE SCRIPTS -->
     <script src="app.js"></script>
     <script src="booking.js"></script>
 </body>

@@ -3,45 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>The Founder & Digital Hub — TiTik Padel</title>
-    <!-- PWA Meta -->
+    <title>The Founder & Digital Hub — TiTik Padel Tangerang</title>
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#090C0F">
-    <!-- Google Fonts -->
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <!-- Dependencies -->
+    
     <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('titik_theme_mode') || 'dark';
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
 </head>
 <body class="bg-obsidian text-ecru antialiased selection:bg-court-green selection:text-obsidian" data-music-theme="hiper">
 
     <div class="noise-overlay" aria-hidden="true"></div>
+    <audio id="globalAudio" preload="auto"></audio>
 
-    <!-- LUXURY NAVBAR -->
+    <!-- NAVBAR -->
     <header class="luxury-navbar">
         <div class="nav-inner">
             <a href="index.html" class="brand-signature">
                 <div class="logo-wrapper">
-                    <img src="Logo/Logo_Padel.svg" alt="TiTik Padel Logo" class="brand-svg-logo" onerror="this.onerror=null; this.src='Logo/logo.png';">
+                    <svg class="brand-svg-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect x="6" y="6" width="34" height="42" rx="17" stroke="#000000" stroke-width="4.5"/>
+                        <circle cx="23" cy="20" r="2.5" fill="#000000"/>
+                        <circle cx="16" cy="27" r="2.5" fill="#000000"/>
+                        <circle cx="30" cy="27" r="2.5" fill="#000000"/>
+                        <circle cx="23" cy="34" r="2.5" fill="#000000"/>
+                        <path d="M32 41L52 61" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
+                        <path d="M44 53L53 44" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
+                    </svg>
                 </div>
                 <div class="brand-text">
                     <span class="brand-title">TiTik<span>.PADEL</span></span>
-                    <span class="brand-tagline">COURT & SOCIAL CAFÉ</span>
+                    <span class="brand-tagline">TANGERANG ARENA & CAFÉ</span>
                 </div>
             </a>
 
             <nav class="nav-menu">
                 <a href="index.html" class="nav-link"><span>01</span> Sanctuary & Café</a>
                 <a href="booking.html" class="nav-link"><span>02</span> Reserve Court</a>
-                <a href="about-owner.html" class="nav-link active"><span>03</span> Founder & Story</a>
+                <a href="about-owner.html" class="nav-link active"><span>03</span> Founder & Branches</a>
             </nav>
 
             <div class="nav-actions">
                 <button id="openMusicModalBtn" class="btn-editorial" style="padding: 7px 14px; cursor: pointer;">
                     <span class="btn-dot" id="musicPulseDot"></span>
-                    <span id="navTrackTitle" class="btn-text">🎵 Hiper Funtime</span>
+                    <span id="navTrackTitle" class="btn-text">🎵 Shuffle Music</span>
                 </button>
 
                 <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
@@ -61,16 +78,15 @@
             </div>
         </div>
 
-        <!-- Mobile Drawer -->
         <div class="mobile-nav-drawer" id="mobileDrawer">
             <a href="index.html" class="mobile-nav-item">01. Sanctuary & Café</a>
             <a href="booking.html" class="mobile-nav-item">02. Reserve Court</a>
-            <a href="about-owner.html" class="mobile-nav-item active">03. Founder & Story</a>
+            <a href="about-owner.html" class="mobile-nav-item active">03. Founder & Branches</a>
             <div class="mobile-drawer-socials">
-                <span>Direct Socials:</span>
+                <span>Direct Links:</span>
                 <div class="drawer-social-icons">
                     <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club</a>
-                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Instagram Founder</a>
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Founder</a>
                     <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a>
                 </div>
             </div>
@@ -78,23 +94,19 @@
     </header>
 
     <main class="owner-page-container">
-        
-        <!-- EDITORIAL FOUNDER HERO PROFILE -->
+        <!-- FOUNDER PROFILE SECTION -->
         <section class="founder-monograph">
             <div class="monograph-grid">
-                
-                <!-- Left: Portrait Photo -->
                 <div class="portrait-column">
                     <div class="portrait-frame">
                         <img src="./founder.png" alt="Sukit Nguyen - Founder of TiTik Padel" class="founder-photo crisp-logo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop';">
                         <div class="portrait-caption">
-                            <span class="caption-tag">PORTRAIT // SENOPATI 2026</span>
+                            <span class="caption-tag">PORTRAIT // TANGERANG 2026</span>
                             <span class="caption-name">Founder & Managing Principal</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Monograph Narrative & Philosophy -->
                 <div class="narrative-column">
                     <div class="section-tag-line">
                         <span>// LEADERSHIP & STORY</span>
@@ -102,29 +114,28 @@
                     
                     <h1 class="monograph-heading">
                         Menemukan "Titik" di Mana <br>
-                        <em>Olahraga, Estetika, & Kopi</em> Bertemu.
+                        <em>Olahraga, Biliar, & Kopi</em> Bertemu.
                     </h1>
 
                     <p class="narrative-lead">
-                        "Seorang pengusaha serta Ahli dalam bermain Biliard yang kebetulan memiliki Usaha Tempat Main biliard yang megah dengan point sell tambahannya yaitu di cafe, serta memiliki Cafe yang digabung dengan toko Vape dan memiliki beberapa cabang yaitu: Tebet, Vilnius, dan Otista. Kini terjun ke dalam dunia padel sebagai tantangan barunya karena kecintaannya pada eksplorasi dan tantangan baru."
+                        "Seorang pengusaha serta Ahli dalam bermain Biliard yang kebetulan memiliki Usaha Tempat Main biliard yang megah dengan point sell tambahannya yaitu di cafe, serta memiliki Cafe yang digabung dengan toko Vape dan memiliki beberapa cabang yaitu: Tebet, Vilnus, dan Otista. Kini terjun ke dalam dunia padel di Tangerang sebagai tantangan barunya karena kecintaannya pada eksplorasi dan tantangan baru."
                     </p>
 
                     <div class="biography-blocks">
                         <div class="bio-chunk">
                             <h4>Filosofi di Balik TiTik Padel</h4>
-                            <p>Berasal dari perpaduan kecintaan terhadap olahraga berakurasi tinggi dan apresiasi terhadap kultur specialty café Jakarta. TiTik Padel dirancang bukan sekadar sebagai fasilitas olahraga komersial yang bising, melainkan urban sanctuary dengan detail material kaca panoramic, turf empuk peredam benturan, dan sajian nutrisi café yang mendukung pemulihan stamina.</p>
+                            <p>Berasal dari perpaduan kecintaan terhadap olahraga berakurasi tinggi dan apresiasi terhadap kultur specialty café. TiTik Padel Tangerang dirancang bukan sekadar sebagai fasilitas olahraga komersial biasa, melainkan urban sanctuary dengan detail material kaca panoramic, turf empuk peredam benturan, dan sajian nutrisi café yang mendukung pemulihan stamina.</p>
                         </div>
                         <div class="bio-chunk">
-                            <h4>Ekosistem & Multi-Branch Presence</h4>
-                            <p>Dengan latar belakang ekspansi unit usaha café-vape terkemuka di <strong>Tebet, Vilnius, dan Otista</strong>, dedikasi terhadap kenyamanan ruang sosial dan standardisasi layanan premium diintegrasikan secara penuh ke dalam atmosfer TiTik Padel Arena.</p>
+                            <h4>Ekosistem Usaha Terpadu</h4>
+                            <p>Dengan pengalaman mengelola jaringan billiard lounge megah serta café-vape di Jakarta & Tangerang, standardisasi pelayanan ramah, penyediaan gear profesional, dan kenyamanan pengunjung menjadi prioritas utama.</p>
                         </div>
                     </div>
 
-                    <!-- Credential Metrics -->
                     <div class="founder-metrics-strip">
                         <div class="f-metric">
-                            <span class="f-val">MULTI</span>
-                            <span class="f-lbl">Branch Café & Lounge Network</span>
+                            <span class="f-val">4 HUB</span>
+                            <span class="f-lbl">Network & Lounge Presence</span>
                         </div>
                         <div class="f-metric">
                             <span class="f-val">FIP-01</span>
@@ -136,71 +147,40 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 
-        <!-- DIGITAL CHANNELS & SOCIAL HUBS -->
+        <!-- GOOGLE MAPS CABANG (TEBET, VILNUS, OTISTA, ICON) -->
         <section class="digital-channels-section">
             <div class="channels-head">
-                <span class="section-subtitle">DIRECT CONTACT & MEDIA</span>
-                <h2>Official Social Channels & Founder Contact</h2>
-                <p>Terhubung langsung dengan tim TiTik Padel atau pantau aktivitas harian melalui media sosial resmi di bawah ini.</p>
+                <span class="section-subtitle">NETWORK & VENUE LOCATIONS</span>
+                <h2>Jaringan Cabang & Lokasi Google Maps</h2>
+                <p>Buka peta presisi ke setiap lokasi cabang usaha biliar, café-vape, dan arena padel kami melalui tautan resmi Google Maps di bawah ini.</p>
             </div>
 
             <div class="luxe-channels-grid">
-                <!-- Instagram Official Titik Padel -->
-                <a href="https://www.instagram.com/titikpadel_id/" target="_blank" class="channel-card highlight" rel="noopener">
+                <!-- Icon Tangerang -->
+                <a href="https://maps.app.goo.gl/kdDccKDmGGsueLwP8" target="_blank" class="channel-card highlight" rel="noopener">
                     <div class="ch-left">
-                        <div class="ch-glyph">IG</div>
+                        <div class="ch-glyph">IC</div>
                         <div class="ch-info">
-                            <span class="ch-title">Instagram Resmi TiTik Padel</span>
-                            <span class="ch-handle">@titikpadel_id &bull; Jadwal open play, turnamen & update arena</span>
+                            <span class="ch-title">TiTik Padel Arena (Icon Tangerang)</span>
+                            <span class="ch-handle">Arena Utama Tangerang &bull; Buka Google Maps Navigasi</span>
                         </div>
                     </div>
                     <div class="ch-action">
-                        <span>Lihat Feed</span>
+                        <span>Petunjuk Arah</span>
                         <span class="arrow-sym">&nearr;</span>
                     </div>
                 </a>
 
-                <!-- Instagram Personal Sukit Nguyen -->
-                <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" class="channel-card" rel="noopener">
+                <!-- Tebet -->
+                <a href="https://maps.app.goo.gl/dcUe6igKkZok5yjV7" target="_blank" class="channel-card" rel="noopener">
                     <div class="ch-left">
-                        <div class="ch-glyph">SN</div>
+                        <div class="ch-glyph">TB</div>
                         <div class="ch-info">
-                            <span class="ch-title">Instagram Pribadi Founder</span>
-                            <span class="ch-handle">@sukitnguyen_ &bull; Personal journey, lifestyle & ventures</span>
-                        </div>
-                    </div>
-                    <div class="ch-action">
-                        <span>Follow &rarr;</span>
-                        <span class="arrow-sym">&nearr;</span>
-                    </div>
-                </a>
-
-                <!-- WhatsApp Concierge Desk -->
-                <a href="https://wa.me/6281234567890" target="_blank" class="channel-card" rel="noopener">
-                    <div class="ch-left">
-                        <div class="ch-glyph">WA</div>
-                        <div class="ch-info">
-                            <span class="ch-title">WhatsApp Concierge Desk</span>
-                            <span class="ch-handle">+62 812-3456-7890 &bull; Reservasi prioritas & konsultasi coaching</span>
-                        </div>
-                    </div>
-                    <div class="ch-action">
-                        <span>Chat Langsung</span>
-                        <span class="arrow-sym">&nearr;</span>
-                    </div>
-                </a>
-
-                <!-- Location Google Maps -->
-                <a href="https://maps.google.com" target="_blank" class="channel-card" rel="noopener">
-                    <div class="ch-left">
-                        <div class="ch-glyph">MP</div>
-                        <div class="ch-info">
-                            <span class="ch-title">Lokasi Google Maps</span>
-                            <span class="ch-handle">Jl. Senopati No. 45, Kebayoran Baru, Jakarta Selatan</span>
+                            <span class="ch-title">Cabang Tebet (Billiard Lounge & Café Vape)</span>
+                            <span class="ch-handle">Tebet, Jakarta Selatan &bull; Buka Google Maps</span>
                         </div>
                     </div>
                     <div class="ch-action">
@@ -208,18 +188,62 @@
                         <span class="arrow-sym">&nearr;</span>
                     </div>
                 </a>
+
+                <!-- Vilnus -->
+                <a href="https://maps.app.goo.gl/fUMSxkwsN2GngxLZ6" target="_blank" class="channel-card" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">VL</div>
+                        <div class="ch-info">
+                            <span class="ch-title">Cabang Vilnus (Billiard & Match Hub)</span>
+                            <span class="ch-handle">Area Vilnus &bull; Buka Google Maps</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Buka Maps</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
+
+                <!-- Otista -->
+                <a href="https://maps.app.goo.gl/mcgZ7GxjF6Wy5B4TA" target="_blank" class="channel-card" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">OT</div>
+                        <div class="ch-info">
+                            <span class="ch-title">Cabang Otista (Café & Community Space)</span>
+                            <span class="ch-handle">Otista Raya &bull; Buka Google Maps</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Buka Maps</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
+
+                <!-- Instagram Owner -->
+                <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" class="channel-card" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">IG</div>
+                        <div class="ch-info">
+                            <span class="ch-title">Instagram Pribadi Founder</span>
+                            <span class="ch-handle">@sukitnguyen_ &bull; Follow personal journey & stories</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Lihat Profil</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
             </div>
         </section>
-
     </main>
 
-    <!-- MODAL POPUP MUSIC PLAYLIST -->
+    <!-- MODAL PLAYLIST -->
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div>
-                    <span class="step-indicator">// SENOPATI MATCHPLAY AMBIENCE</span>
+                    <span class="step-indicator">// TANGERANG MATCHPLAY PLAYLIST</span>
                     <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
                 </div>
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
@@ -239,7 +263,7 @@
         </div>
     </div>
 
-    <!-- STATIC QR CODE MODAL FOR MOBILE DOWNLOAD -->
+    <!-- STATIC QR CODE MODAL -->
     <div id="qrModal" class="luxe-modal-backdrop">
         <div class="luxe-modal-sheet" style="max-width: 360px;">
             <div class="sheet-indicator-bar"></div>
@@ -262,55 +286,22 @@
         <div class="footer-top">
             <div class="footer-brand">
                 <span class="f-title">TiTik Padel</span>
-                <span class="f-sub">Senopati Sanctuary &bull; Jakarta Selatan</span>
+                <span class="f-sub">Court, Sanctuary & Specialty Café &bull; Tangerang Arena</span>
             </div>
             <div class="footer-links">
                 <a href="index.html">Home</a>
                 <a href="booking.html">Direct Booking</a>
-                <a href="about-owner.html">Founder Profile</a>
+                <a href="about-owner.html">Founder & Locations</a>
                 <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
                 <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Desk</a>
             </div>
         </div>
         <div class="footer-bottom">
             <span>&copy; 2026 TiTik Padel Club Indonesia. All Rights Reserved.</span>
-            <span>Architectural Minimalist Sports Club</span>
+            <span>Crafted with Minimalist Architectural Restraint</span>
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
-    <script src="playlist-engine.js"></script>
-    <script>
-        const menuBtn = document.getElementById('mobileMenuBtn');
-        const drawer = document.getElementById('mobileDrawer');
-        if (menuBtn && drawer) {
-            menuBtn.addEventListener('click', () => {
-                menuBtn.classList.toggle('active');
-                drawer.classList.toggle('open');
-            });
-        }
-
-        const qrContainer = document.getElementById('qrcode');
-        if (qrContainer && typeof QRCode !== 'undefined') {
-            new QRCode(qrContainer, {
-                text: window.location.href,
-                width: 160,
-                height: 160,
-                colorDark : "#090C0F",
-                colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        }
-
-        function openQRModal() {
-            const modal = document.getElementById('qrModal');
-            if (modal) modal.classList.add('open');
-        }
-
-        function closeQRModal() {
-            const modal = document.getElementById('qrModal');
-            if (modal) modal.classList.remove('open');
-        }
-    </script>
+    <script src="app.js"></script>
 </body>
 </html>
