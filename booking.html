@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sistem Reservasi Lapangan — TiTik Padel Tangerang</title>
+    
+    <!-- Favicon / Ikon Web -->
+    <link rel="icon" type="image/svg+xml" href="Logo/Logo_padel.svg">
+    <link rel="alternate icon" type="image/png" href="Logo/logo.png">
+    <link rel="apple-touch-icon" href="Logo/Logo_padel.svg">
+
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#090C0F">
     
@@ -12,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
     <script>
         (function() {
             const savedTheme = localStorage.getItem('titik_theme_mode') || 'dark';
@@ -37,15 +44,7 @@
         <div class="nav-inner">
             <a href="index.html" class="brand-signature">
                 <div class="logo-wrapper">
-                    <svg class="brand-svg-logo" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect x="6" y="6" width="34" height="42" rx="17" stroke="#000000" stroke-width="4.5"/>
-                        <circle cx="23" cy="20" r="2.5" fill="#000000"/>
-                        <circle cx="16" cy="27" r="2.5" fill="#000000"/>
-                        <circle cx="30" cy="27" r="2.5" fill="#000000"/>
-                        <circle cx="23" cy="34" r="2.5" fill="#000000"/>
-                        <path d="M32 41L52 61" stroke="#000000" stroke-width="5" stroke-linecap="round"/>
-                        <path d="M44 53L53 44" stroke="#000000" stroke-width="3.5" stroke-linecap="round"/>
-                    </svg>
+                    <img src="Logo/Logo_padel.svg" alt="TiTik Padel Logo" class="brand-svg-logo" onerror="this.onerror=null; this.src='Logo/logo.png';">
                 </div>
                 <div class="brand-text">
                     <span class="brand-title">TiTik<span>.PADEL</span></span>
@@ -85,8 +84,8 @@
             <div class="mobile-drawer-socials">
                 <span>Direct Links:</span>
                 <div class="drawer-social-icons">
-                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club</a>
-                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Founder</a>
+                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club[cite: 22]</a>
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Founder[cite: 22]</a>
                     <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a>
                 </div>
             </div>
@@ -94,7 +93,7 @@
     </header>
 
     <!-- BOOKING ENGINE -->
-    <main class="booking-engine-wrapper">
+    <main class="booking-engine-wrapper" style="display: block; opacity: 1; transform: none;">
         <div class="engine-steps-bar">
             <div class="step-badge active" id="badgeStep1"><span>01</span> Tanggal & Lapangan</div>
             <div class="step-line"></div>
@@ -107,7 +106,6 @@
 
         <div class="engine-main-grid">
             <div class="workspace-panel">
-                <!-- Step 1: Date Ribbon -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
@@ -127,7 +125,6 @@
                     <div class="swipe-hint mobile-only">⇄ Geser ke samping untuk ganti tanggal</div>
                 </section>
 
-                <!-- Step 2: Court Selector -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
@@ -144,7 +141,6 @@
                     <div class="court-cards-container" id="courtContainer"></div>
                 </section>
 
-                <!-- Step 3: Time Slot Matrix -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
@@ -185,18 +181,17 @@
                     </div>
                 </section>
 
-                <!-- Step 4: Pro Racket Addons -->
+                <!-- SEPARATED RACKETS VS BALLS/CAFE -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
                             <span class="step-indicator">STEP 04</span>
-                            <h2>Sewa Raket Pro-Tier & Paket Café</h2>
-                            <p class="panel-sub">Pilihan raket kelas turnamen dengan power & spin tinggi.</p>
+                            <h2>Pilihan Sewa Raket (Reguler & Pro-Tier)</h2>
+                            <p class="panel-sub">Tentukan raket sesuai gaya bermain Anda: Reguler Club atau Carbon Pro.</p>
                         </div>
                     </div>
 
                     <div class="addons-grid-luxe">
-                        <!-- Standard Racket -->
                         <div class="luxe-addon-card" data-addon-id="racket_std">
                             <div class="addon-left-meta">
                                 <div class="addon-icon-sym">🎾</div>
@@ -213,7 +208,6 @@
                             </div>
                         </div>
 
-                        <!-- Pro Tier 1: Bullpadel Vertex -->
                         <div class="luxe-addon-card" data-addon-id="racket_vertex">
                             <div class="addon-left-meta">
                                 <div class="addon-icon-sym">⭐</div>
@@ -230,7 +224,6 @@
                             </div>
                         </div>
 
-                        <!-- Pro Tier 2: Babolat Technical Viper -->
                         <div class="luxe-addon-card" data-addon-id="racket_viper">
                             <div class="addon-left-meta">
                                 <div class="addon-icon-sym">🔥</div>
@@ -247,7 +240,6 @@
                             </div>
                         </div>
 
-                        <!-- Pro Tier 3: Wilson Bela Pro -->
                         <div class="luxe-addon-card" data-addon-id="racket_bela">
                             <div class="addon-left-meta">
                                 <div class="addon-icon-sym">🏆</div>
@@ -263,45 +255,53 @@
                                 <button type="button" class="btn-qty plus" data-target="racket_bela">+</button>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Balls -->
-                        <div class="luxe-addon-card" data-addon-id="balls">
-                            <div class="addon-left-meta">
-                                <div class="addon-icon-sym">🥫</div>
-                                <div class="addon-detail">
-                                    <h4>Head Padel Pro Can (3 Bola Baru)</h4>
-                                    <p>Kaleng baru bertekanan resmi FIP. Hak milik Anda.</p>
-                                    <span class="addon-fee">+Rp 55.000 / kaleng</span>
-                                </div>
-                            </div>
-                            <div class="qty-counter">
-                                <button type="button" class="btn-qty minus" data-target="balls">-</button>
-                                <span class="qty-val" id="qty-balls">0</span>
-                                <button type="button" class="btn-qty plus" data-target="balls">+</button>
+                    <div class="border-t border-slate-800 pt-5 mt-6">
+                        <div class="panel-head" style="margin-bottom: 12px;">
+                            <div class="head-left">
+                                <span class="step-indicator">EXTRA CONSUMABLES</span>
+                                <h3 style="font-size: 1.1rem; font-weight: 700;">Bola Match Resmi & Paket TiTik Café</h3>
                             </div>
                         </div>
 
-                        <!-- Cafe Pack -->
-                        <div class="luxe-addon-card" data-addon-id="cafepack">
-                            <div class="addon-left-meta">
-                                <div class="addon-icon-sym">☕</div>
-                                <div class="addon-detail">
-                                    <h4>TiTik Café Recovery Perk (2 Drink + Snack)</h4>
-                                    <p>2 Iced Latte/Shake + 1 Energy Bar diantar ke bench.</p>
-                                    <span class="addon-fee">+Rp 75.000 / bundle</span>
+                        <div class="addons-grid-luxe">
+                            <div class="luxe-addon-card" data-addon-id="balls">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🥫</div>
+                                    <div class="addon-detail">
+                                        <h4>Head Padel Pro Can (3 Bola Baru Segel)</h4>
+                                        <p>Kaleng baru bertekanan resmi FIP match. Hak milik Anda.</p>
+                                        <span class="addon-fee">+Rp 55.000 / kaleng</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="balls">-</button>
+                                    <span class="qty-val" id="qty-balls">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="balls">+</button>
                                 </div>
                             </div>
-                            <div class="qty-counter">
-                                <button type="button" class="btn-qty minus" data-target="cafepack">-</button>
-                                <span class="qty-val" id="qty-cafepack">0</span>
-                                <button type="button" class="btn-qty plus" data-target="cafepack">+</button>
+
+                            <div class="luxe-addon-card" data-addon-id="cafepack">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">☕</div>
+                                    <div class="addon-detail">
+                                        <h4>TiTik Café Recovery Perk (2 Drink + Snack)</h4>
+                                        <p>2 Iced Latte/Shake + 1 Energy Bar diantar ke bench lapangan.</p>
+                                        <span class="addon-fee">+Rp 75.000 / bundle</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="cafepack">-</button>
+                                    <span class="qty-val" id="qty-cafepack">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="cafepack">+</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
 
-            <!-- Sticky Sidebar Checkout -->
             <aside class="concierge-sidebar" id="conciergeSidebar">
                 <div class="concierge-card">
                     <div class="concierge-header">
@@ -422,7 +422,7 @@
         </button>
     </div>
 
-    <!-- MODAL PLAYLIST -->
+    <!-- PLAYLIST MODAL -->
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -448,7 +448,7 @@
         </div>
     </div>
 
-    <!-- MODAL RECEIPT -->
+    <!-- RECEIPT MODAL -->
     <div id="bookingModal" class="luxe-modal-backdrop">
         <div class="luxe-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -480,7 +480,7 @@
                 <a href="index.html">Home</a>
                 <a href="booking.html">Direct Booking</a>
                 <a href="about-owner.html">Founder & Locations</a>
-                <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
+                <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram[cite: 22]</a>
                 <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Desk</a>
             </div>
         </div>

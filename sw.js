@@ -1,16 +1,15 @@
-const CACHE_NAME = 'titikpadel-tangerang-v5';
+const CACHE_NAME = 'titikpadel-tangerang-v7';
 const STATIC_ASSETS = [
   './index.html',
+  './booking.html',
+  './about-owner.html',
   './style.css',
   './app.js',
   './booking.js',
   './manifest.json',
-  './Logo/Logo_Padel.svg',
-  './founder.png',
-  './Music/Hiper Funtime.mp3',
-  './Music/Jazzy Padelist.mp3',
-  './Music/Lo-fi Padeltime.mp3',
-  './Music/Vaporwavy Apdel.mp3'
+  './Logo/Logo_padel.svg',
+  './Logo/logo.png',
+  './founder.png'
 ];
 
 self.addEventListener('install', (event) => {
@@ -32,13 +31,21 @@ self.addEventListener('activate', (event) => {
 });
 
 self.addEventListener('fetch', (event) => {
+  const url = new URL(event.request.url);
+
+  if (url.pathname.endsWith('.mp3') || event.request.headers.has('range')) {
+    return event.respondWith(fetch(event.request));
+  }
+
   event.respondWith(
     fetch(event.request)
       .then((response) => {
-        const responseClone = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, responseClone);
-        });
+        if (response && response.status === 200 && (response.type === 'basic' || response.type === 'cors')) {
+          const responseClone = response.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, responseClone);
+          });
+        }
         return response;
       })
       .catch(() => caches.match(event.request))

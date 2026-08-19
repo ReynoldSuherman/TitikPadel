@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL - SPA LAYER ROUTER, RANDOMIZED MUSIC ENGINE & THEME MANAGER
+ * TiTik PADEL - SPA LAYER ROUTER, PERSISTENT AUTOPLAY & ADAPTIVE PALETTE
  */
 
 const PLAYLIST_DATA = [
@@ -37,8 +37,8 @@ const PLAYLIST_DATA = [
     }
 ];
 
-let currentTrackIndex = 0;
-let isAudioPlaying = false;
+let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
+let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
 const globalAudio = document.getElementById('globalAudio');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -48,28 +48,29 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initQRGenerator();
 
-    // Auto-pick a randomized track upon loading
-    playRandomTrack(false);
+    setupTrack(currentTrackIndex, isAudioPlaying);
 
-    // Browser policy unlock on user click
-    document.addEventListener('click', function unlockAudio() {
-        if (!isAudioPlaying && globalAudio) {
-            playRandomTrack(true);
+    const unlockAutoplay = () => {
+        if (globalAudio && globalAudio.paused && isAudioPlaying) {
+            globalAudio.play().then(() => {
+                updateAudioUIState(true);
+            }).catch(() => {});
         }
-        document.removeEventListener('click', unlockAudio);
-    }, { once: true });
+        document.removeEventListener('click', unlockAutoplay);
+        document.removeEventListener('touchstart', unlockAutoplay);
+    };
+
+    document.addEventListener('click', unlockAutoplay, { once: true });
+    document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
-// SPA Layer Navigation with Randomize Music
 function navigateTo(targetLayer) {
-    // 1. Switch visible Page Layer
     document.querySelectorAll('.page-layer').forEach(layer => {
         layer.classList.remove('active');
     });
     const activeLayer = document.getElementById(`layer-${targetLayer}`);
     if (activeLayer) activeLayer.classList.add('active');
 
-    // 2. Update Navbars
     document.querySelectorAll('.nav-link').forEach(btn => {
         if (btn.getAttribute('data-nav') === targetLayer) btn.classList.add('active');
         else btn.classList.remove('active');
@@ -80,13 +81,10 @@ function navigateTo(targetLayer) {
         else btn.classList.remove('active');
     });
 
-    // 3. Randomize Music on every page/layer switch
-    playRandomTrack(true);
-
+    playRandomTrack(isAudioPlaying);
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// Randomizer Function
 function playRandomTrack(autoPlay = true) {
     let newIndex;
     do {
@@ -102,13 +100,11 @@ function setupTrack(index, autoPlay = true) {
     if (!track || !globalAudio) return;
 
     globalAudio.src = track.file;
+    localStorage.setItem('titik_track_idx', index);
     document.body.setAttribute('data-music-theme', track.theme);
 
     const navTitle = document.getElementById('navTrackTitle');
     if (navTitle) navTitle.textContent = `🎵 ${track.title}`;
-
-    const playPauseBtn = document.getElementById('btnPlayPauseTrack');
-    const pulseDot = document.getElementById('musicPulseDot');
 
     document.querySelectorAll('.music-track-item').forEach((el, idx) => {
         if (idx === index) el.classList.add('active');
@@ -118,13 +114,23 @@ function setupTrack(index, autoPlay = true) {
     if (autoPlay) {
         globalAudio.play().then(() => {
             isAudioPlaying = true;
-            if (playPauseBtn) playPauseBtn.textContent = '⏸';
-            if (pulseDot) pulseDot.style.boxShadow = '0 0 10px var(--c-court-green)';
+            localStorage.setItem('titik_music_playing', 'true');
+            updateAudioUIState(true);
         }).catch(() => {
-            console.warn("Standby for user interaction.");
+            updateAudioUIState(false);
         });
     } else {
-        if (playPauseBtn) playPauseBtn.textContent = '▶';
+        updateAudioUIState(false);
+    }
+}
+
+function updateAudioUIState(playing) {
+    const playPauseBtn = document.getElementById('btnPlayPauseTrack');
+    const pulseDot = document.getElementById('musicPulseDot');
+    if (playPauseBtn) playPauseBtn.textContent = playing ? '⏸' : '▶';
+    if (pulseDot) {
+        if (playing) pulseDot.style.boxShadow = '0 0 10px var(--c-court-green)';
+        else pulseDot.style.boxShadow = 'none';
     }
 }
 
@@ -138,13 +144,16 @@ function initAudioEvents() {
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', () => {
             if (globalAudio.paused) {
-                globalAudio.play();
-                playPauseBtn.textContent = '⏸';
-                isAudioPlaying = true;
+                globalAudio.play().then(() => {
+                    isAudioPlaying = true;
+                    localStorage.setItem('titik_music_playing', 'true');
+                    updateAudioUIState(true);
+                });
             } else {
                 globalAudio.pause();
-                playPauseBtn.textContent = '▶';
                 isAudioPlaying = false;
+                localStorage.setItem('titik_music_playing', 'false');
+                updateAudioUIState(false);
             }
         });
     }
@@ -162,7 +171,6 @@ function initAudioEvents() {
         });
     }
 
-    // Auto Play randomized track upon finish
     globalAudio.addEventListener('ended', () => {
         playRandomTrack(true);
     });
@@ -224,7 +232,6 @@ function closeMusicModal() {
     if (modal) modal.classList.remove('open');
 }
 
-// Theme Persistence
 function initThemeManager() {
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('titik_theme_mode') || 'dark';
@@ -287,8 +294,31 @@ function closeMobileMenu() {
     }
 }
 
+function openMapModal(title, embedUrl, externalUrl) {
+    const modal = document.getElementById('interactiveMapModal');
+    const titleEl = document.getElementById('mapModalTitle');
+    const iframe = document.getElementById('mapModalIframe');
+    const extLink = document.getElementById('mapExternalLink');
+
+    if (modal && iframe) {
+        titleEl.textContent = title;
+        iframe.src = embedUrl;
+        extLink.href = externalUrl;
+        modal.classList.add('open');
+    }
+}
+
+function closeMapModal() {
+    const modal = document.getElementById('interactiveMapModal');
+    const iframe = document.getElementById('mapModalIframe');
+    if (modal) {
+        modal.classList.remove('open');
+        if (iframe) iframe.src = '';
+    }
+}
+
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(err => console.log('SW Registration:', err));
+        navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
 }

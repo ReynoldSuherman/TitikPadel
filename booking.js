@@ -376,7 +376,6 @@ function updateLiveManifest() {
 
     const courtSubtotal = bookingState.selectedSlots.reduce((acc, slot) => acc + slot.price, 0);
 
-    // Calculate Prices for Specific Pro-Tier Rackets
     const racketStdCost = (bookingState.addons.racket_std || 0) * 40000;
     const racketVertexCost = (bookingState.addons.racket_vertex || 0) * 95000;
     const racketViperCost = (bookingState.addons.racket_viper || 0) * 110000;
