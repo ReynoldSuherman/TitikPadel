@@ -1,7 +1,7 @@
 {
-  "name": "TiTik Padel Tangerang & Match Café",
+  "name": "TiTik Padel & Match Café",
   "short_name": "TiTikPadel",
-  "description": "Urban Padel Sanctuary Tangerang, Tournament Courts & Specialty Café Lounge",
+  "description": "Urban Padel Sanctuary, Tournament Courts & Specialty Café Lounge",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",

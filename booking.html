@@ -3,18 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Sistem Reservasi Lapangan — TiTik Padel Tangerang</title>
+    <title>Sistem Reservasi Lapangan — TiTik Padel</title>
     
-    <!-- Favicon / Ikon Web -->
+    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="Logo/Logo_Padel.svg">
     <link rel="alternate icon" type="image/png" href="Logo/Logo_Padel.svg">
     <link rel="apple-touch-icon" href="Logo/Logo_Padel.svg">
 
-    <!-- PWA Meta -->
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#090C0F">
     
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -50,7 +48,7 @@
                 </div>
                 <div class="brand-text">
                     <span class="brand-title">TiTik<span>.PADEL</span></span>
-                    <span class="brand-tagline">TANGERANG ARENA & CAFÉ</span>
+                    <span class="brand-tagline">COURT & MATCH CAFÉ</span>
                 </div>
             </a>
 
@@ -68,7 +66,7 @@
 
                 <div class="live-clock-badge hidden-mobile">
                     <span class="pulse-dot"></span>
-                    <span id="liveClock">TANGERANG 00:00 WIB</span>
+                    <span id="liveClock">SENOPATI 00:00 WIB</span>
                 </div>
                 
                 <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
@@ -94,7 +92,7 @@
         </div>
     </header>
 
-    <!-- BOOKING ENGINE (STANDALONE VIEW) -->
+    <!-- BOOKING ENGINE -->
     <main class="booking-engine-wrapper" style="display: block; opacity: 1; transform: none;">
         <div class="engine-steps-bar">
             <div class="step-badge active" id="badgeStep1"><span>01</span> Tanggal & Lapangan</div>
@@ -108,7 +106,6 @@
 
         <div class="engine-main-grid">
             <div class="workspace-panel">
-                <!-- Step 1: Date Ribbon -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
@@ -128,12 +125,11 @@
                     <div class="swipe-hint mobile-only">⇄ Geser ke samping untuk ganti tanggal</div>
                 </section>
 
-                <!-- Step 2: Court Selector -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
                             <span class="step-indicator">STEP 02</span>
-                            <h2>Pilih Arena Lapangan TiTik Tangerang</h2>
+                            <h2>Pilih Arena Lapangan TiTik</h2>
                         </div>
                         <div class="court-filter-toggle">
                             <button class="filter-btn active" data-filter="all">Semua</button>
@@ -145,7 +141,6 @@
                     <div class="court-cards-container" id="courtContainer"></div>
                 </section>
 
-                <!-- Step 3: Time Slot Matrix -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
@@ -186,7 +181,7 @@
                     </div>
                 </section>
 
-                <!-- Step 4: SEPARATED RACKETS VS BALLS & CAFÉ -->
+                <!-- SEPARATED RACKETS VS BALLS/CAFE -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
@@ -196,7 +191,6 @@
                         </div>
                     </div>
 
-                    <!-- 4A. SELECTION RACKETS -->
                     <div class="addons-grid-luxe">
                         <div class="luxe-addon-card" data-addon-id="racket_std">
                             <div class="addon-left-meta">
@@ -263,7 +257,6 @@
                         </div>
                     </div>
 
-                    <!-- 4B. SEPARATED SECTION: BALLS & CAFÉ PERKS -->
                     <div class="border-t border-slate-800 pt-5 mt-6">
                         <div class="panel-head" style="margin-bottom: 12px;">
                             <div class="head-left">
@@ -273,7 +266,6 @@
                         </div>
 
                         <div class="addons-grid-luxe">
-                            <!-- Regular Balls -->
                             <div class="luxe-addon-card" data-addon-id="balls_regular">
                                 <div class="addon-left-meta">
                                     <div class="addon-icon-sym">🎾</div>
@@ -290,7 +282,6 @@
                                 </div>
                             </div>
 
-                            <!-- Pro Can Balls -->
                             <div class="luxe-addon-card" data-addon-id="balls_pro">
                                 <div class="addon-left-meta">
                                     <div class="addon-icon-sym">🥫</div>
@@ -307,7 +298,6 @@
                                 </div>
                             </div>
 
-                            <!-- Cafe Pack -->
                             <div class="luxe-addon-card" data-addon-id="cafepack">
                                 <div class="addon-left-meta">
                                     <div class="addon-icon-sym">☕</div>
@@ -328,12 +318,11 @@
                 </section>
             </div>
 
-            <!-- Sticky Sidebar Checkout -->
             <aside class="concierge-sidebar" id="conciergeSidebar">
                 <div class="concierge-card">
                     <div class="concierge-header">
                         <div class="concierge-badge">TITIK CONCIERGE TICKET</div>
-                        <span class="live-pulse">TANGERANG ARENA</span>
+                        <span class="live-pulse">ARENA LIVE</span>
                     </div>
 
                     <div class="manifest-table">
@@ -449,13 +438,13 @@
         </button>
     </div>
 
-    <!-- MODAL PLAYLIST -->
+    <!-- PLAYLIST MODAL -->
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
             <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div>
-                    <span class="step-indicator">// TANGERANG MATCHPLAY PLAYLIST</span>
+                    <span class="step-indicator">// MATCHPLAY PLAYLIST</span>
                     <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
                 </div>
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
@@ -501,7 +490,7 @@
         <div class="footer-top">
             <div class="footer-brand">
                 <span class="f-title">TiTik Padel</span>
-                <span class="f-sub">Court, Sanctuary & Specialty Café &bull; Tangerang Arena</span>
+                <span class="f-sub">Court, Sanctuary & Specialty Café</span>
             </div>
             <div class="footer-links">
                 <a href="index.html">Home</a>

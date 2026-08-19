@@ -1,11 +1,11 @@
 /**
- * TiTik PADEL - TANGERANG ARENA BOOKING & GEAR CALCULATOR
+ * TiTik PADEL - BOOKING ENGINE & GEAR CALCULATOR
  */
 
 const COURTS_DATA = [
     {
         id: 'court-01',
-        name: 'Court 01 — TiTik Tangerang Center Court',
+        name: 'Court 01 — TiTik Center Court',
         type: 'indoor',
         turf: 'Mondo Supercourt XN Blue',
         specs: '12mm Panoramic Glass ✦ 800 Lux LED Pro',
@@ -23,7 +23,7 @@ const COURTS_DATA = [
 
 const PROMO_CODES = {
     'TITIKFIRST': { discountRate: 0.15, label: 'Diskon 15% Pemain Pertama TiTik' },
-    'TANGERANGPADEL': { discountRate: 0.10, label: 'Diskon Komunitas Tangerang 10%' },
+    'TITIKCOMMUNITY': { discountRate: 0.10, label: 'Diskon Komunitas 10%' },
     'TITIKCAFE': { discountRate: 0.10, label: 'Promo Bundling Café 10%' }
 };
 
@@ -87,7 +87,7 @@ function initLiveClock() {
         const hrs = String(now.getHours()).padStart(2, '0');
         const mins = String(now.getMinutes()).padStart(2, '0');
         const secs = String(now.getSeconds()).padStart(2, '0');
-        clockEl.textContent = `TANGERANG ${hrs}:${mins}:${secs} WIB`;
+        clockEl.textContent = `LIVE ${hrs}:${mins}:${secs} WIB`;
     }
     update();
     setInterval(update, 1000);
@@ -377,7 +377,6 @@ function updateLiveManifest() {
 
     const courtSubtotal = bookingState.selectedSlots.reduce((acc, slot) => acc + slot.price, 0);
 
-    // Hitung Racket Pro & Ball Terpisah
     const racketStdCost = (bookingState.addons.racket_std || 0) * 40000;
     const racketVertexCost = (bookingState.addons.racket_vertex || 0) * 95000;
     const racketViperCost = (bookingState.addons.racket_viper || 0) * 110000;
@@ -488,7 +487,7 @@ function proceedBookingSubmission() {
     if (btnWA) {
         btnWA.onclick = () => {
             const waMessage = encodeURIComponent(
-                `Halo Concierge TiTik Padel Tangerang,\n\nSaya ingin konfirmasi pembayaran reservasi:\n` +
+                `Halo Concierge TiTik Padel,\n\nSaya ingin konfirmasi pembayaran reservasi:\n` +
                 `• Nama: ${name}\n` +
                 `• No WA: ${phone}\n` +
                 `• Lapangan: ${bookingState.selectedCourt.name}\n` +

@@ -64,7 +64,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
-// Mendukung Navigasi SPA Layer (index.html) maupun Standalone File
 function navigateTo(targetLayer) {
     const hasLayers = document.querySelectorAll('.page-layer').length > 0;
 
@@ -88,7 +87,6 @@ function navigateTo(targetLayer) {
         playRandomTrack(isAudioPlaying);
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        // Jika sedang di halaman standalone (booking.html / about-owner.html)
         if (targetLayer === 'sanctuary') window.location.href = 'index.html';
         else if (targetLayer === 'booking') window.location.href = 'booking.html';
         else if (targetLayer === 'founder') window.location.href = 'about-owner.html';
