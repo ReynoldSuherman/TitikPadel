@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>Sistem Reservasi Lapangan — TiTik Padel</title>
     
-    <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="Logo/Logo_Padel.svg">
     <link rel="alternate icon" type="image/png" href="Logo/Logo_Padel.svg">
     <link rel="apple-touch-icon" href="Logo/Logo_Padel.svg">
@@ -66,7 +65,7 @@
 
                 <div class="live-clock-badge hidden-mobile">
                     <span class="pulse-dot"></span>
-                    <span id="liveClock">SENOPATI 00:00 WIB</span>
+                    <span id="liveClock">LIVE 00:00:00 WIB</span>
                 </div>
                 
                 <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
@@ -93,7 +92,7 @@
     </header>
 
     <!-- BOOKING ENGINE -->
-    <main class="booking-engine-wrapper" style="display: block; opacity: 1; transform: none;">
+    <main class="booking-engine-wrapper">
         <div class="engine-steps-bar">
             <div class="step-badge active" id="badgeStep1"><span>01</span> Tanggal & Lapangan</div>
             <div class="step-line"></div>
@@ -181,13 +180,12 @@
                     </div>
                 </section>
 
-                <!-- SEPARATED RACKETS VS BALLS/CAFE -->
                 <section class="panel-box">
                     <div class="panel-head">
                         <div class="head-left">
                             <span class="step-indicator">STEP 04</span>
                             <h2>Pilihan Sewa Raket (Reguler & Pro-Tier)</h2>
-                            <p class="panel-sub">Tentukan raket sesuai gaya bermain Anda: Reguler Club atau Carbon Pro.</p>
+                            <p class="panel-sub">Tentukan raket sesuai gaya bermain Anda.</p>
                         </div>
                     </div>
 
@@ -427,7 +425,6 @@
         </div>
     </main>
 
-    <!-- Mobile Floating Action Bar -->
     <div class="mobile-booking-floating-bar" id="mobileFloatingBar">
         <div class="floating-left">
             <span class="floating-label">Total Tagihan (<span id="mobileSlotCount">0 Jam</span>)</span>
@@ -438,7 +435,7 @@
         </button>
     </div>
 
-    <!-- PLAYLIST MODAL -->
+    <!-- MODALS -->
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -449,13 +446,10 @@
                 </div>
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
             </div>
-
             <div class="music-tracks-list" id="tracksContainer"></div>
-
             <div class="music-progress-wrap" id="progressWrap">
                 <div class="music-progress-bar" id="musicProgressBar"></div>
             </div>
-
             <div class="player-controls-bar">
                 <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
                 <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
@@ -464,23 +458,16 @@
         </div>
     </div>
 
-    <!-- RECEIPT MODAL -->
     <div id="bookingModal" class="luxe-modal-backdrop">
         <div class="luxe-modal-sheet">
             <div class="sheet-indicator-bar"></div>
             <div class="modal-emblem">✦</div>
             <h3 class="modal-title">Reservasi TiTik Padel Diamankan</h3>
-            <p class="modal-subtitle">Detail booking Anda telah disiapkan. Lanjutkan konfirmasi ke WhatsApp Concierge untuk verifikasi kode pembayaran resmi.</p>
-            
+            <p class="modal-subtitle">Detail booking Anda telah disiapkan. Lanjutkan konfirmasi ke WhatsApp Concierge.</p>
             <div class="invoice-mini-receipt" id="modalReceiptContent"></div>
-
             <div class="modal-action-buttons">
-                <button type="button" class="btn-luxe-solid full" id="btnSendWhatsApp">
-                    Kirim Konfirmasi WhatsApp Concierge &rarr;
-                </button>
-                <button type="button" class="btn-link-dim" onclick="closeModalAndReset()">
-                    Tutup & Kembali
-                </button>
+                <button type="button" class="btn-luxe-solid full" id="btnSendWhatsApp">Kirim Konfirmasi WhatsApp &rarr;</button>
+                <button type="button" class="btn-link-dim" onclick="closeModalAndReset()">Tutup & Kembali</button>
             </div>
         </div>
     </div>

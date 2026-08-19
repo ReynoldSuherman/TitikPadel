@@ -2,7 +2,7 @@
 <html lang="id" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>The Founder & Multi-Venue Network — TiTik Padel</title>
     
     <link rel="icon" type="image/svg+xml" href="Logo/Logo_Padel.svg">
@@ -160,7 +160,6 @@
             </div>
 
             <div class="venues-grid-interactive">
-                <!-- Cabang 1: Icon -->
                 <div class="venue-card" onclick="openMapModal('Cabang Icon (Billiard & Café Lounge)', 'https://www.google.com/maps?q=-6.229389,106.660139&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/nV2gKwvfXHfuQzXAA')">
                     <div class="vc-badge">BILLIARD & CAFÉ LOUNGE</div>
                     <div class="vc-body">
@@ -176,7 +175,6 @@
                     </div>
                 </div>
 
-                <!-- Cabang 2: Tebet -->
                 <div class="venue-card" onclick="openMapModal('Cabang Tebet (Billiard Lounge & Café Vape)', 'https://www.google.com/maps?q=Tebet,Jakarta+Selatan&hl=id&z=15&output=embed', 'https://maps.app.goo.gl/dcUe6igKkZok5yjV7')">
                     <div class="vc-badge">BILLIARD & CAFÉ VAPE</div>
                     <div class="vc-body">
@@ -192,7 +190,6 @@
                     </div>
                 </div>
 
-                <!-- Cabang 3: Vilnus -->
                 <div class="venue-card" onclick="openMapModal('Cabang Vilnus (Billiard & Lounge Hub)', 'https://www.google.com/maps?q=Vilnius&hl=id&z=15&output=embed', 'https://maps.app.goo.gl/fUMSxkwsN2GngxLZ6')">
                     <div class="vc-badge">BILLIARD & LOUNGE</div>
                     <div class="vc-body">
@@ -208,7 +205,6 @@
                     </div>
                 </div>
 
-                <!-- Cabang 4: Otista -->
                 <div class="venue-card" onclick="openMapModal('Cabang Otista (Café & Community Space)', 'https://www.google.com/maps?q=Otista,Jakarta&hl=id&z=15&output=embed', 'https://maps.app.goo.gl/mcgZ7GxjF6Wy5B4TA')">
                     <div class="vc-badge">CAFÉ & COMMUNITY HUB</div>
                     <div class="vc-body">
@@ -225,8 +221,7 @@
                 </div>
             </div>
 
-            <!-- Social Links Strip -->
-            <div class="luxe-channels-grid" style="margin-top: 36px;">
+            <div class="luxe-channels-grid" style="margin-top: 24px;">
                 <a href="https://www.instagram.com/titikpadel_id/" target="_blank" class="channel-card highlight" rel="noopener">
                     <div class="ch-left">
                         <div class="ch-glyph">IG</div>
@@ -251,7 +246,7 @@
         </section>
     </main>
 
-    <!-- INTERACTIVE MAP PREVIEW MODAL -->
+    <!-- MODALS -->
     <div id="interactiveMapModal" class="luxe-modal-backdrop">
         <div class="map-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -262,20 +257,15 @@
                 </div>
                 <button onclick="closeMapModal()" class="btn-link-dim" style="font-size: 1.2rem; cursor: pointer; padding: 4px 8px;">✕</button>
             </div>
-
             <div class="map-iframe-wrapper">
                 <iframe id="mapModalIframe" src="" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
-
             <div class="map-modal-footer">
-                <a id="mapExternalLink" href="#" target="_blank" rel="noopener" class="btn-luxe-solid full" style="text-align: center;">
-                    Buka Rute di Aplikasi Google Maps &rarr;
-                </a>
+                <a id="mapExternalLink" href="#" target="_blank" rel="noopener" class="btn-luxe-solid full" style="text-align: center;">Buka Rute di Aplikasi Google Maps &rarr;</a>
             </div>
         </div>
     </div>
 
-    <!-- PLAYLIST MODAL -->
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -286,13 +276,10 @@
                 </div>
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
             </div>
-
             <div class="music-tracks-list" id="tracksContainer"></div>
-
             <div class="music-progress-wrap" id="progressWrap">
                 <div class="music-progress-bar" id="musicProgressBar"></div>
             </div>
-
             <div class="player-controls-bar">
                 <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
                 <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
@@ -301,21 +288,16 @@
         </div>
     </div>
 
-    <!-- QR CODE MODAL -->
     <div id="qrModal" class="luxe-modal-backdrop">
         <div class="luxe-modal-sheet" style="max-width: 360px;">
             <div class="sheet-indicator-bar"></div>
             <div class="modal-emblem">📱</div>
             <h3 class="modal-title">Download Hybrid App</h3>
-            <p class="modal-subtitle">Scan QR statis ini dengan kamera HP untuk menginstal TiTik Padel langsung ke Home Screen perangkat Anda.</p>
-            
+            <p class="modal-subtitle">Scan QR statis ini dengan kamera HP untuk menginstal TiTik Padel langsung ke Home Screen.</p>
             <div style="background: white; padding: 14px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
                 <div id="qrcode"></div>
             </div>
-
-            <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">
-                Tutup
-            </button>
+            <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">Tutup</button>
         </div>
     </div>
 

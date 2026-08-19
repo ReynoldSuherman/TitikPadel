@@ -1,4 +1,4 @@
-const CACHE_NAME = 'titikpadel-app-v8';
+const CACHE_NAME = 'titikpadel-app-v9'; // Naikkan versi cache saat ada update
 const STATIC_ASSETS = [
   './index.html',
   './booking.html',
@@ -16,7 +16,6 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => cache.addAll(STATIC_ASSETS))
   );
-  self.skipWaiting();
 });
 
 self.addEventListener('activate', (event) => {
@@ -28,6 +27,13 @@ self.addEventListener('activate', (event) => {
     })
   );
   self.clients.claim();
+});
+
+// Mendengarkan pesan dari aplikasi utama untuk skip waiting jika tombol refresh diklik
+self.addEventListener('message', (event) => {
+  if (event.data && event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
 });
 
 self.addEventListener('fetch', (event) => {

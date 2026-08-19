@@ -339,3 +339,85 @@ if ('serviceWorker' in navigator) {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
     });
 }
+// Tambahkan di dalam app.js untuk mendeteksi update PWA
+if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('./sw.js').then((registration) => {
+            // Cek apakah ada update yang tertunda saat halaman dibuka
+            if (registration.waiting) {
+                showUpdateNotification(registration);
+                return;
+            }
+
+            // Cek jika ditemukan update baru di latar belakang
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            showUpdateNotification(registration);
+                        }
+                    });
+                }
+            });
+        }).catch(() => {});
+    });
+
+    // Refresh halaman secara otomatis setelah update diterapkan
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+        }
+    });
+}
+
+function showUpdateNotification(registration) {
+    // Cek apakah banner update sudah ada di layar agar tidak menumpuk
+    if (document.getElementById('pwaUpdateBanner')) return;
+
+    const banner = document.createElement('div');
+    banner.id = 'pwaUpdateBanner';
+    banner.style.cssText = `
+        position: fixed;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #11161D;
+        border: 1px solid var(--border-accent, #C4F135);
+        color: #F3EEE4;
+        padding: 12px 20px;
+        border-radius: 99px;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 0.82rem;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        z-index: 100000;
+        animation: slideUp 0.3s ease;
+    `;
+
+    banner.innerHTML = `
+        <span>✨ Versi baru TiTik Padel tersedia!</span>
+        <button id="pwaRefreshBtn" style="
+            background: #C4F135;
+            color: #090C0F;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 99px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.78rem;
+        ">Refresh Sekarang</button>
+    `;
+
+    document.body.appendChild(banner);
+
+    document.getElementById('pwaRefreshBtn').addEventListener('click', () => {
+        if (registration.waiting) {
+            // Perintahkan Service Worker baru untuk mengambil alih
+            registration.waiting.postMessage({ action: 'skipWaiting' });
+        }
+    });
+}
