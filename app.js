@@ -37,7 +37,7 @@ const PLAYLIST_DATA = [
     }
 ];
 
-const THEME_KEYS = ["hiper", "jazzy", "lofi", "vapor"];
+const THEME_KEYS = ["hiper", "jazzy", "lofi", "vapor", "cyan", "ruby", "emerald", "solar"];
 
 let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
 let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
@@ -66,7 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
-// Fungsi untuk mengganti tema warna secara acak tanpa harus mengganti lagu
 function randomizeTheme() {
     const currentTheme = document.body.getAttribute('data-music-theme');
     let randomTheme;
@@ -77,11 +76,9 @@ function randomizeTheme() {
     document.body.setAttribute('data-music-theme', randomTheme);
 }
 
-// SPA Layer Navigation dengan pergantian tema warna acak tiap pindah halaman
 function navigateTo(targetLayer) {
     const hasLayers = document.querySelectorAll('.page-layer').length > 0;
 
-    // Ganti tema warna secara acak setiap kali halaman/layer diganti
     randomizeTheme();
 
     if (hasLayers) {
@@ -103,7 +100,6 @@ function navigateTo(targetLayer) {
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
-        // Jika membuka halaman standalone (.html terpisah)
         if (targetLayer === 'sanctuary') window.location.href = 'index.html';
         else if (targetLayer === 'booking') window.location.href = 'booking.html';
         else if (targetLayer === 'founder') window.location.href = 'about-owner.html';
@@ -122,8 +118,6 @@ function setupTrack(index, autoPlay = true) {
     globalAudio.src = track.file;
     globalAudio.loop = false;
     localStorage.setItem('titik_track_idx', index);
-    
-    // Tema warna musik tetap mengikuti track, tetapi bisa diubah acak kapan saja lewat navigasi
     document.body.setAttribute('data-music-theme', track.theme);
 
     const navTitle = document.getElementById('navTrackTitle');
