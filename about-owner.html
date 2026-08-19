@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>The Founder & Digital Hub — TiTik Padel</title>
+    <!-- PWA Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#090C0F">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body class="bg-obsidian text-ecru antialiased selection:bg-court-green selection:text-obsidian" data-music-theme="hiper">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- LUXURY NAVBAR -->
+    <header class="luxury-navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand-signature">
+                <div class="logo-wrapper">
+                    <img src="Logo/Logo_Padel.svg" alt="TiTik Padel Logo" class="brand-svg-logo" onerror="this.onerror=null; this.src='Logo/logo.png';">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">TiTik<span>.PADEL</span></span>
+                    <span class="brand-tagline">COURT & SOCIAL CAFÉ</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link"><span>01</span> Sanctuary & Café</a>
+                <a href="booking.html" class="nav-link"><span>02</span> Reserve Court</a>
+                <a href="about-owner.html" class="nav-link active"><span>03</span> Founder & Story</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="openMusicModalBtn" class="btn-editorial" style="padding: 7px 14px; cursor: pointer;">
+                    <span class="btn-dot" id="musicPulseDot"></span>
+                    <span id="navTrackTitle" class="btn-text">🎵 Hiper Funtime</span>
+                </button>
+
+                <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
+                    <span class="btn-text">App QR</span>
+                </button>
+
+                <a href="booking.html" class="btn-editorial hidden-mobile">
+                    <span class="btn-text">Book Court</span>
+                    <span class="btn-dot"></span>
+                </a>
+                
+                <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer -->
+        <div class="mobile-nav-drawer" id="mobileDrawer">
+            <a href="index.html" class="mobile-nav-item">01. Sanctuary & Café</a>
+            <a href="booking.html" class="mobile-nav-item">02. Reserve Court</a>
+            <a href="about-owner.html" class="mobile-nav-item active">03. Founder & Story</a>
+            <div class="mobile-drawer-socials">
+                <span>Direct Socials:</span>
+                <div class="drawer-social-icons">
+                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club</a>
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Instagram Founder</a>
+                    <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="owner-page-container">
+        
+        <!-- EDITORIAL FOUNDER HERO PROFILE -->
+        <section class="founder-monograph">
+            <div class="monograph-grid">
+                
+                <!-- Left: Portrait Photo -->
+                <div class="portrait-column">
+                    <div class="portrait-frame">
+                        <img src="./founder.png" alt="Sukit Nguyen - Founder of TiTik Padel" class="founder-photo crisp-logo" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=900&auto=format&fit=crop';">
+                        <div class="portrait-caption">
+                            <span class="caption-tag">PORTRAIT // SENOPATI 2026</span>
+                            <span class="caption-name">Founder & Managing Principal</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Monograph Narrative & Philosophy -->
+                <div class="narrative-column">
+                    <div class="section-tag-line">
+                        <span>// LEADERSHIP & STORY</span>
+                    </div>
+                    
+                    <h1 class="monograph-heading">
+                        Menemukan "Titik" di Mana <br>
+                        <em>Olahraga, Estetika, & Kopi</em> Bertemu.
+                    </h1>
+
+                    <p class="narrative-lead">
+                        "Seorang pengusaha serta Ahli dalam bermain Biliard yang kebetulan memiliki Usaha Tempat Main biliard yang megah dengan point sell tambahannya yaitu di cafe, serta memiliki Cafe yang digabung dengan toko Vape dan memiliki beberapa cabang yaitu: Tebet, Vilnius, dan Otista. Kini terjun ke dalam dunia padel sebagai tantangan barunya karena kecintaannya pada eksplorasi dan tantangan baru."
+                    </p>
+
+                    <div class="biography-blocks">
+                        <div class="bio-chunk">
+                            <h4>Filosofi di Balik TiTik Padel</h4>
+                            <p>Berasal dari perpaduan kecintaan terhadap olahraga berakurasi tinggi dan apresiasi terhadap kultur specialty café Jakarta. TiTik Padel dirancang bukan sekadar sebagai fasilitas olahraga komersial yang bising, melainkan urban sanctuary dengan detail material kaca panoramic, turf empuk peredam benturan, dan sajian nutrisi café yang mendukung pemulihan stamina.</p>
+                        </div>
+                        <div class="bio-chunk">
+                            <h4>Ekosistem & Multi-Branch Presence</h4>
+                            <p>Dengan latar belakang ekspansi unit usaha café-vape terkemuka di <strong>Tebet, Vilnius, dan Otista</strong>, dedikasi terhadap kenyamanan ruang sosial dan standardisasi layanan premium diintegrasikan secara penuh ke dalam atmosfer TiTik Padel Arena.</p>
+                        </div>
+                    </div>
+
+                    <!-- Credential Metrics -->
+                    <div class="founder-metrics-strip">
+                        <div class="f-metric">
+                            <span class="f-val">MULTI</span>
+                            <span class="f-lbl">Branch Café & Lounge Network</span>
+                        </div>
+                        <div class="f-metric">
+                            <span class="f-val">FIP-01</span>
+                            <span class="f-lbl">Standard Panoramic Glass Court</span>
+                        </div>
+                        <div class="f-metric">
+                            <span class="f-val">6 AM - 11 PM</span>
+                            <span class="f-lbl">Daily Court & Café Hours</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- DIGITAL CHANNELS & SOCIAL HUBS -->
+        <section class="digital-channels-section">
+            <div class="channels-head">
+                <span class="section-subtitle">DIRECT CONTACT & MEDIA</span>
+                <h2>Official Social Channels & Founder Contact</h2>
+                <p>Terhubung langsung dengan tim TiTik Padel atau pantau aktivitas harian melalui media sosial resmi di bawah ini.</p>
+            </div>
+
+            <div class="luxe-channels-grid">
+                <!-- Instagram Official Titik Padel -->
+                <a href="https://www.instagram.com/titikpadel_id/" target="_blank" class="channel-card highlight" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">IG</div>
+                        <div class="ch-info">
+                            <span class="ch-title">Instagram Resmi TiTik Padel</span>
+                            <span class="ch-handle">@titikpadel_id &bull; Jadwal open play, turnamen & update arena</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Lihat Feed</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
+
+                <!-- Instagram Personal Sukit Nguyen -->
+                <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" class="channel-card" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">SN</div>
+                        <div class="ch-info">
+                            <span class="ch-title">Instagram Pribadi Founder</span>
+                            <span class="ch-handle">@sukitnguyen_ &bull; Personal journey, lifestyle & ventures</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Follow &rarr;</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
+
+                <!-- WhatsApp Concierge Desk -->
+                <a href="https://wa.me/6281234567890" target="_blank" class="channel-card" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">WA</div>
+                        <div class="ch-info">
+                            <span class="ch-title">WhatsApp Concierge Desk</span>
+                            <span class="ch-handle">+62 812-3456-7890 &bull; Reservasi prioritas & konsultasi coaching</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Chat Langsung</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
+
+                <!-- Location Google Maps -->
+                <a href="https://maps.google.com" target="_blank" class="channel-card" rel="noopener">
+                    <div class="ch-left">
+                        <div class="ch-glyph">MP</div>
+                        <div class="ch-info">
+                            <span class="ch-title">Lokasi Google Maps</span>
+                            <span class="ch-handle">Jl. Senopati No. 45, Kebayoran Baru, Jakarta Selatan</span>
+                        </div>
+                    </div>
+                    <div class="ch-action">
+                        <span>Buka Maps</span>
+                        <span class="arrow-sym">&nearr;</span>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL POPUP MUSIC PLAYLIST -->
+    <div id="musicPlaylistModal" class="luxe-modal-backdrop">
+        <div class="music-modal-sheet">
+            <div class="sheet-indicator-bar"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <div>
+                    <span class="step-indicator">// SENOPATI MATCHPLAY AMBIENCE</span>
+                    <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
+                </div>
+                <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
+            </div>
+
+            <div class="music-tracks-list" id="tracksContainer"></div>
+
+            <div class="music-progress-wrap" id="progressWrap">
+                <div class="music-progress-bar" id="musicProgressBar"></div>
+            </div>
+
+            <div class="player-controls-bar">
+                <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
+                <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
+                <button class="player-btn" id="btnNextTrack" title="Next Track">⏭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATIC QR CODE MODAL FOR MOBILE DOWNLOAD -->
+    <div id="qrModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet" style="max-width: 360px;">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem">📱</div>
+            <h3 class="modal-title">Download Hybrid App</h3>
+            <p class="modal-subtitle">Scan QR statis ini dengan kamera HP untuk menginstal TiTik Padel langsung ke Home Screen perangkat Anda.</p>
+            
+            <div style="background: white; padding: 14px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
+                <div id="qrcode"></div>
+            </div>
+
+            <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="luxury-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <span class="f-title">TiTik Padel</span>
+                <span class="f-sub">Senopati Sanctuary &bull; Jakarta Selatan</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="booking.html">Direct Booking</a>
+                <a href="about-owner.html">Founder Profile</a>
+                <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
+                <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Desk</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 TiTik Padel Club Indonesia. All Rights Reserved.</span>
+            <span>Architectural Minimalist Sports Club</span>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="playlist-engine.js"></script>
+    <script>
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const drawer = document.getElementById('mobileDrawer');
+        if (menuBtn && drawer) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('active');
+                drawer.classList.toggle('open');
+            });
+        }
+
+        const qrContainer = document.getElementById('qrcode');
+        if (qrContainer && typeof QRCode !== 'undefined') {
+            new QRCode(qrContainer, {
+                text: window.location.href,
+                width: 160,
+                height: 160,
+                colorDark : "#090C0F",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function openQRModal() {
+            const modal = document.getElementById('qrModal');
+            if (modal) modal.classList.add('open');
+        }
+
+        function closeQRModal() {
+            const modal = document.getElementById('qrModal');
+            if (modal) modal.classList.remove('open');
+        }
+    </script>
+</body>
+</html>

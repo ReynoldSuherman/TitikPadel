@@ -1,0 +1,24 @@
+{
+  "name": "TITIK PADEL & Match Café",
+  "short_name": "TiTikPadel",
+  "description": "Urban Padel Sanctuary, Tournament Courts & Specialty Café Lounge",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#090C0F",
+  "theme_color": "#C4F135",
+  "icons": [
+    {
+      "src": "Logo/Logo_Padel.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "Logo/logo.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

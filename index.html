@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TiTik Padel — Court, Sanctuary & Specialty Café</title>
+    <!-- PWA Meta -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#090C0F">
+    <meta name="mobile-web-app-capable" content="yes">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <!-- Dependencies -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+<body class="bg-obsidian text-ecru antialiased selection:bg-court-green selection:text-obsidian" data-music-theme="hiper">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+
+    <!-- ANNOUNCEMENT BANNER -->
+    <div class="top-marquee">
+        <div class="marquee-track">
+            <span>✦ TITIK PADEL CLUB & CAFÉ ✦ PANORAMIC TOURNAMENT COURTS ✦ ARTISAN ESPRESSO & SMOOTHIE BAR ✦ SENOPATI SANCTUARY ✦ TITIK PADEL CLUB & CAFÉ ✦ PANORAMIC TOURNAMENT COURTS</span>
+        </div>
+    </div>
+
+    <!-- LUXURY NAVBAR -->
+    <header class="luxury-navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand-signature">
+                <div class="logo-wrapper">
+                    <img src="Logo/Logo_Padel.svg" alt="TiTik Padel Logo" class="brand-svg-logo" onerror="this.onerror=null; this.src='Logo/logo.png';">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">TiTik<span>.PADEL</span></span>
+                    <span class="brand-tagline">COURT & SOCIAL CAFÉ</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link active"><span>01</span> Sanctuary & Café</a>
+                <a href="booking.html" class="nav-link"><span>02</span> Reserve Court</a>
+                <a href="about-owner.html" class="nav-link"><span>03</span> Founder & Story</a>
+            </nav>
+
+            <div class="nav-actions">
+                <!-- Playlist Controller Button -->
+                <button id="openMusicModalBtn" class="btn-editorial" style="padding: 7px 14px; cursor: pointer;">
+                    <span class="btn-dot" id="musicPulseDot"></span>
+                    <span id="navTrackTitle" class="btn-text">🎵 Hiper Funtime</span>
+                </button>
+
+                <!-- Fresh Light/Dark Theme Switcher -->
+                <button id="themeToggle" class="btn-editorial" style="padding: 7px 12px; cursor: pointer;" title="Ganti Mode Warna">
+                    <span>🌓 Theme</span>
+                </button>
+
+                <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
+                    <span class="btn-text">App QR</span>
+                </button>
+
+                <a href="booking.html" class="btn-editorial hidden-mobile">
+                    <span class="btn-text">Direct Booking</span>
+                    <span class="btn-dot"></span>
+                </a>
+
+                <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Drawer Navigation -->
+        <div class="mobile-nav-drawer" id="mobileDrawer">
+            <a href="index.html" class="mobile-nav-item active">01. Sanctuary & Café</a>
+            <a href="booking.html" class="mobile-nav-item">02. Reserve Court</a>
+            <a href="about-owner.html" class="mobile-nav-item">03. Founder & Story</a>
+            <div class="mobile-drawer-socials">
+                <span>Direct Socials:</span>
+                <div class="drawer-social-icons">
+                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club</a>
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Founder</a>
+                    <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <main>
+        <section class="hero-sanctuary">
+            <div class="hero-backdrop-glow"></div>
+            
+            <div class="hero-content">
+                <div class="hero-eyebrow">
+                    <span class="badge-pill">Urban Padel Sanctuary & Café Lounge</span>
+                    <span class="coords">6°13'42.2"S 106°48'33.1"E</span>
+                </div>
+
+                <h1 class="hero-display-title">
+                    Titik Temu Permainan, <br>
+                    <em>Kebugaran, & Kopi</em> <span class="text-glow">Berkelas.</span>
+                </h1>
+
+                <div class="hero-split-desc">
+                    <p class="lead-text">
+                        <strong>TiTik Padel</strong> adalah ruang terkurasi di Senopati di mana presisi olahraga berstandar internasional bersanding harmonis dengan atmosfer <em>specialty coffee shop</em>, nutrisi atletik, dan komunitas modern yang dinamis.
+                    </p>
+                    <div class="hero-cta-cluster">
+                        <a href="booking.html" class="btn-luxe-solid">Reservasi Lapangan &rarr;</a>
+                        <a href="#cafe-section" class="btn-luxe-outline">Eksplor TiTik Café ☕</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CORE STATS BAR -->
+            <div class="sanctuary-stats-bar">
+                <div class="stat-card">
+                    <span class="stat-mono">FACILITY 01</span>
+                    <h3>Panoramic Glass Courts</h3>
+                    <p>Rumput sintetis Mondo Supercourt XN & pencahayaan LED bebas silau.</p>
+                </div>
+                <div class="stat-card highlight-cafe">
+                    <span class="stat-mono">FACILITY 02</span>
+                    <h3>TiTik Match Café ☕</h3>
+                    <p>Artisan espresso, sourdough toast, & high-protein recovery shakes.</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-mono">FACILITY 03</span>
+                    <h3>Recovery & Shower</h3>
+                    <p>Air hangat, private locker room higienis, & cold plunge bath.</p>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-mono">FACILITY 04</span>
+                    <h3>Pro Equipment Hub</h3>
+                    <p>Rental raket Bullpadel & Head Padel official tournament balls.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SPECIAL FEATURE: TITIK CAFÉ SECTION -->
+        <section id="cafe-section" class="cafe-feature-section">
+            <div class="container-luxury">
+                <div class="section-tag-line">
+                    <span>// SOCIAL & NOURISHMENT SPOT</span>
+                </div>
+
+                <div class="cafe-grid-layout">
+                    <div class="cafe-story">
+                        <span class="badge-pill cafe-badge">Specialty Café & Recovery Lounge</span>
+                        <h2 class="section-heading-serif">TiTik Match Café: Lebih dari Sekadar Ruang Tunggu.</h2>
+                        <p class="cafe-p">
+                            Dirancang dengan interior natural batu travertine dan kayu jati gelap, TiTik Café menyajikan asupan nutrisi seimbang untuk performa atletik maupun obrolan santai pasca pertandingan.
+                        </p>
+
+                        <div class="cafe-menu-highlights">
+                            <div class="menu-item-row">
+                                <div class="menu-lead">
+                                    <span class="menu-title">Cold Brew Tonic & Double Espresso</span>
+                                    <span class="menu-desc">Biji kopi arabika single-origin hasil sangrai lokal pilihan.</span>
+                                </div>
+                                <span class="menu-tag">Post-Match Energy</span>
+                            </div>
+
+                            <div class="menu-item-row">
+                                <div class="menu-lead">
+                                    <span class="menu-title">The Smash Protein Shake</span>
+                                    <span class="menu-desc">Whey isolate / plant protein, pisang ambon, almond butter & madu murni.</span>
+                                </div>
+                                <span class="menu-tag">Muscle Recovery</span>
+                            </div>
+
+                            <div class="menu-item-row">
+                                <div class="menu-lead">
+                                    <span class="menu-title">Truffle Egg & Avocado Sourdough</span>
+                                    <span class="menu-desc">Roti sourdough fermentasi 36 jam dengan scramble egg lembut.</span>
+                                </div>
+                                <span class="menu-tag">Brunch Delight</span>
+                            </div>
+                        </div>
+
+                        <div class="cafe-timing-bar">
+                            <span>🕒 <strong>Jam Operasional Café:</strong> Setiap Hari 06.00 — 23.00 WIB (Terbuka untuk Umum & Pemain)</span>
+                        </div>
+                    </div>
+
+                    <div class="cafe-visuals">
+                        <div class="cafe-card-photo-main">
+                            <img src="https://images.unsplash.com/photo-1554118811-1e0d58224f24?q=80&w=800&auto=format&fit=crop" alt="TiTik Match Cafe Seating" class="cafe-img">
+                            <div class="photo-overlay-tag">
+                                <span>Co-working Ready & High Speed WiFi</span>
+                            </div>
+                        </div>
+                        <div class="cafe-mini-grid">
+                            <div class="mini-spec-card">
+                                <span class="spec-icon">🌱</span>
+                                <h4>100% Organic Fuel</h4>
+                                <p>Tanpa pemanis berlebih & ramah pola diet atletik.</p>
+                            </div>
+                            <div class="mini-spec-card">
+                                <span class="spec-icon">⚡</span>
+                                <h4>Courtside Serving</h4>
+                                <p>Pesanan minuman dapat langsung diantarkan ke bench pemain.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SOCIAL MEDIA CHANNELS IN MAIN PAGE -->
+        <section class="main-socials-section">
+            <div class="container-luxury">
+                <div class="channels-head text-center">
+                    <span class="section-subtitle">CONNECT WITH US</span>
+                    <h2 class="section-heading-serif">Media Sosial & Channel Komunitas TiTik Padel</h2>
+                    <p>Ikuti update jadwal Open Play harian, promo booking, video coaching tips, dan event turnamen komunitas.</p>
+                </div>
+
+                <div class="social-channels-bar">
+                    <!-- Instagram Club -->
+                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank" class="social-hub-card highlight" rel="noopener">
+                        <div class="sh-left">
+                            <div class="sh-icon">📸</div>
+                            <div>
+                                <span class="sh-title">Instagram Resmi TiTik Padel</span>
+                                <span class="sh-sub">@titikpadel_id &bull; Highlight, foto event & turnamen</span>
+                            </div>
+                        </div>
+                        <span class="sh-arrow">&nearr;</span>
+                    </a>
+
+                    <!-- Instagram Owner -->
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" class="social-hub-card" rel="noopener">
+                        <div class="sh-left">
+                            <div class="sh-icon">👤</div>
+                            <div>
+                                <span class="sh-title">Instagram Founder</span>
+                                <span class="sh-sub">@sukitnguyen_ &bull; Personal story & ventures</span>
+                            </div>
+                        </div>
+                        <span class="sh-arrow">&nearr;</span>
+                    </a>
+
+                    <!-- WhatsApp Concierge -->
+                    <a href="https://wa.me/6281234567890" target="_blank" class="social-hub-card" rel="noopener">
+                        <div class="sh-left">
+                            <div class="sh-icon">💬</div>
+                            <div>
+                                <span class="sh-title">WhatsApp Concierge Desk</span>
+                                <span class="sh-sub">+62 812-3456-7890 &bull; Reservasi prioritas & private coach</span>
+                            </div>
+                        </div>
+                        <span class="sh-arrow">&nearr;</span>
+                    </a>
+
+                    <!-- Google Maps -->
+                    <a href="https://maps.google.com" target="_blank" class="social-hub-card" rel="noopener">
+                        <div class="sh-left">
+                            <div class="sh-icon">📍</div>
+                            <div>
+                                <span class="sh-title">Petunjuk Arah Google Maps</span>
+                                <span class="sh-sub">Senopati Sanctuary, Jakarta Selatan</span>
+                            </div>
+                        </div>
+                        <span class="sh-arrow">&nearr;</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA STRIP -->
+        <section class="booking-cta-strip">
+            <div class="container-luxury flex-between-cta">
+                <div>
+                    <span class="section-tag-line" style="color: var(--c-court-green);">// SIAP BERMAIN HARI INI?</span>
+                    <h3 class="cta-title">Pilih Slot Waktu & Court Favorit Anda Sekarang</h3>
+                    <p class="cta-desc">Ketersediaan real-time dengan sistem reservasi pintar. Split-bill per pemain & konfirmasi WhatsApp kilat.</p>
+                </div>
+                <a href="booking.html" class="btn-luxe-solid cta-btn">Buka Mesin Booking &rarr;</a>
+            </div>
+        </section>
+    </main>
+
+    <!-- MOBILE STICKY BOTTOM RESERVATION BAR -->
+    <div class="mobile-sticky-bar">
+        <div class="sticky-info">
+            <span class="st-venue">TiTik Padel Senopati</span>
+            <span class="st-status">🟢 Slot Hari Ini Tersedia</span>
+        </div>
+        <a href="booking.html" class="btn-luxe-solid btn-mobile-book">Book Court &rarr;</a>
+    </div>
+
+    <!-- MODAL POPUP MUSIC PLAYLIST -->
+    <div id="musicPlaylistModal" class="luxe-modal-backdrop">
+        <div class="music-modal-sheet">
+            <div class="sheet-indicator-bar"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+                <div>
+                    <span class="step-indicator">// SENOPATI MATCHPLAY AMBIENCE</span>
+                    <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
+                </div>
+                <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
+            </div>
+
+            <!-- Track List -->
+            <div class="music-tracks-list" id="tracksContainer"></div>
+
+            <!-- Progress Bar -->
+            <div class="music-progress-wrap" id="progressWrap">
+                <div class="music-progress-bar" id="musicProgressBar"></div>
+            </div>
+
+            <!-- Player Controls -->
+            <div class="player-controls-bar">
+                <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
+                <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
+                <button class="player-btn" id="btnNextTrack" title="Next Track">⏭</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- STATIC QR CODE MODAL FOR MOBILE DOWNLOAD -->
+    <div id="qrModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet" style="max-width: 360px;">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem">📱</div>
+            <h3 class="modal-title">Download Hybrid App</h3>
+            <p class="modal-subtitle">Scan QR statis ini dengan kamera HP untuk menginstal TiTik Padel langsung ke Home Screen perangkat Anda.</p>
+            
+            <div style="background: white; padding: 14px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
+                <div id="qrcode"></div>
+            </div>
+
+            <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">
+                Tutup
+            </button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="luxury-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <span class="f-title">TiTik Padel</span>
+                <span class="f-sub">Court, Sanctuary & Specialty Café &bull; Senopati, Jakarta</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="booking.html">Direct Booking</a>
+                <a href="about-owner.html">Founder Profile</a>
+                <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
+                <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Desk</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 TiTik Padel Indonesia. All Rights Reserved.</span>
+            <span>Crafted with Minimalist Architectural Restraint</span>
+        </div>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="playlist-engine.js"></script>
+    <script>
+        const menuBtn = document.getElementById('mobileMenuBtn');
+        const drawer = document.getElementById('mobileDrawer');
+        if (menuBtn && drawer) {
+            menuBtn.addEventListener('click', () => {
+                menuBtn.classList.toggle('active');
+                drawer.classList.toggle('open');
+            });
+        }
+
+        const themeToggle = document.getElementById('themeToggle');
+        if (themeToggle) {
+            themeToggle.addEventListener('click', () => {
+                document.body.classList.add('transitioning');
+                document.body.classList.toggle('light-theme');
+                setTimeout(() => document.body.classList.remove('transitioning'), 400);
+            });
+        }
+
+        const qrContainer = document.getElementById('qrcode');
+        if (qrContainer && typeof QRCode !== 'undefined') {
+            new QRCode(qrContainer, {
+                text: window.location.href,
+                width: 160,
+                height: 160,
+                colorDark : "#090C0F",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        function openQRModal() {
+            const modal = document.getElementById('qrModal');
+            if (modal) modal.classList.add('open');
+        }
+
+        function closeQRModal() {
+            const modal = document.getElementById('qrModal');
+            if (modal) modal.classList.remove('open');
+        }
+    </script>
+</body>
+</html>
