@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL - MANUAL AUDIO PLAYER, HYBRID ROUTER & THEME CONTROLLER
+ * TiTik PADEL - HYBRID ROUTER, SEQUENTIAL AUTOPLAY MUSIC & THEME CONTROLLER
  */
 
 const PLAYLIST_DATA = [
@@ -38,8 +38,7 @@ const PLAYLIST_DATA = [
 ];
 
 let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
-// Diatur false agar TIDAK autoplay saat web dibuka pertama kali
-let isAudioPlaying = false; 
+let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
 const globalAudio = document.getElementById('globalAudio');
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -49,11 +48,22 @@ document.addEventListener('DOMContentLoaded', () => {
     initMobileMenu();
     initQRGenerator();
 
-    // Load track awal tanpa memutarnya secara otomatis
-    setupTrack(currentTrackIndex, false);
+    setupTrack(currentTrackIndex, isAudioPlaying);
+
+    const unlockAutoplay = () => {
+        if (globalAudio && globalAudio.paused && isAudioPlaying) {
+            globalAudio.play().then(() => {
+                updateAudioUIState(true);
+            }).catch(() => {});
+        }
+        document.removeEventListener('click', unlockAutoplay);
+        document.removeEventListener('touchstart', unlockAutoplay);
+    };
+
+    document.addEventListener('click', unlockAutoplay, { once: true });
+    document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
-// SPA Layer Navigation
 function navigateTo(targetLayer) {
     const hasLayers = document.querySelectorAll('.page-layer').length > 0;
 
@@ -82,12 +92,18 @@ function navigateTo(targetLayer) {
     }
 }
 
-function setupTrack(index, autoPlay = false) {
+function playNextTrack(autoPlay = true) {
+    // Pindah secara berurutan ke lagu berikutnya, kembali ke 0 jika sudah di akhir playlist
+    currentTrackIndex = (currentTrackIndex + 1) % PLAYLIST_DATA.length;
+    setupTrack(currentTrackIndex, autoPlay);
+}
+
+function setupTrack(index, autoPlay = true) {
     const track = PLAYLIST_DATA[index];
     if (!track || !globalAudio) return;
 
     globalAudio.src = track.file;
-    globalAudio.loop = false; // Memastikan lagu tidak mengulang terus menerus
+    globalAudio.loop = false; // Wajib false agar event 'ended' bisa memicu lagu berikutnya
     localStorage.setItem('titik_track_idx', index);
     document.body.setAttribute('data-music-theme', track.theme);
 
@@ -108,9 +124,6 @@ function setupTrack(index, autoPlay = false) {
             updateAudioUIState(false);
         });
     } else {
-        globalAudio.pause();
-        isAudioPlaying = false;
-        localStorage.setItem('titik_music_playing', 'false');
         updateAudioUIState(false);
     }
 }
@@ -158,17 +171,13 @@ function initAudioEvents() {
 
     if (nextBtn) {
         nextBtn.addEventListener('click', () => {
-            currentTrackIndex = (currentTrackIndex + 1) % PLAYLIST_DATA.length;
-            setupTrack(currentTrackIndex, true);
+            playNextTrack(true);
         });
     }
 
-    // Saat lagu selesai, musik BERHENTI total (tidak ganti lagu otomatis / tidak random / tidak loop)
+    // Saat lagu selesai, otomatis lanjut ke lagu berurutan berikutnya secara mulus tanpa berhenti
     globalAudio.addEventListener('ended', () => {
-        isAudioPlaying = false;
-        localStorage.setItem('titik_music_playing', 'false');
-        updateAudioUIState(false);
-        globalAudio.currentTime = 0;
+        playNextTrack(true);
     });
 
     globalAudio.addEventListener('timeupdate', () => {
