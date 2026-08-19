@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL - TANGERANG ARENA BOOKING & PRO RACKET CALCULATOR
+ * TiTik PADEL - TANGERANG ARENA BOOKING & GEAR CALCULATOR
  */
 
 const COURTS_DATA = [
@@ -57,7 +57,8 @@ let bookingState = {
         racket_vertex: 0,
         racket_viper: 0,
         racket_bela: 0,
-        balls: 0,
+        balls_regular: 0,
+        balls_pro: 0,
         cafepack: 0
     },
     promoApplied: null,
@@ -376,14 +377,16 @@ function updateLiveManifest() {
 
     const courtSubtotal = bookingState.selectedSlots.reduce((acc, slot) => acc + slot.price, 0);
 
+    // Hitung Racket Pro & Ball Terpisah
     const racketStdCost = (bookingState.addons.racket_std || 0) * 40000;
     const racketVertexCost = (bookingState.addons.racket_vertex || 0) * 95000;
     const racketViperCost = (bookingState.addons.racket_viper || 0) * 110000;
     const racketBelaCost = (bookingState.addons.racket_bela || 0) * 115000;
-    const ballsCost = (bookingState.addons.balls || 0) * 55000;
+    const ballsRegCost = (bookingState.addons.balls_regular || 0) * 25000;
+    const ballsProCost = (bookingState.addons.balls_pro || 0) * 55000;
     const cafeCost = (bookingState.addons.cafepack || 0) * 75000;
 
-    const addonsSubtotal = racketStdCost + racketVertexCost + racketViperCost + racketBelaCost + ballsCost + cafeCost;
+    const addonsSubtotal = racketStdCost + racketVertexCost + racketViperCost + racketBelaCost + ballsRegCost + ballsProCost + cafeCost;
 
     if (addonsSubtotal > 0) {
         let addonDesc = [];
@@ -391,7 +394,8 @@ function updateLiveManifest() {
         if (bookingState.addons.racket_vertex > 0) addonDesc.push(`${bookingState.addons.racket_vertex}x Vertex Pro`);
         if (bookingState.addons.racket_viper > 0) addonDesc.push(`${bookingState.addons.racket_viper}x Viper Pro`);
         if (bookingState.addons.racket_bela > 0) addonDesc.push(`${bookingState.addons.racket_bela}x Bela Pro`);
-        if (bookingState.addons.balls > 0) addonDesc.push(`${bookingState.addons.balls}x Bola`);
+        if (bookingState.addons.balls_regular > 0) addonDesc.push(`${bookingState.addons.balls_regular}x Bola Reg`);
+        if (bookingState.addons.balls_pro > 0) addonDesc.push(`${bookingState.addons.balls_pro}x Bola Pro`);
         if (bookingState.addons.cafepack > 0) addonDesc.push(`${bookingState.addons.cafepack}x TiTik Café`);
         sumAddons.textContent = `${addonDesc.join(', ')} (Rp ${addonsSubtotal.toLocaleString('id-ID')})`;
     } else {

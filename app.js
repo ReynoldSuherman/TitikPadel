@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL - SPA LAYER ROUTER, PERSISTENT AUTOPLAY & ADAPTIVE PALETTE
+ * TiTik PADEL - HYBRID ROUTER, PERSISTENT MUSIC & THEME CONTROLLER
  */
 
 const PLAYLIST_DATA = [
@@ -64,25 +64,35 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
+// Mendukung Navigasi SPA Layer (index.html) maupun Standalone File
 function navigateTo(targetLayer) {
-    document.querySelectorAll('.page-layer').forEach(layer => {
-        layer.classList.remove('active');
-    });
-    const activeLayer = document.getElementById(`layer-${targetLayer}`);
-    if (activeLayer) activeLayer.classList.add('active');
+    const hasLayers = document.querySelectorAll('.page-layer').length > 0;
 
-    document.querySelectorAll('.nav-link').forEach(btn => {
-        if (btn.getAttribute('data-nav') === targetLayer) btn.classList.add('active');
-        else btn.classList.remove('active');
-    });
+    if (hasLayers) {
+        document.querySelectorAll('.page-layer').forEach(layer => {
+            layer.classList.remove('active');
+        });
+        const activeLayer = document.getElementById(`layer-${targetLayer}`);
+        if (activeLayer) activeLayer.classList.add('active');
 
-    document.querySelectorAll('[data-nav-mobile]').forEach(btn => {
-        if (btn.getAttribute('data-nav-mobile') === targetLayer) btn.classList.add('active');
-        else btn.classList.remove('active');
-    });
+        document.querySelectorAll('.nav-link').forEach(btn => {
+            if (btn.getAttribute('data-nav') === targetLayer) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
 
-    playRandomTrack(isAudioPlaying);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+        document.querySelectorAll('[data-nav-mobile]').forEach(btn => {
+            if (btn.getAttribute('data-nav-mobile') === targetLayer) btn.classList.add('active');
+            else btn.classList.remove('active');
+        });
+
+        playRandomTrack(isAudioPlaying);
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+        // Jika sedang di halaman standalone (booking.html / about-owner.html)
+        if (targetLayer === 'sanctuary') window.location.href = 'index.html';
+        else if (targetLayer === 'booking') window.location.href = 'booking.html';
+        else if (targetLayer === 'founder') window.location.href = 'about-owner.html';
+    }
 }
 
 function playRandomTrack(autoPlay = true) {
