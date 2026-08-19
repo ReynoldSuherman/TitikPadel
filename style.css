@@ -38,7 +38,7 @@
     --transition: all 0.28s var(--ease-out-expo);
 }
 
-/* --- 8 VARIAN WARNA TEMA DINAMIS --- */
+/* --- VARIAN WARNA TEMA DINAMIS --- */
 body[data-music-theme="hiper"] {
     --c-court-green: #C4F135;
     --c-court-green-glow: rgba(196, 241, 53, 0.25);
@@ -415,7 +415,7 @@ body.light-theme .luxury-navbar {
 }
 
 /* ==========================================================================
-   FOUNDER / ABOUT SECTION STYLES (DIREVISI AGAR RAPI & PROPORSIONAL)
+   FOUNDER / ABOUT SECTION STYLES (DIPERBAIKI & DISEIMBANGKAN)
    ========================================================================== */
 .owner-page-container {
     max-width: 1200px;
