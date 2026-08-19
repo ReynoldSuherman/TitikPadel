@@ -1,14 +1,11 @@
-const CACHE_NAME = 'titikpadel-app-v3';
+const CACHE_NAME = 'titikpadel-app-v4';
 const STATIC_ASSETS = [
   './index.html',
-  './booking.html',
-  './about-owner.html',
   './style.css',
+  './app.js',
   './booking.js',
-  './playlist-engine.js',
   './manifest.json',
   './Logo/Logo_Padel.svg',
-  './Logo/logo.png',
   './founder.png',
   './Music/Hiper Funtime.mp3',
   './Music/Jazzy Padelist.mp3',

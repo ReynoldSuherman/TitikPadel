@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL - UNIVERSAL MOBILE & DESKTOP INTERACTIVE BOOKING ENGINE
+ * TiTik PADEL - BOOKING ENGINE & SPLIT BILL REAL-TIME CALCULATOR
  */
 
 const COURTS_DATA = [
@@ -81,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
     initPromoCodeEngine();
     initSplitBillControls();
     initMobileFloatingBar();
-    initMobileNav();
     updateLiveManifest();
 });
 
@@ -343,17 +342,6 @@ function initMobileFloatingBar() {
             sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
             const nameInput = document.getElementById('clientName');
             if (nameInput) setTimeout(() => nameInput.focus(), 600);
-        });
-    }
-}
-
-function initMobileNav() {
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    const drawer = document.getElementById('mobileDrawer');
-    if (menuBtn && drawer) {
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('active');
-            drawer.classList.toggle('open');
         });
     }
 }
