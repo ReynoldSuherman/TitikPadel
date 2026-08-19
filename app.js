@@ -1,56 +1,31 @@
 /**
- * TiTik PADEL - HYBRID ROUTER, SEQUENTIAL AUTOPLAY MUSIC & INDEPENDENT DYNAMIC THEME CONTROLLER
+ * TiTik PADEL — MASTER APPLICATION CONTROLLER (app.js)
  */
 
-const PLAYLIST_DATA = [
-    {
-        id: 0,
-        title: "Hiper Funtime",
-        file: "Music/Hiper Funtime.mp3",
-        genre: "High Energy Upbeat",
-        theme: "hiper",
-        colorName: "Cyber Matcha Neon"
-    },
-    {
-        id: 1,
-        title: "Jazzy Padelist",
-        file: "Music/Jazzy Padelist.mp3",
-        genre: "Warm Matchside Jazz",
-        theme: "jazzy",
-        colorName: "Amber Bronze Gold"
-    },
-    {
-        id: 2,
-        title: "Lo-fi Padeltime",
-        file: "Music/Lo-fi Padeltime.mp3",
-        genre: "Chilled Sunset Beats",
-        theme: "lofi",
-        colorName: "Sunset Rose Pink"
-    },
-    {
-        id: 3,
-        title: "Vaporwavy Apdel",
-        file: "Music/Vaporwavy Apdel.mp3",
-        genre: "Synthwave Cyber Aura",
-        theme: "vapor",
-        colorName: "Neon Violet Dream"
-    }
+const MUSIC_TRACKS = [
+    { title: "Hiper Funtime", themeKey: "hiper", themeLabel: "Cyber Matcha Neon", url: "Music/Hiper Funtime.mp3" },
+    { title: "Jazzy Padelist", themeKey: "jazzy", themeLabel: "Amber Bronze Gold", url: "Music/Jazzy Padelist.mp3" },
+    { title: "Lo-fi Padeltime", themeKey: "lofi", themeLabel: "Sunset Rose Pink", url: "Music/Lo-fi Padeltime.mp3" },
+    { title: "Vaporwavy Apdel", themeKey: "vapor", themeLabel: "Neon Violet Dream", url: "Music/Vaporwavy Apdel.mp3" }
 ];
-
-const THEME_KEYS = ["hiper", "jazzy", "lofi", "vapor", "cyan", "ruby", "emerald", "solar"];
 
 let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
 let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
-const globalAudio = document.getElementById('globalAudio');
+let isLooping = false;
+let globalAudio = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-    initThemeManager();
-    initPlaylistUI();
-    initAudioEvents();
-    initMobileMenu();
-    initQRGenerator();
+    globalAudio = document.getElementById('globalAudio');
+    
+    initNavigationRouting();
+    initThemeEngine();
+    initMusicEngine();
+    initMobileDrawer();
+    initQRCodeGenerator();
 
-    setupTrack(currentTrackIndex, isAudioPlaying);
+    if (globalAudio && MUSIC_TRACKS.length > 0) {
+        setupTrack(currentTrackIndex, isAudioPlaying);
+    }
 
     const unlockAutoplay = () => {
         if (globalAudio && globalAudio.paused && isAudioPlaying) {
@@ -66,20 +41,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
-function randomizeTheme() {
-    const currentTheme = document.body.getAttribute('data-music-theme');
-    let randomTheme;
-    do {
-        randomTheme = THEME_KEYS[Math.floor(Math.random() * THEME_KEYS.length)];
-    } while (randomTheme === currentTheme && THEME_KEYS.length > 1);
-
-    document.body.setAttribute('data-music-theme', randomTheme);
-}
-
+// ==========================================
+// 1. NAVIGATION & ROUTING ENGINE
+// ==========================================
 function navigateTo(targetLayer) {
     const hasLayers = document.querySelectorAll('.page-layer').length > 0;
-
-    randomizeTheme();
 
     if (hasLayers) {
         document.querySelectorAll('.page-layer').forEach(layer => {
@@ -106,149 +72,34 @@ function navigateTo(targetLayer) {
     }
 }
 
-function playNextTrack(autoPlay = true) {
-    currentTrackIndex = (currentTrackIndex + 1) % PLAYLIST_DATA.length;
-    setupTrack(currentTrackIndex, autoPlay);
+function initNavigationRouting() {
+    const hash = window.location.hash.replace('#', '');
+    if (hash && document.getElementById(`layer-${hash}`)) {
+        navigateTo(hash);
+    }
 }
 
-function setupTrack(index, autoPlay = true) {
-    const track = PLAYLIST_DATA[index];
-    if (!track || !globalAudio) return;
+function initMobileDrawer() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const drawer = document.getElementById('mobileDrawer');
+    if (!btn || !drawer) return;
 
-    globalAudio.src = track.file;
-    globalAudio.loop = false;
-    localStorage.setItem('titik_track_idx', index);
-    document.body.setAttribute('data-music-theme', track.theme);
-
-    const navTitle = document.getElementById('navTrackTitle');
-    if (navTitle) navTitle.textContent = `🎵 ${track.title}`;
-
-    document.querySelectorAll('.music-track-item').forEach((el, idx) => {
-        if (idx === index) el.classList.add('active');
-        else el.classList.remove('active');
+    btn.addEventListener('click', () => {
+        btn.classList.toggle('active');
+        drawer.classList.toggle('open');
     });
-
-    if (autoPlay) {
-        globalAudio.play().then(() => {
-            isAudioPlaying = true;
-            localStorage.setItem('titik_music_playing', 'true');
-            updateAudioUIState(true);
-        }).catch(() => {
-            updateAudioUIState(false);
-        });
-    } else {
-        updateAudioUIState(false);
-    }
 }
 
-function updateAudioUIState(playing) {
-    const playPauseBtn = document.getElementById('btnPlayPauseTrack');
-    const pulseDot = document.getElementById('musicPulseDot');
-    if (playPauseBtn) playPauseBtn.textContent = playing ? '⏸' : '▶';
-    if (pulseDot) {
-        if (playing) pulseDot.style.boxShadow = '0 0 10px var(--c-court-green)';
-        else pulseDot.style.boxShadow = 'none';
-    }
+function closeMobileMenu() {
+    const btn = document.getElementById('mobileMenuBtn');
+    const drawer = document.getElementById('mobileDrawer');
+    if (btn) btn.classList.remove('active');
+    if (drawer) drawer.classList.remove('open');
 }
 
-function initAudioEvents() {
-    const playPauseBtn = document.getElementById('btnPlayPauseTrack');
-    const prevBtn = document.getElementById('btnPrevTrack');
-    const nextBtn = document.getElementById('btnNextTrack');
-    const progressWrap = document.getElementById('progressWrap');
-    const progressBar = document.getElementById('musicProgressBar');
-
-    if (playPauseBtn) {
-        playPauseBtn.addEventListener('click', () => {
-            if (globalAudio.paused) {
-                globalAudio.play().then(() => {
-                    isAudioPlaying = true;
-                    localStorage.setItem('titik_music_playing', 'true');
-                    updateAudioUIState(true);
-                });
-            } else {
-                globalAudio.pause();
-                isAudioPlaying = false;
-                localStorage.setItem('titik_music_playing', 'false');
-                updateAudioUIState(false);
-            }
-        });
-    }
-
-    if (prevBtn) {
-        prevBtn.addEventListener('click', () => {
-            currentTrackIndex = (currentTrackIndex - 1 + PLAYLIST_DATA.length) % PLAYLIST_DATA.length;
-            setupTrack(currentTrackIndex, true);
-        });
-    }
-
-    if (nextBtn) {
-        nextBtn.addEventListener('click', () => {
-            playNextTrack(true);
-        });
-    }
-
-    globalAudio.addEventListener('ended', () => {
-        playNextTrack(true);
-    });
-
-    globalAudio.addEventListener('timeupdate', () => {
-        if (globalAudio.duration && progressBar) {
-            const pct = (globalAudio.currentTime / globalAudio.duration) * 100;
-            progressBar.style.width = `${pct}%`;
-        }
-    });
-
-    if (progressWrap) {
-        progressWrap.addEventListener('click', (e) => {
-            const width = progressWrap.clientWidth;
-            const clickX = e.offsetX;
-            if (globalAudio.duration) {
-                globalAudio.currentTime = (clickX / width) * globalAudio.duration;
-            }
-        });
-    }
-}
-
-function initPlaylistUI() {
-    const container = document.getElementById('tracksContainer');
-    if (!container) return;
-
-    container.innerHTML = '';
-    PLAYLIST_DATA.forEach((track, idx) => {
-        const item = document.createElement('div');
-        item.className = `music-track-item ${idx === currentTrackIndex ? 'active' : ''}`;
-        item.innerHTML = `
-            <div class="track-info">
-                <span class="track-index">0${idx + 1}</span>
-                <div>
-                    <span class="track-title">${track.title}</span>
-                    <span class="track-genre">${track.genre} &bull; <small style="color:var(--c-bronze-gold);">${track.colorName}</small></span>
-                </div>
-            </div>
-            <span class="track-playing-icon">♫</span>
-        `;
-        item.addEventListener('click', () => {
-            currentTrackIndex = idx;
-            setupTrack(idx, true);
-        });
-        container.appendChild(item);
-    });
-
-    const openBtn = document.getElementById('openMusicModalBtn');
-    if (openBtn) openBtn.addEventListener('click', openMusicModal);
-}
-
-function openMusicModal() {
-    const modal = document.getElementById('musicPlaylistModal');
-    if (modal) modal.classList.add('open');
-}
-
-function closeMusicModal() {
-    const modal = document.getElementById('musicPlaylistModal');
-    if (modal) modal.classList.remove('open');
-}
-
+// ==========================================
+// 2. THEME & COLOR ENGINE
+// ==========================================
 function initThemeManager() {
     const themeToggle = document.getElementById('themeToggle');
     const savedTheme = localStorage.getItem('titik_theme_mode') || 'dark';
@@ -267,18 +118,199 @@ function initThemeManager() {
     }
 }
 
-function initQRGenerator() {
-    const qrContainer = document.getElementById('qrcode');
-    if (qrContainer && typeof QRCode !== 'undefined') {
-        new QRCode(qrContainer, {
-            text: window.location.href,
-            width: 160,
-            height: 160,
-            colorDark : "#090C0F",
-            colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
+// ==========================================
+// 3. MUSIC & PLAYLIST ENGINE
+// ==========================================
+function initMusicEngine() {
+    const openBtn = document.getElementById('openMusicModalBtn');
+    const modal = document.getElementById('musicPlaylistModal');
+    const playPauseBtn = document.getElementById('btnPlayPauseTrack');
+    const prevBtn = document.getElementById('btnPrevTrack');
+    const nextBtn = document.getElementById('btnNextTrack');
+    const progressBarWrap = document.getElementById('progressWrap');
+
+    if (openBtn && modal) {
+        openBtn.addEventListener('click', () => modal.classList.add('open'));
+    }
+
+    renderPlaylist();
+
+    if (playPauseBtn) {
+        playPauseBtn.addEventListener('click', () => {
+            if (!globalAudio) return;
+            if (globalAudio.paused) {
+                globalAudio.play().then(() => {
+                    isAudioPlaying = true;
+                    localStorage.setItem('titik_music_playing', 'true');
+                    updateAudioUIState(true);
+                });
+            } else {
+                globalAudio.pause();
+                isAudioPlaying = false;
+                localStorage.setItem('titik_music_playing', 'false');
+                updateAudioUIState(false);
+            }
+            renderPlaylist();
         });
     }
+
+    if (prevBtn) {
+        prevBtn.addEventListener('click', () => {
+            currentTrackIndex = (currentTrackIndex - 1 + MUSIC_TRACKS.length) % MUSIC_TRACKS.length;
+            setupTrack(currentTrackIndex, true);
+        });
+    }
+
+    if (nextBtn) {
+        nextBtn.addEventListener('click', () => {
+            playNextTrack(true);
+        });
+    }
+
+    if (globalAudio) {
+        globalAudio.addEventListener('timeupdate', updateAudioProgress);
+        globalAudio.addEventListener('ended', () => {
+            if (isLooping) {
+                globalAudio.play();
+            } else {
+                playNextTrack(true);
+            }
+        });
+    }
+
+    if (progressBarWrap && globalAudio) {
+        progressBarWrap.addEventListener('click', (e) => {
+            const rect = progressBarWrap.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const width = rect.width;
+            if (globalAudio.duration) {
+                globalAudio.currentTime = (clickX / width) * globalAudio.duration;
+            }
+        });
+    }
+}
+
+function playNextTrack(autoPlay = true) {
+    currentTrackIndex = (currentTrackIndex + 1) % MUSIC_TRACKS.length;
+    setupTrack(currentTrackIndex, autoPlay);
+}
+
+function setupTrack(index, autoPlay = true) {
+    const track = MUSIC_TRACKS[index];
+    if (!track || !globalAudio) return;
+
+    currentTrackIndex = index;
+    globalAudio.src = track.file;
+    globalAudio.loop = false;
+    localStorage.setItem('titik_track_idx', index);
+    document.body.setAttribute('data-music-theme', track.themeKey);
+
+    const navTitle = document.getElementById('navTrackTitle');
+    if (navTitle) navTitle.textContent = `🎵 ${track.title}`;
+
+    const labelEl = document.getElementById('currentThemeLabel');
+    if (labelEl) labelEl.textContent = track.themeLabel;
+
+    renderPlaylist();
+
+    if (autoPlay) {
+        globalAudio.play().then(() => {
+            isAudioPlaying = true;
+            localStorage.setItem('titik_music_playing', 'true');
+            updateAudioUIState(true);
+        }).catch(() => {
+            updateAudioUIState(false);
+        });
+    } else {
+        updateAudioUIState(false);
+    }
+}
+
+function renderPlaylist() {
+    const container = document.getElementById('tracksContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+    MUSIC_TRACKS.forEach((track, index) => {
+        const row = document.createElement('div');
+        row.className = `music-track-row ${index === currentTrackIndex ? 'active' : ''}`;
+        row.innerHTML = `
+            <div class="music-track-info">
+                <h5>0${index + 1}. ${track.title}</h5>
+                <p>${track.themeLabel}</p>
+            </div>
+            <span class="music-track-glyph">${index === currentTrackIndex && isAudioPlaying ? '🔊' : '🎵'}</span>
+        `;
+
+        row.addEventListener('click', () => {
+            currentTrackIndex = index;
+            setupTrack(index, true);
+        });
+
+        container.appendChild(row);
+    });
+}
+
+function updateAudioUIState(playing) {
+    const btn = document.getElementById('btnPlayPauseTrack');
+    const pulseDot = document.getElementById('musicPulseDot');
+    if (btn) btn.textContent = playing ? '⏸' : '▶';
+    if (pulseDot) {
+        pulseDot.style.boxShadow = playing ? '0 0 10px var(--c-court-green)' : 'none';
+    }
+}
+
+function updateAudioProgress() {
+    if (!globalAudio) return;
+    const current = globalAudio.currentTime;
+    const duration = globalAudio.duration || 0;
+
+    const progressPercent = duration > 0 ? (current / duration) * 100 : 0;
+    const progressBar = document.getElementById('musicProgressBar');
+    if (progressBar) progressBar.style.width = `${progressPercent}%`;
+
+    const currDisp = document.getElementById('currentTimeDisplay');
+    const totDisp = document.getElementById('totalDurationDisplay');
+    if (currDisp) currDisp.textContent = formatTime(current);
+    if (totDisp) totDisp.textContent = formatTime(duration);
+}
+
+function formatTime(secs) {
+    const mins = Math.floor(secs / 60);
+    const remainingSecs = Math.floor(secs % 60);
+    return `${String(mins).padStart(2, '0')}:${String(remainingSecs).padStart(2, '0')}`;
+}
+
+function toggleLoopMode() {
+    isLooping = !isLooping;
+    showToast(isLooping ? '🔁 Loop Mode: Active' : '▶ Loop Mode: Off');
+}
+
+function closeMusicModal() {
+    const modal = document.getElementById('musicPlaylistModal');
+    if (modal) modal.classList.remove('open');
+}
+
+// ==========================================
+// 4. MAPS & QR MODALS
+// ==========================================
+function openMapModal(title, embedUrl, externalUrl) {
+    const modal = document.getElementById('interactiveMapModal');
+    const titleEl = document.getElementById('mapModalTitle');
+    const iframeEl = document.getElementById('mapModalIframe');
+    const extLink = document.getElementById('mapExternalLink');
+
+    if (titleEl) titleEl.textContent = title;
+    if (iframeEl) iframeEl.src = embedUrl;
+    if (extLink) extLink.href = externalUrl;
+    if (modal) modal.classList.add('open');
+}
+
+function closeMapModal() {
+    const modal = document.getElementById('interactiveMapModal');
+    const iframeEl = document.getElementById('mapModalIframe');
+    if (modal) modal.classList.remove('open');
+    if (iframeEl) iframeEl.src = '';
 }
 
 function openQRModal() {
@@ -291,133 +323,35 @@ function closeQRModal() {
     if (modal) modal.classList.remove('open');
 }
 
-function initMobileMenu() {
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    const drawer = document.getElementById('mobileDrawer');
-    if (menuBtn && drawer) {
-        menuBtn.addEventListener('click', () => {
-            menuBtn.classList.toggle('active');
-            drawer.classList.toggle('open');
+function initQRCodeGenerator() {
+    const qrContainer = document.getElementById('qrcode');
+    if (qrContainer && typeof QRCode !== 'undefined' && qrContainer.innerHTML.trim() === '') {
+        new QRCode(qrContainer, {
+            text: window.location.href,
+            width: 140,
+            height: 140,
+            colorDark: "#090C0F",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
         });
     }
 }
 
-function closeMobileMenu() {
-    const menuBtn = document.getElementById('mobileMenuBtn');
-    const drawer = document.getElementById('mobileDrawer');
-    if (menuBtn && drawer) {
-        menuBtn.classList.remove('active');
-        drawer.classList.remove('open');
-    }
+function showToast(msg) {
+    const toast = document.getElementById('toastNotification');
+    const toastMsg = document.getElementById('toastMsg');
+    if (!toast || !toastMsg) return;
+
+    toastMsg.textContent = msg;
+    toast.classList.add('show');
+
+    clearTimeout(window.toastTimer);
+    window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
 }
 
-function openMapModal(title, embedUrl, externalUrl) {
-    const modal = document.getElementById('interactiveMapModal');
-    const titleEl = document.getElementById('mapModalTitle');
-    const iframe = document.getElementById('mapModalIframe');
-    const extLink = document.getElementById('mapExternalLink');
-
-    if (modal && iframe) {
-        titleEl.textContent = title;
-        iframe.src = embedUrl;
-        extLink.href = externalUrl;
-        modal.classList.add('open');
-    }
-}
-
-function closeMapModal() {
-    const modal = document.getElementById('interactiveMapModal');
-    const iframe = document.getElementById('mapModalIframe');
-    if (modal) {
-        modal.classList.remove('open');
-        if (iframe) iframe.src = '';
-    }
-}
-
+// Service Worker Registration
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
         navigator.serviceWorker.register('./sw.js').catch(() => {});
-    });
-}
-// Tambahkan di dalam app.js untuk mendeteksi update PWA
-if ('serviceWorker' in navigator) {
-    window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').then((registration) => {
-            // Cek apakah ada update yang tertunda saat halaman dibuka
-            if (registration.waiting) {
-                showUpdateNotification(registration);
-                return;
-            }
-
-            // Cek jika ditemukan update baru di latar belakang
-            registration.addEventListener('updatefound', () => {
-                const newWorker = registration.installing;
-                if (newWorker) {
-                    newWorker.addEventListener('statechange', () => {
-                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                            showUpdateNotification(registration);
-                        }
-                    });
-                }
-            });
-        }).catch(() => {});
-    });
-
-    // Refresh halaman secara otomatis setelah update diterapkan
-    let refreshing = false;
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-        if (!refreshing) {
-            refreshing = true;
-            window.location.reload();
-        }
-    });
-}
-
-function showUpdateNotification(registration) {
-    // Cek apakah banner update sudah ada di layar agar tidak menumpuk
-    if (document.getElementById('pwaUpdateBanner')) return;
-
-    const banner = document.createElement('div');
-    banner.id = 'pwaUpdateBanner';
-    banner.style.cssText = `
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #11161D;
-        border: 1px solid var(--border-accent, #C4F135);
-        color: #F3EEE4;
-        padding: 12px 20px;
-        border-radius: 99px;
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 0.82rem;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.8);
-        z-index: 100000;
-        animation: slideUp 0.3s ease;
-    `;
-
-    banner.innerHTML = `
-        <span>✨ Versi baru TiTik Padel tersedia!</span>
-        <button id="pwaRefreshBtn" style="
-            background: #C4F135;
-            color: #090C0F;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 99px;
-            font-weight: 700;
-            cursor: pointer;
-            font-size: 0.78rem;
-        ">Refresh Sekarang</button>
-    `;
-
-    document.body.appendChild(banner);
-
-    document.getElementById('pwaRefreshBtn').addEventListener('click', () => {
-        if (registration.waiting) {
-            // Perintahkan Service Worker baru untuk mengambil alih
-            registration.waiting.postMessage({ action: 'skipWaiting' });
-        }
     });
 }

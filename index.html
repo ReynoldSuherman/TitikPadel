@@ -98,9 +98,9 @@
             <div class="mobile-drawer-socials">
                 <span>Direct Links:</span>
                 <div class="drawer-social-icons">
-                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram Club</a>
-                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank">Founder</a>
-                    <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a>
+                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank" rel="noopener">Instagram</a>
+                    <a href="https://www.instagram.com/sukitnguyen_?igsh=MXJwODJlb2YyNWVobw==" target="_blank" rel="noopener">Founder</a>
+                    <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WhatsApp</a>
                 </div>
             </div>
         </div>
@@ -713,13 +713,13 @@
                 </div>
 
                 <div class="venues-grid-interactive">
-                    <div class="venue-card" onclick="openMapModal('Cabang Icon (Billiard & Café Lounge)', 'https://www.google.com/maps?q=-6.302567189765148,106.95692501274429&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/N9ByXYp3gXFdeQbK8')">
+                    <div class="venue-card" onclick="openMapModal('Cabang Icon (Billiard & Café Lounge)', 'https://www.google.com/maps?q=-6.302567,106.956925&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/N9ByXYp3gXFdeQbK8')">
                         <div class="vc-badge">BILLIARD & CAFÉ LOUNGE</div>
                         <div class="vc-body">
                             <div class="vc-icon">🎱</div>
                             <div class="vc-details">
                                 <h3>Cabang Icon</h3>
-                                <p>Area Icon &bull; Meja Biliar Standar Turnamen, Café Lounge & Vape Corner</p>
+                                <p>Jl. Wibawa Mukti II, Jatiasih, Bekasi &bull; Meja Biliar Standar Turnamen & Café</p>
                             </div>
                         </div>
                         <div class="vc-footer">
@@ -804,7 +804,7 @@
     <div id="interactiveMapModal" class="luxe-modal-backdrop">
         <div class="map-modal-sheet">
             <div class="sheet-indicator-bar"></div>
-            <div class="map-modal-header">
+            <div class="map-modal-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
                 <div>
                     <span class="step-indicator">// LIVE LOCATION PREVIEW</span>
                     <h3 id="mapModalTitle" class="modal-title" style="font-size: 1.25rem; margin: 0;">Lokasi Cabang</h3>
@@ -823,21 +823,37 @@
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px;">
+            
+            <div class="music-player-header-flex">
                 <div>
                     <span class="step-indicator">// MATCHPLAY PLAYLIST</span>
                     <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
                 </div>
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
             </div>
+
+            <!-- Playlist Tracks Container -->
             <div class="music-tracks-list" id="tracksContainer"></div>
+
+            <!-- Progress Bar & Waktu (Di Atas Tombol Kontrol) -->
             <div class="music-progress-wrap" id="progressWrap">
                 <div class="music-progress-bar" id="musicProgressBar"></div>
             </div>
+            <div class="music-time-info">
+                <span id="currentTimeDisplay">00:00</span>
+                <span id="totalDurationDisplay">00:00</span>
+            </div>
+
+            <!-- Player Controls Bar (Di Bagian Bawah) -->
             <div class="player-controls-bar">
                 <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
                 <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
                 <button class="player-btn" id="btnNextTrack" title="Next Track">⏭</button>
+            </div>
+
+            <div class="player-extra-actions">
+                <span style="font-size: 0.72rem; color: var(--c-muted);">Active Theme: <strong id="currentThemeLabel" style="color: var(--c-court-green);">Hiper Active</strong></span>
+                <button onclick="toggleLoopMode()" class="btn-editorial" style="padding: 4px 10px; font-size: 0.7rem;">🔁 Loop</button>
             </div>
         </div>
     </div>
@@ -880,8 +896,8 @@
                 <a href="javascript:void(0)" onclick="navigateTo('sanctuary')">Home</a>
                 <a href="javascript:void(0)" onclick="navigateTo('booking')">Direct Booking</a>
                 <a href="javascript:void(0)" onclick="navigateTo('founder')">Founder & Locations</a>
-                <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
-                <a href="https://wa.me/6281234567890" target="_blank">WhatsApp Desk</a>
+                <a href="https://www.instagram.com/titikpadel_id/" target="_blank" rel="noopener">Instagram</a>
+                <a href="https://wa.me/6281234567890" target="_blank" rel="noopener">WhatsApp Desk</a>
             </div>
         </div>
         <div class="footer-bottom">
