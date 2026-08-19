@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL - HYBRID ROUTER, SEQUENTIAL AUTOPLAY MUSIC & THEME CONTROLLER
+ * TiTik PADEL - HYBRID ROUTER, SEQUENTIAL AUTOPLAY MUSIC & INDEPENDENT DYNAMIC THEME CONTROLLER
  */
 
 const PLAYLIST_DATA = [
@@ -37,6 +37,8 @@ const PLAYLIST_DATA = [
     }
 ];
 
+const THEME_KEYS = ["hiper", "jazzy", "lofi", "vapor"];
+
 let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
 let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
 const globalAudio = document.getElementById('globalAudio');
@@ -64,8 +66,23 @@ document.addEventListener('DOMContentLoaded', () => {
     document.addEventListener('touchstart', unlockAutoplay, { once: true });
 });
 
+// Fungsi untuk mengganti tema warna secara acak tanpa harus mengganti lagu
+function randomizeTheme() {
+    const currentTheme = document.body.getAttribute('data-music-theme');
+    let randomTheme;
+    do {
+        randomTheme = THEME_KEYS[Math.floor(Math.random() * THEME_KEYS.length)];
+    } while (randomTheme === currentTheme && THEME_KEYS.length > 1);
+
+    document.body.setAttribute('data-music-theme', randomTheme);
+}
+
+// SPA Layer Navigation dengan pergantian tema warna acak tiap pindah halaman
 function navigateTo(targetLayer) {
     const hasLayers = document.querySelectorAll('.page-layer').length > 0;
+
+    // Ganti tema warna secara acak setiap kali halaman/layer diganti
+    randomizeTheme();
 
     if (hasLayers) {
         document.querySelectorAll('.page-layer').forEach(layer => {
@@ -86,6 +103,7 @@ function navigateTo(targetLayer) {
 
         window.scrollTo({ top: 0, behavior: 'smooth' });
     } else {
+        // Jika membuka halaman standalone (.html terpisah)
         if (targetLayer === 'sanctuary') window.location.href = 'index.html';
         else if (targetLayer === 'booking') window.location.href = 'booking.html';
         else if (targetLayer === 'founder') window.location.href = 'about-owner.html';
@@ -93,7 +111,6 @@ function navigateTo(targetLayer) {
 }
 
 function playNextTrack(autoPlay = true) {
-    // Pindah secara berurutan ke lagu berikutnya, kembali ke 0 jika sudah di akhir playlist
     currentTrackIndex = (currentTrackIndex + 1) % PLAYLIST_DATA.length;
     setupTrack(currentTrackIndex, autoPlay);
 }
@@ -103,8 +120,10 @@ function setupTrack(index, autoPlay = true) {
     if (!track || !globalAudio) return;
 
     globalAudio.src = track.file;
-    globalAudio.loop = false; // Wajib false agar event 'ended' bisa memicu lagu berikutnya
+    globalAudio.loop = false;
     localStorage.setItem('titik_track_idx', index);
+    
+    // Tema warna musik tetap mengikuti track, tetapi bisa diubah acak kapan saja lewat navigasi
     document.body.setAttribute('data-music-theme', track.theme);
 
     const navTitle = document.getElementById('navTrackTitle');
@@ -175,7 +194,6 @@ function initAudioEvents() {
         });
     }
 
-    // Saat lagu selesai, otomatis lanjut ke lagu berurutan berikutnya secara mulus tanpa berhenti
     globalAudio.addEventListener('ended', () => {
         playNextTrack(true);
     });
