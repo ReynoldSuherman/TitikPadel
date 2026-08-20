@@ -125,7 +125,7 @@ div {
 }
 
 /* ==========================================================================
-   FIXED NAVBAR AMAN iOS / iPAD (TIDAK TERTROK STATUS BAR)
+   FIXED NAVBAR AMAN iOS / iPAD & MOBILE HORIZONTAL SLIDE
    ========================================================================== */
 .top-marquee {
     background: var(--c-surface-1);
@@ -183,6 +183,7 @@ body.light-theme .luxury-navbar {
     gap: 10px;
     text-decoration: none;
     min-width: 0;
+    flex-shrink: 0;
 }
 
 .logo-wrapper {
@@ -787,7 +788,9 @@ body.light-theme .luxury-navbar {
 .footer-links a { color: var(--c-muted); font-size: 0.75rem; text-decoration: none; }
 .footer-bottom { max-width: 1240px; width: 100%; margin: 0 auto; display: flex; justify-content: space-between; font-size: 0.68rem; color: var(--c-dim); gap: 10px; flex-wrap: wrap; }
 
-/* RESPONSIVE MEDIA QUERIES */
+/* ==========================================================================
+   RESPONSIVE MEDIA QUERIES & MOBILE HORIZONTAL SLIDE ACTIONS
+   ========================================================================== */
 @media (max-width: 1024px) {
     .engine-main-grid { grid-template-columns: 1fr !important; }
     .concierge-sidebar { position: static !important; }
@@ -812,8 +815,64 @@ body.light-theme .luxury-navbar {
     .footer-bottom { flex-direction: column; gap: 6px; }
     .mobile-booking-floating-bar { display: flex !important; }
     
-    .nav-inner { padding: 8px 12px; }
-    .brand-title { font-size: 0.95rem; }
+    .nav-inner { 
+        padding: 8px 12px; 
+        gap: 6px;
+        overflow: hidden;
+    }
+    
+    .brand-signature {
+        flex-shrink: 0;
+        max-width: 120px;
+    }
+
+    .brand-title { font-size: 0.9rem; }
     .brand-tagline { display: none; }
-    .btn-editorial { padding: 5px 10px; font-size: 0.7rem; }
+    
+    /* Mengaktifkan geser (slide) horizontal pada aksi header mobile agar tidak tertimpa */
+    .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        overflow-x: auto;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+        padding: 4px 0;
+        flex-shrink: 1;
+        min-width: 0;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .nav-actions::-webkit-scrollbar {
+        display: none;
+    }
+
+    #openMusicModalBtn {
+        max-width: 130px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        padding: 5px 8px;
+        font-size: 0.68rem;
+        flex-shrink: 0;
+    }
+
+    #navTrackTitle {
+        display: inline-block;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 80px;
+        vertical-align: middle;
+    }
+
+    .btn-editorial { 
+        padding: 5px 8px; 
+        font-size: 0.68rem; 
+        flex-shrink: 0; 
+    }
+
+    .mobile-menu-toggle {
+        flex-shrink: 0;
+    }
 }
