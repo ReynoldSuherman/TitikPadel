@@ -5,6 +5,30 @@
 const PLAYLIST_DATA = [
     {
         id: 0,
+        title: "Aftermath court",
+        file: "Music/Aftermath court.mp3",
+        genre: "Tournament Match",
+        theme: "emerald",
+        colorName: "Matrix Green Mint"
+    },
+    {
+        id: 1,
+        title: "Cherish EDM for u",
+        file: "Music/Cherish EDM for u.mp3",
+        genre: "High Energy Club",
+        theme: "cyan",
+        colorName: "Electric Cyan Glow"
+    },
+    {
+        id: 2,
+        title: "Crazy (about you) - kamome sano",
+        file: "Music/crazy (about you) - kamome sano.mp3",
+        genre: "Melodic Synthwave",
+        theme: "vapor",
+        colorName: "Neon Violet Dream"
+    },
+    {
+        id: 3,
         title: "Hiper Funtime",
         file: "Music/Hiper Funtime.mp3",
         genre: "High Energy Upbeat",
@@ -12,7 +36,7 @@ const PLAYLIST_DATA = [
         colorName: "Cyber Matcha Neon"
     },
     {
-        id: 1,
+        id: 4,
         title: "Jazzy Padelist",
         file: "Music/Jazzy Padelist.mp3",
         genre: "Warm Matchside Jazz",
@@ -20,7 +44,7 @@ const PLAYLIST_DATA = [
         colorName: "Amber Bronze Gold"
     },
     {
-        id: 2,
+        id: 5,
         title: "Lo-fi Padeltime",
         file: "Music/Lo-fi Padeltime.mp3",
         genre: "Chilled Sunset Beats",
@@ -28,7 +52,23 @@ const PLAYLIST_DATA = [
         colorName: "Sunset Rose Pink"
     },
     {
-        id: 3,
+        id: 6,
+        title: "Midnight Padel Break",
+        file: "Music/Midnight Padel Break.mp3",
+        genre: "Late Night Lounge",
+        theme: "solar",
+        colorName: "Sunset Orange Flare"
+    },
+    {
+        id: 7,
+        title: "Take U Rest",
+        file: "Music/Take U Rest.mp3",
+        genre: "Recovery Ambient",
+        theme: "ruby",
+        colorName: "Crimson Ruby Riot"
+    },
+    {
+        id: 8,
         title: "Vaporwavy Apdel",
         file: "Music/Vaporwavy Apdel.mp3",
         genre: "Synthwave Cyber Aura",
@@ -42,7 +82,14 @@ const THEME_KEYS = ["hiper", "jazzy", "lofi", "vapor", "cyan", "ruby", "emerald"
 let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
 let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
 let isLooping = false;
-const globalAudio = document.getElementById('globalAudio');
+let globalAudio = document.getElementById('globalAudio');
+
+if (!globalAudio) {
+    globalAudio = new Audio();
+    globalAudio.id = 'globalAudio';
+    globalAudio.loop = false;
+    document.body.appendChild(globalAudio);
+}
 
 document.addEventListener('DOMContentLoaded', () => {
     initThemeManager();
@@ -128,10 +175,7 @@ function setupTrack(index, autoPlay = true) {
     const labelEl = document.getElementById('currentThemeLabel');
     if (labelEl) labelEl.textContent = track.colorName;
 
-    document.querySelectorAll('.music-track-item').forEach((el, idx) => {
-        if (idx === index) el.classList.add('active');
-        else el.classList.remove('active');
-    });
+    renderPlaylist();
 
     if (autoPlay) {
         globalAudio.play().then(() => {
@@ -146,13 +190,40 @@ function setupTrack(index, autoPlay = true) {
     }
 }
 
+function renderPlaylist() {
+    const container = document.getElementById('tracksContainer');
+    if (!container) return;
+
+    container.innerHTML = '';
+    PLAYLIST_DATA.forEach((track, index) => {
+        const row = document.createElement('div');
+        row.className = `music-track-item ${index === currentTrackIndex ? 'active' : ''}`;
+        row.innerHTML = `
+            <div class="track-info" style="display: flex; align-items: center; gap: 12px; min-width: 0;">
+                <span class="track-index" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--c-bronze-gold); font-weight: 700;">0${index + 1}</span>
+                <div style="min-width: 0; flex: 1;">
+                    <span class="track-title" style="font-size: 0.85rem; font-weight: 600; color: var(--c-ecru); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${track.title}</span>
+                    <span class="track-genre" style="font-size: 0.7rem; color: var(--c-muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${track.genre} &bull; <small style="color:var(--c-court-green);">${track.colorName}</small></span>
+                </div>
+            </div>
+            <span class="track-playing-icon" style="font-size: 0.95rem; color: var(--c-court-green); flex-shrink: 0; margin-left: 8px;">${index === currentTrackIndex && isAudioPlaying ? '🔊' : '♫'}</span>
+        `;
+
+        row.addEventListener('click', () => {
+            currentTrackIndex = index;
+            setupTrack(index, true);
+        });
+
+        container.appendChild(row);
+    });
+}
+
 function updateAudioUIState(playing) {
-    const playPauseBtn = document.getElementById('btnPlayPauseTrack');
+    const btn = document.getElementById('btnPlayPauseTrack');
     const pulseDot = document.getElementById('musicPulseDot');
-    if (playPauseBtn) playPauseBtn.textContent = playing ? '⏸' : '▶';
+    if (btn) btn.textContent = playing ? '⏸' : '▶';
     if (pulseDot) {
-        if (playing) pulseDot.style.boxShadow = '0 0 10px var(--c-court-green)';
-        else pulseDot.style.boxShadow = 'none';
+        pulseDot.style.boxShadow = playing ? '0 0 10px var(--c-court-green)' : 'none';
     }
 }
 
@@ -165,6 +236,7 @@ function initAudioEvents() {
 
     if (playPauseBtn) {
         playPauseBtn.addEventListener('click', () => {
+            if (!globalAudio) return;
             if (globalAudio.paused) {
                 globalAudio.play().then(() => {
                     isAudioPlaying = true;
@@ -177,6 +249,7 @@ function initAudioEvents() {
                 localStorage.setItem('titik_music_playing', 'false');
                 updateAudioUIState(false);
             }
+            renderPlaylist();
         });
     }
 
@@ -213,7 +286,7 @@ function initAudioEvents() {
         if (totDisp && globalAudio.duration) totDisp.textContent = formatTime(globalAudio.duration);
     });
 
-    if (progressWrap) {
+    if (progressWrap && globalAudio) {
         progressWrap.addEventListener('click', (e) => {
             const width = progressWrap.clientWidth;
             const clickX = e.offsetX;
@@ -238,27 +311,7 @@ function toggleLoopMode() {
 function initPlaylistUI() {
     const container = document.getElementById('tracksContainer');
     if (!container) return;
-
-    container.innerHTML = '';
-    PLAYLIST_DATA.forEach((track, idx) => {
-        const item = document.createElement('div');
-        item.className = `music-track-item ${idx === currentTrackIndex ? 'active' : ''}`;
-        item.innerHTML = `
-            <div class="track-info" style="display: flex; align-items: center; gap: 12px; min-width: 0;">
-                <span class="track-index" style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--c-bronze-gold); font-weight: 700;">0${idx + 1}</span>
-                <div style="min-width: 0; flex: 1;">
-                    <span class="track-title" style="font-size: 0.85rem; font-weight: 600; color: var(--c-ecru); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${track.title}</span>
-                    <span class="track-genre" style="font-size: 0.7rem; color: var(--c-muted); display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${track.genre} &bull; <small style="color:var(--c-bronze-gold);">${track.colorName}</small></span>
-                </div>
-            </div>
-            <span class="track-playing-icon" style="font-size: 0.95rem; color: var(--c-court-green); flex-shrink: 0; margin-left: 8px;">♫</span>
-        `;
-        item.addEventListener('click', () => {
-            currentTrackIndex = idx;
-            setupTrack(idx, true);
-        });
-        container.appendChild(item);
-    });
+    renderPlaylist();
 
     const openBtn = document.getElementById('openMusicModalBtn');
     if (openBtn) openBtn.addEventListener('click', openMusicModal);
