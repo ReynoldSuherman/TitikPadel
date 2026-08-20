@@ -184,7 +184,7 @@ body.light-theme .luxury-navbar {
     text-decoration: none;
     min-width: 0;
     flex-shrink: 0;
-    margin-right: 20px; /* Spasi aman agar tulisan PADEL tidak tertimpa tombol musik */
+    margin-right: 24px; /* Spasi aman ekstra agar tulisan PADEL tidak tertimpa tombol musik */
 }
 
 .logo-wrapper {
@@ -267,25 +267,22 @@ body.light-theme .luxury-navbar {
 .btn-editorial:hover { border-color: var(--c-court-green); background: var(--c-surface-2); }
 .btn-dot { width: 5px; height: 5px; background: var(--c-court-green); border-radius: 50%; }
 
-/* Tombol Floating Menu Kotak Elegan di Pojok Kanan Bawah Sesuai Patokan Anda */
+/* Tombol Menu Kotak (Hamburger) di Ujung Kanan Atas Baris Aksi (Sesuai Marker Anda) */
 .mobile-floating-menu-btn {
     display: none;
-    position: fixed;
-    bottom: 24px;
-    right: 20px;
-    width: 46px;
-    height: 46px;
+    width: 42px;
+    height: 42px;
     background: var(--c-surface-1);
     color: var(--c-ecru);
     border: 1px solid var(--border-gold);
-    border-radius: var(--radius-sm); /* Berbentuk kotak rapi */
+    border-radius: var(--radius-sm); /* Bentuk kotak rapi */
     cursor: pointer;
-    z-index: 9999;
     align-items: center;
     justify-content: center;
-    font-size: 1.25rem;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.6);
+    font-size: 1.15rem;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     transition: var(--transition);
+    flex-shrink: 0;
 }
 .mobile-floating-menu-btn.active {
     background: var(--c-court-green);
@@ -810,7 +807,7 @@ body.light-theme .luxury-navbar {
 @media (max-width: 768px) {
     .nav-menu { display: none; }
     .hidden-mobile { display: none !important; }
-    .mobile-floating-menu-btn { display: flex; } /* Menampilkan tombol menu melayang bentuk kotak di kanan bawah */
+    .mobile-floating-menu-btn { display: flex; } /* Menampilkan tombol menu hamburger kotak di posisi pojok kanan atas baris aksi */
     .court-cards-container { grid-template-columns: 1fr; }
     .slot-matrix-grid { grid-template-columns: repeat(2, 1fr); }
     .sanctuary-stats-bar { grid-template-columns: 1fr; }

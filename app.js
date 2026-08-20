@@ -398,7 +398,6 @@ function initPWAInstallPrompt() {
                 }
                 deferredPrompt = null;
             } else {
-                // Alih-alih QR Code, berikan tips panduan instan via Toast khusus untuk perangkat mobile
                 showToast('💡 Tips: Ketuk menu browser (titik tiga) lalu pilih "Tambahkan ke Layar Utama".');
             }
         });
@@ -460,8 +459,55 @@ function showToast(msg) {
     window.toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
+// PWA Auto-Update Handler
 if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-        navigator.serviceWorker.register('./sw.js').catch(() => {});
+        navigator.serviceWorker.register('./sw.js').then((registration) => {
+            if (registration.waiting) {
+                showUpdateNotification(registration);
+                return;
+            }
+            registration.addEventListener('updatefound', () => {
+                const newWorker = registration.installing;
+                if (newWorker) {
+                    newWorker.addEventListener('statechange', () => {
+                        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                            showUpdateNotification(registration);
+                        }
+                    });
+                }
+            });
+        }).catch(() => {});
+    });
+
+    let refreshing = false;
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+            refreshing = true;
+            window.location.reload();
+        }
+    });
+}
+
+function showUpdateNotification(registration) {
+    if (document.getElementById('pwaUpdateBanner')) return;
+    const banner = document.createElement('div');
+    banner.id = 'pwaUpdateBanner';
+    banner.style.cssText = `
+        position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+        background: #11161D; border: 1px solid var(--border-accent, #C4F135);
+        color: #F3EEE4; padding: 12px 20px; border-radius: 99px; display: flex;
+        align-items: center; gap: 12px; font-size: 0.82rem; box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+        z-index: 100000; animation: slideUp 0.3s ease;
+    `;
+    banner.innerHTML = `
+        <span>✨ Versi baru TiTik Padel tersedia!</span>
+        <button id="pwaRefreshBtn" style="background: #C4F135; color: #090C0F; border: none; padding: 6px 14px; border-radius: 99px; font-weight: 700; cursor: pointer; font-size: 0.78rem;">Refresh Sekarang</button>
+    `;
+    document.body.appendChild(banner);
+    document.getElementById('pwaRefreshBtn').addEventListener('click', () => {
+        if (registration.waiting) {
+            registration.waiting.postMessage({ action: 'skipWaiting' });
+        }
     });
 }
