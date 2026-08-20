@@ -1,56 +1,35 @@
 /**
- * TiTik PADEL - BOOKING ENGINE & GEAR CALCULATOR
+ * TiTik PADEL — ADVANCED BOOKING ENGINE & CONCIERGE LOGIC (6 COURTS)
  */
 
 const COURTS_DATA = [
-    {
-        id: 'court-01',
-        name: 'Court 01 — TiTik Center Court',
-        type: 'indoor',
-        turf: 'Mondo Supercourt XN Blue',
-        specs: '12mm Panoramic Glass ✦ 800 Lux LED Pro',
-        pricePerPeriod: { morning: 300000, afternoon: 350000, night: 420000 }
-    },
-    {
-        id: 'court-02',
-        name: 'Court 02 — TiTik Sanctuary Semi-Outdoor',
-        type: 'outdoor',
-        turf: 'Official WPT Anti-Glare Green',
-        specs: 'High Canopy Shaded ✦ Natural Airflow',
-        pricePerPeriod: { morning: 250000, afternoon: 300000, night: 380000 }
-    }
+    { id: 'court_1', name: 'Court 01: Panoramic Center', type: 'indoor', rate: 350000, desc: 'FIP Pro Official Glass & Mondo Turf (Indoor Air-Cooled)' },
+    { id: 'court_2', name: 'Court 02: Match Arena Pro', type: 'indoor', rate: 350000, desc: 'Tournament Grade Glass with Anti-Glare LED System' },
+    { id: 'court_3', name: 'Court 03: Executive Glass', type: 'indoor', rate: 380000, desc: 'Premium Viewing Deck & Direct Café Access' },
+    { id: 'court_4', name: 'Court 04: Semi-Outdoor Breeze', type: 'outdoor', rate: 300000, desc: 'Open-Air Canopy with Natural Airflow & Shade' },
+    { id: 'court_5', name: 'Court 05: Sunset Open Court', type: 'outdoor', rate: 300000, desc: 'Scenic Sunset View with Premium Artificial Turf' },
+    { id: 'court_6', name: 'Court 06: Community Master', type: 'outdoor', rate: 280000, desc: 'Ideal for Open Play, Coaching Clinics & Club Members' }
 ];
 
-const PROMO_CODES = {
-    'TITIKFIRST': { discountRate: 0.15, label: 'Diskon 15% Pemain Pertama TiTik' },
-    'TITIKCOMMUNITY': { discountRate: 0.10, label: 'Diskon Komunitas 10%' },
-    'TITIKCAFE': { discountRate: 0.10, label: 'Promo Bundling Café 10%' }
+const TIME_SLOTS_CONFIG = {
+    morning: ['06:00', '07:00', '08:00', '09:00', '10:00'],
+    afternoon: ['11:00', '12:00', '13:00', '14:00', '15:00', '16:00'],
+    night: ['17:00', '18:00', '19:00', '20:00', '21:00', '22:00']
 };
 
-const TIME_SCHEDULE = [
-    { id: 'm-06', time: '06:00 - 07:00', period: 'morning', bookedCourts: [] },
-    { id: 'm-07', time: '07:00 - 08:00', period: 'morning', bookedCourts: ['court-02'] },
-    { id: 'm-08', time: '08:00 - 09:00', period: 'morning', bookedCourts: ['court-01'] },
-    { id: 'm-09', time: '09:00 - 10:00', period: 'morning', bookedCourts: [] },
-    { id: 'm-10', time: '10:00 - 11:00', period: 'morning', bookedCourts: [] },
-    { id: 'a-11', time: '11:00 - 12:00', period: 'afternoon', bookedCourts: ['court-02'] },
-    { id: 'a-12', time: '12:00 - 13:00', period: 'afternoon', bookedCourts: [] },
-    { id: 'a-13', time: '13:00 - 14:00', period: 'afternoon', bookedCourts: [] },
-    { id: 'a-14', time: '14:00 - 15:00', period: 'afternoon', bookedCourts: [] },
-    { id: 'a-15', time: '15:00 - 16:00', period: 'afternoon', bookedCourts: ['court-01'] },
-    { id: 'a-16', time: '16:00 - 17:00', period: 'afternoon', bookedCourts: [] },
-    { id: 'n-17', time: '17:00 - 18:00', period: 'night', bookedCourts: [] },
-    { id: 'n-18', time: '18:00 - 19:00', period: 'night', bookedCourts: ['court-01', 'court-02'] },
-    { id: 'n-19', time: '19:00 - 20:00', period: 'night', bookedCourts: ['court-01', 'court-02'] },
-    { id: 'n-20', time: '20:00 - 21:00', period: 'night', bookedCourts: ['court-01'] },
-    { id: 'n-21', time: '21:00 - 22:00', period: 'night', bookedCourts: [] },
-    { id: 'n-22', time: '22:00 - 23:00', period: 'night', bookedCourts: [] }
-];
+const ADDONS_CONFIG = {
+    racket_std: { name: 'Standard Club Racket', price: 40000 },
+    racket_vertex: { name: 'Bullpadel Vertex 04 Pro', price: 95000 },
+    racket_viper: { name: 'Babolat Technical Viper', price: 110000 },
+    racket_bela: { name: 'Wilson Bela Pro V2', price: 115000 },
+    balls_regular: { name: 'Bola Padel Reguler (3 Pcs)', price: 25000 },
+    balls_pro: { name: 'Head Padel Pro Can (Segel FIP)', price: 55000 },
+    cafepack: { name: 'TiTik Café Recovery Perk', price: 75000 }
+};
 
 let bookingState = {
     selectedDate: '',
-    selectedCourt: COURTS_DATA[0],
-    activeFilter: 'all',
+    selectedCourtId: COURTS_DATA[0].id,
     selectedSlots: [],
     addons: {
         racket_std: 0,
@@ -61,66 +40,45 @@ let bookingState = {
         balls_pro: 0,
         cafepack: 0
     },
-    promoApplied: null,
-    splitPlayers: 4,
-    finalTotal: 0
+    promoCode: '',
+    discountPct: 0,
+    splitCount: 4
 };
 
 document.addEventListener('DOMContentLoaded', () => {
-    initLiveClock();
+    if (!document.getElementById('dateRibbon')) return;
+
     initDateRibbon();
     initCourtCards();
-    initCourtFilters();
-    renderTimeMatrix();
-    initAddonCounters();
-    initPromoCodeEngine();
-    initSplitBillControls();
-    initMobileFloatingBar();
-    updateLiveManifest();
+    initTimeMatrix();
+    initAddonsCounter();
+    initConciergeControls();
 });
 
-function initLiveClock() {
-    const clockEl = document.getElementById('liveClock');
-    if (!clockEl) return;
-    function update() {
-        const now = new Date();
-        const hrs = String(now.getHours()).padStart(2, '0');
-        const mins = String(now.getMinutes()).padStart(2, '0');
-        const secs = String(now.getSeconds()).padStart(2, '0');
-        clockEl.textContent = `LIVE ${hrs}:${mins}:${secs} WIB`;
-    }
-    update();
-    setInterval(update, 1000);
-}
-
 function initDateRibbon() {
-    const ribbon = document.getElementById('dateRibbon');
-    const prevBtn = document.getElementById('dateScrollPrev');
-    const nextBtn = document.getElementById('dateScrollNext');
-    if (!ribbon) return;
+    const scroller = document.getElementById('dateRibbon');
+    if (!scroller) return;
 
-    const days = ['MIN', 'SEN', 'SEL', 'RAB', 'KAM', 'JUM', 'SAB'];
-    const months = ['JAN', 'FEB', 'MAR', 'APR', 'MEI', 'JUN', 'JUL', 'AGS', 'SEP', 'OKT', 'NOV', 'DES'];
-    const weatherIcons = ['☀️ Cerah', '🌤️ Sejuk', '⛅ Berawan', '🌤️ Cerah', '🌙 Sejuk', '🌤️ Cerah', '☀️ Cerah'];
+    scroller.innerHTML = '';
+    const today = new Date();
 
-    ribbon.innerHTML = '';
-    const now = new Date();
+    for (let i = 0; i < 14; i++) {
+        const d = new Date(today);
+        d.setDate(today.getDate() + i);
 
-    for (let i = 0; i < 7; i++) {
-        const d = new Date();
-        d.setDate(now.getDate() + i);
-
-        const dayName = i === 0 ? 'Hari Ini' : days[d.getDay()];
-        const dateNum = `${d.getDate()} ${months[d.getMonth()]}`;
-        const fullDateStr = `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+        const dayName = d.toLocaleDateString('id-ID', { weekday: 'short' });
+        const dayNum = d.getDate();
+        const monthName = d.toLocaleDateString('id-ID', { month: 'short' });
+        const fullDateStr = d.toISOString().split('T')[0];
 
         const btn = document.createElement('button');
         btn.type = 'button';
         btn.className = `ribbon-day-btn ${i === 0 ? 'active' : ''}`;
+        btn.dataset.date = fullDateStr;
         btn.innerHTML = `
             <span class="r-day-name">${dayName}</span>
-            <span class="r-day-num">${dateNum}</span>
-            <span class="r-weather">${weatherIcons[i % weatherIcons.length]}</span>
+            <span class="r-day-num">${dayNum} ${monthName}</span>
+            <span class="r-weather">🌤️ 28°C</span>
         `;
 
         if (i === 0) bookingState.selectedDate = fullDateStr;
@@ -128,21 +86,23 @@ function initDateRibbon() {
         btn.addEventListener('click', () => {
             document.querySelectorAll('.ribbon-day-btn').forEach(b => b.classList.remove('active'));
             btn.classList.add('active');
-            btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
             bookingState.selectedDate = fullDateStr;
             bookingState.selectedSlots = [];
-            renderTimeMatrix();
-            updateLiveManifest();
-            showToast(`Tanggal: ${fullDateStr}`);
+            initTimeMatrix();
+            updateConciergeSummary();
         });
 
-        ribbon.appendChild(btn);
+        scroller.appendChild(btn);
     }
 
-    if (prevBtn && nextBtn) {
-        prevBtn.addEventListener('click', () => ribbon.scrollBy({ left: -180, behavior: 'smooth' }));
-        nextBtn.addEventListener('click', () => ribbon.scrollBy({ left: 180, behavior: 'smooth' }));
+    const btnPrev = document.getElementById('dateScrollPrev');
+    const btnNext = document.getElementById('dateScrollNext');
+    if (btnPrev && btnNext) {
+        btnPrev.addEventListener('click', () => scroller.scrollBy({ left: -200, behavior: 'smooth' }));
+        btnNext.addEventListener('click', () => scroller.scrollBy({ left: 200, behavior: 'smooth' }));
     }
+
+    updateConciergeSummary();
 }
 
 function initCourtCards() {
@@ -150,361 +110,281 @@ function initCourtCards() {
     if (!container) return;
 
     container.innerHTML = '';
-    COURTS_DATA.forEach(court => {
-        if (bookingState.activeFilter !== 'all' && court.type !== bookingState.activeFilter) return;
-
-        const isSelected = bookingState.selectedCourt.id === court.id;
+    COURTS_DATA.forEach((court, idx) => {
         const card = document.createElement('div');
-        card.className = `luxe-court-card ${isSelected ? 'active' : ''}`;
+        card.className = `luxe-court-card ${idx === 0 ? 'active' : ''}`;
+        card.dataset.courtId = court.id;
         card.innerHTML = `
             <div>
-                <span class="court-badge-cat">${court.type === 'indoor' ? '✦ INDOOR PANORAMIC' : '✦ SEMI-OUTDOOR SHADED'}</span>
+                <span class="court-badge-cat">ARENA // ${court.type.toUpperCase()}</span>
                 <h3>${court.name}</h3>
-                <p class="court-specs">${court.specs} &bull; ${court.turf}</p>
+                <p class="court-specs">${court.desc}</p>
             </div>
             <div class="court-bottom-bar">
-                <span class="hourly-rate">Mulai Rp ${(court.pricePerPeriod.morning/1000)}k <small style="font-weight: normal; color: #8E9BAE;">/ jam</small></span>
-                <span class="select-pill">${isSelected ? '✓ Terpilih' : 'Pilih'}</span>
+                <span class="hourly-rate">Rp ${court.rate.toLocaleString('id-ID')} / jam</span>
+                <span class="select-pill">${idx === 0 ? 'Dipilih' : 'Pilih'}</span>
             </div>
         `;
 
         card.addEventListener('click', () => {
-            bookingState.selectedCourt = court;
+            document.querySelectorAll('.luxe-court-card').forEach(c => {
+                c.classList.remove('active');
+                c.querySelector('.select-pill').textContent = 'Pilih';
+            });
+            card.classList.add('active');
+            card.querySelector('.select-pill').textContent = 'Dipilih';
+            bookingState.selectedCourtId = court.id;
             bookingState.selectedSlots = [];
-            initCourtCards();
-            renderTimeMatrix();
-            updateLiveManifest();
-            showToast(`Lapangan: ${court.name}`);
+            initTimeMatrix();
+            updateConciergeSummary();
         });
 
         container.appendChild(card);
     });
 }
 
-function initCourtFilters() {
-    const filterBtns = document.querySelectorAll('.filter-btn');
-    filterBtns.forEach(btn => {
+function initTimeMatrix() {
+    const morningGrid = document.getElementById('morningMatrix');
+    const afternoonGrid = document.getElementById('afternoonMatrix');
+    const nightGrid = document.getElementById('nightMatrix');
+
+    if (!morningGrid || !afternoonGrid || !nightGrid) return;
+
+    morningGrid.innerHTML = '';
+    afternoonGrid.innerHTML = '';
+    nightGrid.innerHTML = '';
+
+    const currentCourt = COURTS_DATA.find(c => c.id === bookingState.selectedCourtId) || COURTS_DATA[0];
+
+    const renderSlotsToGrid = (slotsArray, gridEl, periodName) => {
+        slotsArray.forEach((timeStr, idx) => {
+            // Simulasi slot terisi acak berdasarkan tanggal & court agar dinamis
+            const isBooked = (parseInt(bookingState.selectedDate.replace(/-/g, '')) + idx + currentCourt.name.length) % 7 === 0;
+            const isSelected = bookingState.selectedSlots.includes(timeStr);
+
+            const btn = document.createElement('button');
+            btn.type = 'button';
+            btn.className = `luxe-slot-btn ${isBooked ? 'booked' : ''} ${isSelected ? 'selected' : ''}`;
+            btn.disabled = isBooked;
+
+            const rateCalc = periodName === 'morning' ? currentCourt.rate * 0.85 : (periodName === 'night' ? currentCourt.rate * 1.15 : currentCourt.rate);
+
+            btn.innerHTML = `
+                <span class="slot-time-text">${timeStr} WIB</span>
+                <span class="slot-rate-text">${isBooked ? 'Terisi' : 'Rp ' + Math.round(rateCalc / 1000) + 'rb'}</span>
+            `;
+
+            if (!isBooked) {
+                btn.addEventListener('click', () => {
+                    if (bookingState.selectedSlots.includes(timeStr)) {
+                        bookingState.selectedSlots = bookingState.selectedSlots.filter(s => s !== timeStr);
+                    } else {
+                        bookingState.selectedSlots.push(timeStr);
+                        bookingState.selectedSlots.sort();
+                    }
+                    initTimeMatrix();
+                    updateConciergeSummary();
+                });
+            }
+
+            gridEl.appendChild(btn);
+        });
+    };
+
+    renderSlotsToGrid(TIME_SLOTS_CONFIG.morning, morningGrid, 'morning');
+    renderSlotsToGrid(TIME_SLOTS_CONFIG.afternoon, afternoonGrid, 'afternoon');
+    renderSlotsToGrid(TIME_SLOTS_CONFIG.night, nightGrid, 'night');
+
+    const countBadge = document.getElementById('availCountBadge');
+    if (countBadge) countBadge.textContent = '12 Slot Tersedia';
+}
+
+function initAddonsCounter() {
+    document.querySelectorAll('.btn-qty').forEach(btn => {
         btn.addEventListener('click', () => {
-            filterBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-            bookingState.activeFilter = btn.getAttribute('data-filter');
-            initCourtCards();
+            const targetId = btn.dataset.target;
+            const isPlus = btn.classList.contains('plus');
+
+            if (isPlus) {
+                bookingState.addons[targetId]++;
+            } else {
+                if (bookingState.addons[targetId] > 0) bookingState.addons[targetId]--;
+            }
+
+            const valEl = document.getElementById(`qty-${targetId}`);
+            if (valEl) valEl.textContent = bookingState.addons[targetId];
+
+            const card = btn.closest('.luxe-addon-card');
+            if (card) {
+                if (bookingState.addons[targetId] > 0) card.classList.add('active');
+                else card.classList.remove('active');
+            }
+
+            updateConciergeSummary();
         });
     });
 }
 
-function renderTimeMatrix() {
-    const morningEl = document.getElementById('morningMatrix');
-    const afternoonEl = document.getElementById('afternoonMatrix');
-    const nightEl = document.getElementById('nightMatrix');
-    const availBadge = document.getElementById('availCountBadge');
+function initConciergeControls() {
+    const btnApplyPromo = document.getElementById('btnApplyPromo');
+    const inputPromo = document.getElementById('inputPromo');
+    const promoFeedback = document.getElementById('promoFeedback');
 
-    if (!morningEl || !afternoonEl || !nightEl) return;
-
-    morningEl.innerHTML = '';
-    afternoonEl.innerHTML = '';
-    nightEl.innerHTML = '';
-
-    let availableCount = 0;
-
-    TIME_SCHEDULE.forEach(slot => {
-        const isBooked = slot.bookedCourts.includes(bookingState.selectedCourt.id);
-        const isSelected = bookingState.selectedSlots.some(s => s.id === slot.id);
-        const price = bookingState.selectedCourt.pricePerPeriod[slot.period];
-
-        if (!isBooked) availableCount++;
-
-        const btn = document.createElement('button');
-        btn.type = 'button';
-        btn.className = `luxe-slot-btn ${isBooked ? 'booked' : ''} ${isSelected ? 'selected' : ''}`;
-        btn.innerHTML = `
-            <span class="slot-time-text">${slot.time}</span>
-            <span class="slot-rate-text">${isBooked ? 'Terisi' : 'Rp ' + (price / 1000) + 'k'}</span>
-        `;
-
-        if (!isBooked) {
-            btn.addEventListener('click', () => toggleTimeSlot(slot, price));
-        }
-
-        if (slot.period === 'morning') morningEl.appendChild(btn);
-        else if (slot.period === 'afternoon') afternoonEl.appendChild(btn);
-        else if (slot.period === 'night') nightEl.appendChild(btn);
-    });
-
-    if (availBadge) availBadge.textContent = `${availableCount} Slot Tersedia Hari Ini`;
-}
-
-function toggleTimeSlot(slot, price) {
-    const existingIndex = bookingState.selectedSlots.findIndex(s => s.id === slot.id);
-    if (existingIndex > -1) {
-        bookingState.selectedSlots.splice(existingIndex, 1);
-        showToast(`Slot ${slot.time} dilepas`);
-    } else {
-        bookingState.selectedSlots.push({ id: slot.id, time: slot.time, period: slot.period, price: price });
-        showToast(`Slot ${slot.time} dipilih`);
+    if (btnApplyPromo && inputPromo) {
+        btnApplyPromo.addEventListener('click', () => {
+            const code = inputPromo.value.trim().toUpperCase();
+            if (code === 'TITIKFIRST') {
+                bookingState.promoCode = code;
+                bookingState.discountPct = 15;
+                promoFeedback.textContent = '✓ Promo 15% Berhasil Digunakan!';
+                promoFeedback.className = 'promo-feedback success';
+            } else if (code === 'PADELVIP') {
+                bookingState.promoCode = code;
+                bookingState.discountPct = 25;
+                promoFeedback.textContent = '✓ VIP Promo 25% Berhasil Digunakan!';
+                promoFeedback.className = 'promo-feedback success';
+            } else {
+                bookingState.promoCode = '';
+                bookingState.discountPct = 0;
+                promoFeedback.textContent = '✕ Kode promo tidak valid.';
+                promoFeedback.className = 'promo-feedback error';
+            }
+            updateConciergeSummary();
+        });
     }
-    renderTimeMatrix();
-    updateLiveManifest();
-}
 
-function initAddonCounters() {
-    const plusBtns = document.querySelectorAll('.btn-qty.plus');
-    const minusBtns = document.querySelectorAll('.btn-qty.minus');
+    const btnSplitMinus = document.getElementById('splitMinus');
+    const btnSplitPlus = document.getElementById('splitPlus');
+    const splitCountEl = document.getElementById('splitPlayerCount');
 
-    plusBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const target = btn.getAttribute('data-target');
-            bookingState.addons[target] = (bookingState.addons[target] || 0) + 1;
-            updateAddonUI(target);
-            updateLiveManifest();
-        });
-    });
-
-    minusBtns.forEach(btn => {
-        btn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            const target = btn.getAttribute('data-target');
-            if (bookingState.addons[target] > 0) {
-                bookingState.addons[target] -= 1;
-                updateAddonUI(target);
-                updateLiveManifest();
+    if (btnSplitMinus && btnSplitPlus && splitCountEl) {
+        btnSplitMinus.addEventListener('click', () => {
+            if (bookingState.splitCount > 1) {
+                bookingState.splitCount--;
+                splitCountEl.textContent = bookingState.splitCount;
+                updateConciergeSummary();
             }
         });
-    });
-}
-
-function updateAddonUI(target) {
-    const qtyEl = document.getElementById(`qty-${target}`);
-    const cardEl = document.querySelector(`.luxe-addon-card[data-addon-id="${target}"]`);
-    if (qtyEl) qtyEl.textContent = bookingState.addons[target];
-    if (cardEl) {
-        if (bookingState.addons[target] > 0) cardEl.classList.add('active');
-        else cardEl.classList.remove('active');
-    }
-}
-
-function initPromoCodeEngine() {
-    const btn = document.getElementById('btnApplyPromo');
-    const input = document.getElementById('inputPromo');
-    const feedback = document.getElementById('promoFeedback');
-    if (!btn || !input) return;
-
-    btn.addEventListener('click', () => {
-        const code = input.value.trim().toUpperCase();
-        if (PROMO_CODES[code]) {
-            bookingState.promoApplied = { code: code, ...PROMO_CODES[code] };
-            feedback.textContent = `✓ Promo "${code}" aktif: ${PROMO_CODES[code].label}`;
-            feedback.className = 'promo-feedback success';
-            showToast(`Promo ${code} berhasil!`);
-        } else {
-            bookingState.promoApplied = null;
-            feedback.textContent = '✗ Kode promo tidak valid.';
-            feedback.className = 'promo-feedback error';
-        }
-        updateLiveManifest();
-    });
-}
-
-function initSplitBillControls() {
-    const plusBtn = document.getElementById('splitPlus');
-    const minusBtn = document.getElementById('splitMinus');
-    const countEl = document.getElementById('splitPlayerCount');
-    if (!plusBtn || !minusBtn) return;
-
-    plusBtn.addEventListener('click', () => {
-        if (bookingState.splitPlayers < 8) {
-            bookingState.splitPlayers++;
-            countEl.textContent = bookingState.splitPlayers;
-            updateLiveManifest();
-        }
-    });
-
-    minusBtn.addEventListener('click', () => {
-        if (bookingState.splitPlayers > 1) {
-            bookingState.splitPlayers--;
-            countEl.textContent = bookingState.splitPlayers;
-            updateLiveManifest();
-        }
-    });
-}
-
-function initMobileFloatingBar() {
-    const triggerBtn = document.getElementById('btnOpenMobileSheet');
-    const sidebar = document.getElementById('conciergeSidebar');
-    if (triggerBtn && sidebar) {
-        triggerBtn.addEventListener('click', () => {
-            sidebar.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            const nameInput = document.getElementById('clientName');
-            if (nameInput) setTimeout(() => nameInput.focus(), 600);
+        btnSplitPlus.addEventListener('click', () => {
+            if (bookingState.splitCount < 12) {
+                bookingState.splitCount++;
+                splitCountEl.textContent = bookingState.splitCount;
+                updateConciergeSummary();
+            }
         });
     }
 }
 
-function updateLiveManifest() {
-    const sumDate = document.getElementById('summaryDate');
-    const sumCourt = document.getElementById('summaryCourt');
-    const sumSlots = document.getElementById('summarySlots');
-    const sumAddons = document.getElementById('summaryAddons');
+function updateConciergeSummary() {
+    const summaryDate = document.getElementById('summaryDate');
+    const summaryCourt = document.getElementById('summaryCourt');
+    const summarySlots = document.getElementById('summarySlots');
+    const summaryAddons = document.getElementById('summaryAddons');
 
-    const calcCourt = document.getElementById('calcSubtotalCourt');
-    const calcAddons = document.getElementById('calcSubtotalAddons');
-    const calcDiscount = document.getElementById('calcDiscount');
+    const calcSubtotalCourt = document.getElementById('calcSubtotalCourt');
+    const calcSubtotalAddons = document.getElementById('calcSubtotalAddons');
     const discountLine = document.getElementById('discountLine');
+    const calcDiscount = document.getElementById('calcDiscount');
     const calcFee = document.getElementById('calcFee');
-    const calcGrand = document.getElementById('calcGrandTotal');
+    const calcGrandTotal = document.getElementById('calcGrandTotal');
     const splitPerPerson = document.getElementById('splitPerPerson');
-    const btnSubmit = document.getElementById('btnSubmitBooking');
 
-    const mobileSlotCount = document.getElementById('mobileSlotCount');
+    const btnSubmitBooking = document.getElementById('btnSubmitBooking');
+    const mobileFloatingBar = document.getElementById('mobileFloatingBar');
     const mobileTotalPrice = document.getElementById('mobileTotalPrice');
-    const btnMobileSheet = document.getElementById('btnOpenMobileSheet');
+    const mobileSlotCount = document.getElementById('mobileSlotCount');
+    const btnOpenMobileSheet = document.getElementById('btnOpenMobileSheet');
 
-    updateBreadcrumbs();
+    if (!summaryDate) return;
 
-    if (!sumDate) return;
+    summaryDate.textContent = bookingState.selectedDate || '-';
 
-    sumDate.textContent = bookingState.selectedDate || '-';
-    sumCourt.textContent = bookingState.selectedCourt.name;
+    const currentCourt = COURTS_DATA.find(c => c.id === bookingState.selectedCourtId) || COURTS_DATA[0];
+    summaryCourt.textContent = currentCourt.name.split(':')[0];
 
-    const totalHours = bookingState.selectedSlots.length;
+    let slotsHtml = '';
+    let courtSubtotal = 0;
 
-    if (totalHours === 0) {
-        sumSlots.innerHTML = '<span class="placeholder-text">Belum ada slot dipilih</span>';
+    if (bookingState.selectedSlots.length > 0) {
+        bookingState.selectedSlots.forEach(s => {
+            slotsHtml += `<span class="slot-tag-badge">${s}</span>`;
+            courtSubtotal += currentCourt.rate;
+        });
+        summarySlots.innerHTML = slotsHtml;
     } else {
-        sumSlots.innerHTML = bookingState.selectedSlots.map(s => `<span class="slot-tag-badge">${s.time}</span>`).join('');
+        summarySlots.innerHTML = `<span class="placeholder-text">Belum ada slot dipilih</span>`;
     }
 
-    const courtSubtotal = bookingState.selectedSlots.reduce((acc, slot) => acc + slot.price, 0);
+    let addonsSubtotal = 0;
+    Object.keys(bookingState.addons).forEach(key => {
+        const qty = bookingState.addons[key];
+        if (qty > 0) {
+            addonsSubtotal += qty * ADDONS_CONFIG[key].price;
+        }
+    });
 
-    const racketStdCost = (bookingState.addons.racket_std || 0) * 40000;
-    const racketVertexCost = (bookingState.addons.racket_vertex || 0) * 95000;
-    const racketViperCost = (bookingState.addons.racket_viper || 0) * 110000;
-    const racketBelaCost = (bookingState.addons.racket_bela || 0) * 115000;
-    const ballsRegCost = (bookingState.addons.balls_regular || 0) * 25000;
-    const ballsProCost = (bookingState.addons.balls_pro || 0) * 55000;
-    const cafeCost = (bookingState.addons.cafepack || 0) * 75000;
+    summaryAddons.textContent = `Rp ${addonsSubtotal.toLocaleString('id-ID')}`;
 
-    const addonsSubtotal = racketStdCost + racketVertexCost + racketViperCost + racketBelaCost + ballsRegCost + ballsProCost + cafeCost;
+    calcSubtotalCourt.textContent = `Rp ${courtSubtotal.toLocaleString('id-ID')}`;
+    calcSubtotalAddons.textContent = `Rp ${addonsSubtotal.toLocaleString('id-ID')}`;
 
-    if (addonsSubtotal > 0) {
-        let addonDesc = [];
-        if (bookingState.addons.racket_std > 0) addonDesc.push(`${bookingState.addons.racket_std}x Std Racket`);
-        if (bookingState.addons.racket_vertex > 0) addonDesc.push(`${bookingState.addons.racket_vertex}x Vertex Pro`);
-        if (bookingState.addons.racket_viper > 0) addonDesc.push(`${bookingState.addons.racket_viper}x Viper Pro`);
-        if (bookingState.addons.racket_bela > 0) addonDesc.push(`${bookingState.addons.racket_bela}x Bela Pro`);
-        if (bookingState.addons.balls_regular > 0) addonDesc.push(`${bookingState.addons.balls_regular}x Bola Reg`);
-        if (bookingState.addons.balls_pro > 0) addonDesc.push(`${bookingState.addons.balls_pro}x Bola Pro`);
-        if (bookingState.addons.cafepack > 0) addonDesc.push(`${bookingState.addons.cafepack}x TiTik Café`);
-        sumAddons.textContent = `${addonDesc.join(', ')} (Rp ${addonsSubtotal.toLocaleString('id-ID')})`;
-    } else {
-        sumAddons.textContent = 'Rp 0';
-    }
-
-    const facilityFee = totalHours > 0 ? 10000 : 0;
-
-    let discountAmount = 0;
-    if (bookingState.promoApplied && courtSubtotal > 0) {
-        discountAmount = Math.round(courtSubtotal * bookingState.promoApplied.discountRate);
+    let discountNominal = 0;
+    if (bookingState.discountPct > 0) {
+        discountNominal = (courtSubtotal * bookingState.discountPct) / 100;
         discountLine.style.display = 'flex';
-        calcDiscount.textContent = `- Rp ${discountAmount.toLocaleString('id-ID')}`;
+        calcDiscount.textContent = `- Rp ${discountNominal.toLocaleString('id-ID')} (${bookingState.discountPct}%)`;
     } else {
         discountLine.style.display = 'none';
     }
 
-    const grandTotal = Math.max(0, courtSubtotal + addonsSubtotal + facilityFee - discountAmount);
-    bookingState.finalTotal = grandTotal;
-
-    calcCourt.textContent = `Rp ${courtSubtotal.toLocaleString('id-ID')}`;
-    calcAddons.textContent = `Rp ${addonsSubtotal.toLocaleString('id-ID')}`;
+    const facilityFee = bookingState.selectedSlots.length > 0 ? 25000 : 0;
     calcFee.textContent = `Rp ${facilityFee.toLocaleString('id-ID')}`;
-    calcGrand.textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
 
-    if (mobileSlotCount) mobileSlotCount.textContent = `${totalHours} Jam`;
+    const grandTotal = Math.max(0, courtSubtotal + addonsSubtotal - discountNominal + facilityFee);
+    calcGrandTotal.textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
+
+    const perPerson = Math.round(grandTotal / bookingState.splitCount);
+    splitPerPerson.textContent = `Rp ${perPerson.toLocaleString('id-ID')}`;
+
     if (mobileTotalPrice) mobileTotalPrice.textContent = `Rp ${grandTotal.toLocaleString('id-ID')}`;
-    if (btnMobileSheet) btnMobileSheet.disabled = totalHours === 0;
+    if (mobileSlotCount) mobileSlotCount.textContent = `${bookingState.selectedSlots.length} Jam`;
 
-    const perPerson = Math.ceil(grandTotal / (bookingState.splitPlayers || 1));
-    if (splitPerPerson) splitPerPerson.textContent = `Rp ${perPerson.toLocaleString('id-ID')}`;
-
-    if (btnSubmit) btnSubmit.disabled = totalHours === 0;
-}
-
-function updateBreadcrumbs() {
-    const b1 = document.getElementById('badgeStep1');
-    const b2 = document.getElementById('badgeStep2');
-    const b3 = document.getElementById('badgeStep3');
-    const b4 = document.getElementById('badgeStep4');
-
-    if (!b1) return;
-
-    b1.className = 'step-badge active';
-    b2.className = `step-badge ${bookingState.selectedSlots.length > 0 ? 'active' : ''}`;
-    
-    const hasAddons = Object.values(bookingState.addons).some(v => v > 0);
-    b3.className = `step-badge ${hasAddons ? 'active' : ''}`;
-    b4.className = `step-badge ${bookingState.selectedSlots.length > 0 ? 'active' : ''}`;
-}
-
-function showToast(msg) {
-    const toast = document.getElementById('toastNotification');
-    const toastMsg = document.getElementById('toastMsg');
-    if (!toast || !toastMsg) return;
-
-    toastMsg.textContent = msg;
-    toast.classList.add('show');
-
-    clearTimeout(window.toastTimer);
-    window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    const isValid = bookingState.selectedSlots.length > 0;
+    if (btnSubmitBooking) btnSubmitBooking.disabled = !isValid;
+    if (btnOpenMobileSheet) btnOpenMobileSheet.disabled = !isValid;
 }
 
 function proceedBookingSubmission() {
-    const name = document.getElementById('clientName').value;
-    const phone = document.getElementById('clientWhatsapp').value;
-    const email = document.getElementById('clientEmail').value;
-    const notes = document.getElementById('clientNotes').value;
+    const name = document.getElementById('clientName').value.trim();
+    const whatsapp = document.getElementById('clientWhatsapp').value.trim();
+    const email = document.getElementById('clientEmail').value.trim();
+    const notes = document.getElementById('clientNotes').value.trim();
 
-    const modal = document.getElementById('bookingModal');
-    const receipt = document.getElementById('modalReceiptContent');
-    if (!modal || !receipt) return;
-
-    const slotsList = bookingState.selectedSlots.map(s => s.time).join(', ');
-
-    receipt.innerHTML = `
-        <div class="rec-line"><span>Booking Ref:</span><strong>#TITIK-${Math.floor(100000 + Math.random() * 900000)}</strong></div>
-        <div class="rec-line"><span>Pemesan:</span><strong>${name}</strong></div>
-        <div class="rec-line"><span>WhatsApp:</span><strong>${phone}</strong></div>
-        <div class="rec-line"><span>Tanggal:</span><strong>${bookingState.selectedDate}</strong></div>
-        <div class="rec-line"><span>Lapangan:</span><strong>${bookingState.selectedCourt.name}</strong></div>
-        <div class="rec-line"><span>Slot Jam:</span><strong>${slotsList}</strong></div>
-        <div class="rec-line"><span>Split (${bookingState.splitPlayers} Pemain):</span><strong>Rp ${(Math.ceil(bookingState.finalTotal / bookingState.splitPlayers)).toLocaleString('id-ID')} / org</strong></div>
-        <div class="rec-line" style="border-top: 1px solid rgba(255,255,255,0.1); padding-top: 6px; margin-top: 6px; color: var(--c-court-green);">
-            <span>Total Tagihan:</span><strong>Rp ${bookingState.finalTotal.toLocaleString('id-ID')}</strong>
-        </div>
-    `;
-
-    const btnWA = document.getElementById('btnSendWhatsApp');
-    if (btnWA) {
-        btnWA.onclick = () => {
-            const waMessage = encodeURIComponent(
-                `Halo Concierge TiTik Padel,\n\nSaya ingin konfirmasi pembayaran reservasi:\n` +
-                `• Nama: ${name}\n` +
-                `• No WA: ${phone}\n` +
-                `• Lapangan: ${bookingState.selectedCourt.name}\n` +
-                `• Tanggal: ${bookingState.selectedDate}\n` +
-                `• Slot Jam: ${slotsList}\n` +
-                `• Total Tagihan: Rp ${bookingState.finalTotal.toLocaleString('id-ID')}\n` +
-                (notes ? `• Catatan: ${notes}\n` : '') +
-                `\nMohon invoice QRIS resmi. Terima kasih.`
-            );
-            window.open(`https://wa.me/6281234567890?text=${waMessage}`, '_blank');
-        };
+    if (!name || !whatsapp || !email) {
+        showToast('⚠️ Harap lengkapi data pemesan terlebih dahulu.');
+        return;
     }
 
-    modal.classList.add('open');
-}
+    const currentCourt = COURTS_DATA.find(c => c.id === bookingState.selectedCourtId) || COURTS_DATA[0];
+    const grandTotalText = document.getElementById('calcGrandTotal').textContent;
 
-function closeModalAndReset() {
-    const modal = document.getElementById('bookingModal');
-    if (modal) modal.classList.remove('open');
+    let orderSummaryText = `*RESERVASI TIITK PADEL TANGERANG*%0A`;
+    orderSummaryText += `───────────────────%0A`;
+    orderSummaryText += `👤 Nama: ${name}%0A`;
+    orderSummaryText += `📱 WhatsApp: ${whatsapp}%0A`;
+    orderSummaryText += `📧 Email: ${email}%0A`;
+    orderSummaryText += `📅 Tanggal: ${bookingState.selectedDate}%0A`;
+    orderSummaryText += `🏟️ Lapangan: ${currentCourt.name}%0A`;
+    orderSummaryText += `⏰ Jam: ${bookingState.selectedSlots.join(', ')} WIB%0A`;
+    orderSummaryText += `💰 Total Tagihan: ${grandTotalText}%0A`;
+    if (notes) orderSummaryText += `📝 Catatan: ${notes}%0A`;
+    orderSummaryText += `───────────────────%0A`;
+    orderSummaryText += `Mohon konfirmasi pembayaran & ketersediaan slot. Terima kasih!`;
+
+    const whatsappUrl = `https://wa.me/6281234567890?text=${orderSummaryText}`;
+    
+    showToast('✦ Mengalihkan ke WhatsApp Concierge...');
+    setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+    }, 1000);
 }
