@@ -184,6 +184,7 @@ body.light-theme .luxury-navbar {
     text-decoration: none;
     min-width: 0;
     flex-shrink: 0;
+    margin-right: 8px; /* Memberikan spasi agar tidak tertimpa tombol musik */
 }
 
 .logo-wrapper {
@@ -817,19 +818,20 @@ body.light-theme .luxury-navbar {
     
     .nav-inner { 
         padding: 8px 12px; 
-        gap: 6px;
+        gap: 8px;
         overflow: hidden;
     }
     
     .brand-signature {
         flex-shrink: 0;
-        max-width: 120px;
+        max-width: 110px;
+        margin-right: 4px;
     }
 
-    .brand-title { font-size: 0.9rem; }
+    .brand-title { font-size: 0.85rem; }
     .brand-tagline { display: none; }
     
-    /* Mengaktifkan geser (slide) horizontal pada aksi header mobile agar tidak tertimpa */
+    /* Mengaktifkan geser (slide) horizontal pada aksi header mobile agar tidak menimpa kata PADEL */
     .nav-actions {
         display: flex;
         align-items: center;
@@ -849,12 +851,12 @@ body.light-theme .luxury-navbar {
     }
 
     #openMusicModalBtn {
-        max-width: 130px;
+        max-width: 125px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
         padding: 5px 8px;
-        font-size: 0.68rem;
+        font-size: 0.65rem;
         flex-shrink: 0;
     }
 
@@ -862,7 +864,7 @@ body.light-theme .luxury-navbar {
         display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 80px;
+        max-width: 75px;
         vertical-align: middle;
     }
 

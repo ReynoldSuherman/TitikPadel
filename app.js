@@ -83,6 +83,7 @@ let currentTrackIndex = parseInt(localStorage.getItem('titik_track_idx')) || 0;
 let isAudioPlaying = localStorage.getItem('titik_music_playing') !== 'false';
 let isLooping = false;
 let globalAudio = document.getElementById('globalAudio');
+let deferredPrompt = null;
 
 if (!globalAudio) {
     globalAudio = new Audio();
@@ -97,6 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initAudioEvents();
     initMobileMenu();
     initQRGenerator();
+    initPWAInstallPrompt();
 
     setupTrack(currentTrackIndex, isAudioPlaying);
 
@@ -367,6 +369,43 @@ function openQRModal() {
 function closeQRModal() {
     const modal = document.getElementById('qrModal');
     if (modal) modal.classList.remove('open');
+}
+
+function initPWAInstallPrompt() {
+    const installBtn = document.getElementById('btnInstallApp');
+    
+    // Deteksi cerdas: Menggabungkan touch points dan user agent agar mendeteksi HP meskipun mode desktop aktif
+    const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) || 
+                          /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+
+    if (!isTouchDevice && installBtn) {
+        installBtn.style.display = 'none';
+        return;
+    } else if (installBtn) {
+        installBtn.style.display = 'inline-flex';
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+    });
+
+    if (installBtn) {
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    installBtn.style.display = 'none';
+                }
+                deferredPrompt = null;
+            } else {
+                // Smart Fallback jika mode desktop disengaja aktif di HP
+                openQRModal();
+                showToast('💡 Tips: Ketuk menu browser (titik tiga) lalu pilih "Tambahkan ke Layar Utama".');
+            }
+        });
+    }
 }
 
 function initMobileMenu() {

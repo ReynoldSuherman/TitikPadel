@@ -74,8 +74,14 @@
                     <span>🌓 Theme</span>
                 </button>
 
+                <!-- Tombol QR Code (Muncul di Desktop) -->
                 <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
                     <span class="btn-text">App QR</span>
+                </button>
+
+                <!-- Tombol Install Langsung (Muncul Khusus di Mobile/Tablet) -->
+                <button id="btnInstallApp" class="btn-editorial" style="cursor: pointer; display: none; background: var(--c-court-green); color: var(--c-obsidian); font-weight: 700;">
+                    <span class="btn-text">📥 Install App</span>
                 </button>
 
                 <button onclick="navigateTo('booking')" class="btn-editorial hidden-mobile" style="cursor: pointer;">
@@ -722,12 +728,12 @@
                 </div>
 
                 <div class="venues-grid-interactive">
-                    <div class="venue-card" onclick="openMapModal('Bros Vape Cabang Gala Vape', 'https://www.google.com/maps?q=-6.355457909869484,107.36907793972999&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/DKquPacdNNCmxoP19')">
+                    <div class="venue-card" onclick="openMapModal('Gala Vape', 'https://www.google.com/maps?q=-6.355457909869484,107.36907793972999&hl=id&z=16&output=embed', 'https://maps.app.goo.gl/DKquPacdNNCmxoP19')">
                         <div class="vc-badge">TOKO VAPE</div>
                         <div class="vc-body">
                             <div class="vc-icon">💨</div>
                             <div class="vc-details">
-                                <h3>Bros Vape Cabang: Gala Vape</h3>
+                                <h3>Gala Vape</h3>
                                 <p>Karawang &bull; Toko Vape Terkurasi & Komunitas Vaporizer</p>
                             </div>
                         </div>
