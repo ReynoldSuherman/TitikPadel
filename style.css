@@ -267,7 +267,7 @@ body.light-theme .luxury-navbar {
 .btn-editorial:hover { border-color: var(--c-court-green); background: var(--c-surface-2); }
 .btn-dot { width: 5px; height: 5px; background: var(--c-court-green); border-radius: 50%; }
 
-/* Tombol Menu Kotak (Hamburger) di Ujung Kanan Atas Baris Aksi (Sesuai Marker Anda) */
+/* Tombol Menu Kotak (Hamburger) di Ujung Kanan Atas Baris Aksi */
 .mobile-floating-menu-btn {
     display: none;
     width: 42px;
@@ -524,7 +524,7 @@ body.light-theme .luxury-navbar {
 .court-cards-container { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; width: 100%; }
 .luxe-court-card { background: var(--c-surface-2); border: 1px solid var(--border-hairline); border-radius: var(--radius-sm); padding: 16px; cursor: pointer; transition: var(--transition); display: flex; flex-direction: column; justify-content: space-between; gap: 14px; }
 .luxe-court-card:hover { border-color: var(--border-gold); background: var(--c-surface-hover); }
-.luxe-court-card.active { border-color: var(--c-court-green); background: var(--c-court-green-glow); box-shadow: 0 0 15px rgba(196, 241, 53, 0.1); }
+.luxe-court-card.active { border-color: var(--border-court-green); background: var(--c-court-green-glow); box-shadow: 0 0 15px rgba(196, 241, 53, 0.1); }
 .court-badge-cat { font-family: var(--font-mono); font-size: 0.62rem; color: var(--c-bronze-gold); letter-spacing: 1px; display: block; margin-bottom: 4px; font-weight: 700; }
 .luxe-court-card h3 { font-size: 0.92rem; font-weight: 700; color: var(--c-ecru); margin-bottom: 3px; }
 .court-specs { font-size: 0.72rem; color: var(--c-muted); line-height: 1.4; }
@@ -807,7 +807,7 @@ body.light-theme .luxury-navbar {
 @media (max-width: 768px) {
     .nav-menu { display: none; }
     .hidden-mobile { display: none !important; }
-    .mobile-floating-menu-btn { display: flex; } /* Menampilkan tombol menu hamburger kotak di posisi pojok kanan atas baris aksi */
+    .mobile-floating-menu-btn { display: flex; } /* Menampilkan tombol menu hamburger kotak di pojok kanan atas baris aksi */
     .court-cards-container { grid-template-columns: 1fr; }
     .slot-matrix-grid { grid-template-columns: repeat(2, 1fr); }
     .sanctuary-stats-bar { grid-template-columns: 1fr; }

@@ -33,6 +33,11 @@
     <div class="noise-overlay" aria-hidden="true"></div>
     <audio id="globalAudio" preload="auto"></audio>
 
+    <!-- Tombol Menu Kotak Floating di Posisi Tanda Plus (Kanan Bawah) untuk Mobile -->
+    <button class="mobile-floating-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span>☰</span>
+    </button>
+
     <!-- NAVBAR -->
     <header class="luxury-navbar">
         <div class="nav-inner">
@@ -66,10 +71,6 @@
                     <span class="btn-text">Book Court</span>
                     <span class="btn-dot"></span>
                 </a>
-                
-                <button class="mobile-floating-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
-                    <span>☰</span>
-                </button>
             </div>
         </div>
 
@@ -308,19 +309,6 @@
                 <span style="font-size: 0.72rem; color: var(--c-muted);">Active Theme: <strong id="currentThemeLabel" style="color: var(--c-court-green);">Hiper Active</strong></span>
                 <button onclick="toggleLoopMode()" class="btn-editorial" style="padding: 4px 10px; font-size: 0.7rem;">🔁 Loop</button>
             </div>
-        </div>
-    </div>
-
-    <div id="qrModal" class="luxe-modal-backdrop">
-        <div class="luxe-modal-sheet" style="max-width: 360px;">
-            <div class="sheet-indicator-bar"></div>
-            <div class="modal-emblem">📱</div>
-            <h3 class="modal-title">Download Hybrid App</h3>
-            <p class="modal-subtitle">Scan QR statis ini dengan kamera HP untuk menginstal TiTik Padel langsung ke Home Screen.</p>
-            <div style="background: white; padding: 14px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
-                <div id="qrcode"></div>
-            </div>
-            <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">Tutup</button>
         </div>
     </div>
 

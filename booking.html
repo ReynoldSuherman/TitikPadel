@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Sistem Reservasi Lapangan — TiTik Padel Tangerang</title>
+    <title>Reserve Court & Concierge — TiTik Padel</title>
     
     <link rel="icon" type="image/svg+xml" href="Logo/Logo_Padel.svg">
     <link rel="alternate icon" type="image/png" href="Logo/Logo_Padel.svg">
@@ -39,6 +39,11 @@
         <span id="toastMsg" class="toast-text">Slot berhasil dipilih.</span>
     </div>
 
+    <!-- Tombol Menu Kotak Floating di Kanan Atas Baris Aksi (Khusus Mobile) -->
+    <button class="mobile-floating-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span>☰</span>
+    </button>
+
     <div class="top-marquee">
         <div class="marquee-track">
             <span>✦ TITIK PADEL TANGERANG ✦ PANORAMIC TOURNAMENT COURTS ✦ ARTISAN ESPRESSO & MATCH CAFÉ ✦ TANGERANG SANCTUARY ✦ PRO-TIER RACKETS AVAILABLE</span>
@@ -54,7 +59,7 @@
                 </div>
                 <div class="brand-text">
                     <span class="brand-title">TiTik<span>.PADEL</span></span>
-                    <span class="brand-tagline">TANGERANG ARENA & CAFÉ</span>
+                    <span class="brand-tagline">COURT & MATCH CAFÉ</span>
                 </div>
             </a>
 
@@ -74,16 +79,18 @@
                     <span>🌓 Theme</span>
                 </button>
 
-                <div class="live-clock-badge hidden-mobile">
-                    <span class="pulse-dot"></span>
-                    <span id="liveClock">LIVE 00:00:00 WIB</span>
-                </div>
-                
-                <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
+                <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
+                    <span class="btn-text">App QR</span>
                 </button>
+
+                <button id="btnInstallApp" class="btn-editorial" style="cursor: pointer; display: none; background: var(--c-court-green); color: var(--c-obsidian); font-weight: 700;">
+                    <span class="btn-text">📥 Install App</span>
+                </button>
+
+                <a href="booking.html" class="btn-editorial hidden-mobile">
+                    <span class="btn-text">Book Court</span>
+                    <span class="btn-dot"></span>
+                </a>
             </div>
         </div>
 
@@ -102,7 +109,6 @@
         </div>
     </header>
 
-    <!-- BOOKING ENGINE -->
     <main class="booking-engine-wrapper">
         <div class="engine-steps-bar">
             <div class="step-badge active" id="badgeStep1"><span>01</span> Tanggal & Lapangan</div>
@@ -436,6 +442,79 @@
         </div>
     </main>
 
+    <div class="mobile-booking-floating-bar" id="mobileFloatingBar">
+        <div class="floating-left">
+            <span class="floating-label">Total Tagihan (<span id="mobileSlotCount">0 Jam</span>)</span>
+            <span class="floating-price" id="mobileTotalPrice">Rp 0</span>
+        </div>
+        <button type="button" class="btn-luxe-solid btn-mobile-sheet-trigger" id="btnOpenMobileSheet" disabled>
+            Checkout &rarr;
+        </button>
+    </div>
+
+    <!-- MODALS -->
+    <div id="musicPlaylistModal" class="luxe-modal-backdrop">
+        <div class="music-modal-sheet">
+            <div class="sheet-indicator-bar"></div>
+            
+            <div class="music-player-header-flex">
+                <div>
+                    <span class="step-indicator">// MATCHPLAY PLAYLIST</span>
+                    <h3 class="modal-title" style="font-size: 1.25rem; margin: 0;">TiTik Soundtracks</h3>
+                </div>
+                <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
+            </div>
+
+            <div class="music-tracks-list" id="tracksContainer"></div>
+
+            <div class="music-progress-wrap" id="progressWrap">
+                <div class="music-progress-bar" id="musicProgressBar"></div>
+            </div>
+            <div class="music-time-info">
+                <span id="currentTimeDisplay">00:00</span>
+                <span id="totalDurationDisplay">00:00</span>
+            </div>
+
+            <div class="player-controls-bar">
+                <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
+                <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
+                <button class="player-btn" id="btnNextTrack" title="Next Track">⏭</button>
+            </div>
+
+            <div class="player-extra-actions">
+                <span style="font-size: 0.72rem; color: var(--c-muted);">Active Theme: <strong id="currentThemeLabel" style="color: var(--c-court-green);">Hiper Active</strong></span>
+                <button onclick="toggleLoopMode()" class="btn-editorial" style="padding: 4px 10px; font-size: 0.7rem;">🔁 Loop</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem">✦</div>
+            <h3 class="modal-title">Reservasi TiTik Padel Diamankan</h3>
+            <p class="modal-subtitle">Detail booking Anda telah disiapkan. Lanjutkan konfirmasi ke WhatsApp Concierge.</p>
+            <div class="invoice-mini-receipt" id="modalReceiptContent"></div>
+            <div class="modal-action-buttons">
+                <button type="button" class="btn-luxe-solid full" id="btnSendWhatsApp">Kirim Konfirmasi WhatsApp &rarr;</button>
+                <button type="button" class="btn-link-dim" onclick="closeModalAndReset()">Tutup & Kembali</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qrModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet" style="max-width: 360px;">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem">📱</div>
+            <h3 class="modal-title">Download Hybrid App</h3>
+            <p class="modal-subtitle">Scan QR statis ini dengan kamera HP untuk menginstal TiTik Padel langsung ke Home Screen.</p>
+            <div style="background: white; padding: 14px; border-radius: 12px; display: inline-block; margin-bottom: 20px;">
+                <div id="qrcode"></div>
+            </div>
+            <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">Tutup</button>
+        </div>
+    </div>
+
     <!-- FOOTER -->
     <footer class="luxury-footer">
         <div class="footer-top">
@@ -457,6 +536,7 @@
         </div>
     </footer>
 
+    <!-- ENGINE SCRIPTS -->
     <script src="app.js"></script>
     <script src="booking.js"></script>
 </body>

@@ -279,7 +279,7 @@ function initAudioEvents() {
     globalAudio.addEventListener('timeupdate', () => {
         if (globalAudio.duration && progressBar) {
             const pct = (globalAudio.currentTime / globalAudio.duration) * 100;
-            progressBar.style.width = `${pct}%`;
+            progressBar.style.width = `${pct}`;
         }
 
         const currDisp = document.getElementById('currentTimeDisplay');
@@ -373,19 +373,24 @@ function closeQRModal() {
 
 function initPWAInstallPrompt() {
     const installBtn = document.getElementById('btnInstallApp');
+    
+    // Cek apakah aplikasi sudah dibuka dalam mode standalone (sudah terpasang di HP)
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
     const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) || 
                           /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-    if (!isTouchDevice && installBtn) {
-        installBtn.style.display = 'none';
+    // Jika sudah terpasang atau di desktop, sembunyikan tombol Install App
+    if (isStandalone || !isTouchDevice) {
+        if (installBtn) installBtn.style.display = 'none';
         return;
-    } else if (installBtn) {
-        installBtn.style.display = 'inline-flex';
     }
 
     window.addEventListener('beforeinstallprompt', (e) => {
         e.preventDefault();
         deferredPrompt = e;
+        if (installBtn && !isStandalone) {
+            installBtn.style.display = 'inline-flex';
+        }
     });
 
     if (installBtn) {
