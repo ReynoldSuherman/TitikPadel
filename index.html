@@ -74,12 +74,12 @@
                     <span>🌓 Theme</span>
                 </button>
 
-                <!-- Tombol QR Code (Muncul di Desktop) -->
+                <!-- Tombol QR Code (Hanya di Desktop) -->
                 <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
                     <span class="btn-text">App QR</span>
                 </button>
 
-                <!-- Tombol Install Langsung (Muncul Khusus di Mobile/Tablet) -->
+                <!-- Tombol Install Langsung (Hanya di Mobile) -->
                 <button id="btnInstallApp" class="btn-editorial" style="cursor: pointer; display: none; background: var(--c-court-green); color: var(--c-obsidian); font-weight: 700;">
                     <span class="btn-text">📥 Install App</span>
                 </button>
@@ -88,14 +88,13 @@
                     <span class="btn-text">Book Court</span>
                     <span class="btn-dot"></span>
                 </button>
-
-                <button class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </button>
             </div>
         </div>
+
+        <!-- Tombol Hamburger Floating Khusus Mobile di Pojok Kanan Bawah -->
+        <button class="mobile-floating-menu-btn mobile-only" id="mobileMenuBtn" aria-label="Toggle Menu">
+            <span>☰</span>
+        </button>
 
         <div class="mobile-nav-drawer" id="mobileDrawer">
             <button onclick="navigateTo('sanctuary'); closeMobileMenu();" class="mobile-nav-item active" data-nav-mobile="sanctuary">01. Sanctuary & Café</button>

@@ -373,8 +373,6 @@ function closeQRModal() {
 
 function initPWAInstallPrompt() {
     const installBtn = document.getElementById('btnInstallApp');
-    
-    // Deteksi cerdas: Menggabungkan touch points dan user agent agar mendeteksi HP meskipun mode desktop aktif
     const isTouchDevice = ('maxTouchPoints' in navigator && navigator.maxTouchPoints > 0) || 
                           /Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
@@ -400,8 +398,7 @@ function initPWAInstallPrompt() {
                 }
                 deferredPrompt = null;
             } else {
-                // Smart Fallback jika mode desktop disengaja aktif di HP
-                openQRModal();
+                // Alih-alih QR Code, berikan tips panduan instan via Toast khusus untuk perangkat mobile
                 showToast('💡 Tips: Ketuk menu browser (titik tiga) lalu pilih "Tambahkan ke Layar Utama".');
             }
         });
@@ -460,7 +457,7 @@ function showToast(msg) {
     toast.classList.add('show');
 
     clearTimeout(window.toastTimer);
-    window.toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+    window.toastTimer = setTimeout(() => toast.classList.remove('show'), 3200);
 }
 
 if ('serviceWorker' in navigator) {
