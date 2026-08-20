@@ -184,7 +184,7 @@ body.light-theme .luxury-navbar {
     text-decoration: none;
     min-width: 0;
     flex-shrink: 0;
-    margin-right: 16px; /* Memberikan spasi ekstra sesuai ilustrasi garis merah Anda */
+    margin-right: 20px; /* Spasi aman agar tulisan PADEL tidak tertimpa tombol musik */
 }
 
 .logo-wrapper {
@@ -267,29 +267,30 @@ body.light-theme .luxury-navbar {
 .btn-editorial:hover { border-color: var(--c-court-green); background: var(--c-surface-2); }
 .btn-dot { width: 5px; height: 5px; background: var(--c-court-green); border-radius: 50%; }
 
-/* Mobile Menu Toggle yang dijadikan Floating di Pojok Kanan Bawah */
+/* Tombol Floating Menu Kotak Elegan di Pojok Kanan Bawah Sesuai Patokan Anda */
 .mobile-floating-menu-btn {
     display: none;
     position: fixed;
     bottom: 24px;
     right: 20px;
-    width: 54px;
-    height: 54px;
-    background: var(--c-court-green);
-    color: var(--c-obsidian);
+    width: 46px;
+    height: 46px;
+    background: var(--c-surface-1);
+    color: var(--c-ecru);
     border: 1px solid var(--border-gold);
-    border-radius: 50%;
+    border-radius: var(--radius-sm); /* Berbentuk kotak rapi */
     cursor: pointer;
     z-index: 9999;
     align-items: center;
     justify-content: center;
-    font-size: 1.4rem;
+    font-size: 1.25rem;
     box-shadow: 0 10px 25px rgba(0,0,0,0.6);
     transition: var(--transition);
 }
 .mobile-floating-menu-btn.active {
-    transform: rotate(90deg);
-    background: var(--c-ecru);
+    background: var(--c-court-green);
+    color: var(--c-obsidian);
+    border-color: var(--c-court-green);
 }
 
 /* MOBILE MENU DRAWER & DIRECT LINKS */
@@ -809,7 +810,7 @@ body.light-theme .luxury-navbar {
 @media (max-width: 768px) {
     .nav-menu { display: none; }
     .hidden-mobile { display: none !important; }
-    .mobile-floating-menu-btn { display: flex; }
+    .mobile-floating-menu-btn { display: flex; } /* Menampilkan tombol menu melayang bentuk kotak di kanan bawah */
     .court-cards-container { grid-template-columns: 1fr; }
     .slot-matrix-grid { grid-template-columns: repeat(2, 1fr); }
     .sanctuary-stats-bar { grid-template-columns: 1fr; }
@@ -828,8 +829,8 @@ body.light-theme .luxury-navbar {
     
     .brand-signature {
         flex-shrink: 0;
-        max-width: 130px;
-        margin-right: 14px; /* Memberikan spasi aman seperti garis merah Anda agar PADEL tidak tertimpa */
+        max-width: 135px;
+        margin-right: 22px; /* Spasi lebar aman untuk teks PADEL */
     }
 
     .brand-title { font-size: 0.88rem; }
@@ -855,7 +856,7 @@ body.light-theme .luxury-navbar {
     }
 
     #openMusicModalBtn {
-        max-width: 110px;
+        max-width: 115px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
@@ -868,7 +869,7 @@ body.light-theme .luxury-navbar {
         display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 65px;
+        max-width: 70px;
         vertical-align: middle;
     }
 
