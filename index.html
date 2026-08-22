@@ -39,6 +39,23 @@
         <span id="toastMsg" class="toast-text">Slot berhasil dipilih.</span>
     </div>
 
+    <!-- Pager Notification Banner (Virtual Pager Simulation) -->
+    <div id="cafePagerBanner" class="cafe-pager-banner">
+        <div class="pager-content">
+            <span class="pager-icon">🔔</span>
+            <div>
+                <strong id="pagerTitle">TiTik Pager Active</strong>
+                <p id="pagerSub">Pesanan Anda sedang disiapkan oleh barista & chef.</p>
+            </div>
+        </div>
+        <span id="pagerQueueBadge" class="pager-code-pill">-</span>
+    </div>
+
+    <!-- Tombol Menu Kotak Floating di Ujung Kanan Atas Baris Aksi (Khusus Mobile) -->
+    <button class="mobile-floating-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+        <span>☰</span>
+    </button>
+
     <div class="top-marquee">
         <div class="marquee-track">
             <span>✦ TITIK PADEL TANGERANG ✦ PANORAMIC TOURNAMENT COURTS ✦ ARTISAN ESPRESSO & MATCH CAFÉ ✦ TANGERANG SANCTUARY ✦ PRO-TIER RACKETS AVAILABLE</span>
@@ -59,42 +76,37 @@
             </a>
 
             <nav class="nav-menu">
-                <button onclick="navigateTo('sanctuary')" class="nav-link active" data-nav="sanctuary"><span>01</span> Sanctuary & Café</button>
+                <button onclick="navigateTo('sanctuary')" class="nav-link active" data-nav="sanctuary"><span>01</span> Sanctuary</button>
                 <button onclick="navigateTo('booking')" class="nav-link" data-nav="booking"><span>02</span> Reserve Court</button>
-                <a href="cafe-booking.html" class="nav-link"><span>03</span> Café & Table Order</a>
-                <button onclick="navigateTo('founder')" class="nav-link" data-nav="founder"><span>04</span> Founder & Branches</button>
+                <button onclick="navigateTo('cafe')" class="nav-link" data-nav="cafe"><span>03</span> Café Order</button>
+                <button onclick="navigateTo('founder')" class="nav-link" data-nav="founder"><span>04</span> Founder</button>
             </nav>
 
             <div class="nav-actions">
-                <button id="openMusicModalBtn" class="btn-editorial" style="padding: 7px 14px; cursor: pointer;">
+                <button id="openMusicModalBtn" class="btn-editorial" style="padding: 6px 12px; cursor: pointer;">
                     <span class="btn-dot" id="musicPulseDot"></span>
-                    <span id="navTrackTitle" class="btn-text">🎵 Shuffle Music</span>
+                    <span id="navTrackTitle" class="btn-text">🎵 Shuffle</span>
                 </button>
 
-                <button id="themeToggle" class="btn-editorial" style="padding: 7px 12px; cursor: pointer;" title="Ganti Mode Warna">
-                    <span>🌓 Theme</span>
+                <button id="themeToggle" class="btn-editorial" style="padding: 6px 10px; cursor: pointer;" title="Ganti Mode Warna">
+                    <span>🌓</span>
                 </button>
 
                 <button onclick="openQRModal()" class="btn-editorial hidden-mobile" style="cursor: pointer;">
-                    <span class="btn-text">App QR</span>
+                    <span class="btn-text">QR</span>
                 </button>
 
                 <button id="btnInstallApp" class="btn-editorial" style="cursor: pointer; display: none; background: var(--c-court-green); color: var(--c-obsidian); font-weight: 700;">
-                    <span class="btn-text">📥 Install App</span>
+                    <span class="btn-text">📥 App</span>
                 </button>
 
-                <a href="cafe-booking.html" class="btn-editorial hidden-mobile" style="background: var(--c-surface-2); border-color: var(--border-gold);">
-                    <span class="btn-text">☕ Order Café</span>
-                </a>
+                <button onclick="navigateTo('cafe')" class="btn-editorial hidden-mobile" style="background: var(--c-surface-2); border-color: var(--border-gold); cursor: pointer;">
+                    <span class="btn-text">☕ Café</span>
+                </button>
 
                 <button onclick="navigateTo('booking')" class="btn-editorial hidden-mobile" style="cursor: pointer;">
-                    <span class="btn-text">Book Court</span>
+                    <span class="btn-text">Book</span>
                     <span class="btn-dot"></span>
-                </button>
-
-                <!-- Tombol Menu Kotak Floating di Ujung Kanan Atas Baris Aksi (Khusus Mobile) -->
-                <button class="mobile-floating-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
-                    <span>☰</span>
                 </button>
             </div>
         </div>
@@ -102,7 +114,7 @@
         <div class="mobile-nav-drawer" id="mobileDrawer">
             <button onclick="navigateTo('sanctuary'); closeMobileMenu();" class="mobile-nav-item active" data-nav-mobile="sanctuary">01. Sanctuary & Café</button>
             <button onclick="navigateTo('booking'); closeMobileMenu();" class="mobile-nav-item" data-nav-mobile="booking">02. Reserve Court</button>
-            <a href="cafe-booking.html" class="mobile-nav-item">03. Café & Table Order</a>
+            <button onclick="navigateTo('cafe'); closeMobileMenu();" class="mobile-nav-item" data-nav-mobile="cafe">03. Café & Table Order</button>
             <button onclick="navigateTo('founder'); closeMobileMenu();" class="mobile-nav-item" data-nav-mobile="founder">04. Founder & Branches</button>
             <div class="mobile-drawer-socials">
                 <span>Direct Links:</span>
@@ -137,7 +149,7 @@
                     </p>
                     <div class="hero-cta-cluster">
                         <button onclick="navigateTo('booking')" class="btn-luxe-solid">Reservasi Lapangan &rarr;</button>
-                        <a href="cafe-booking.html" class="btn-luxe-outline">Pesan Menu Café ☕</a>
+                        <button onclick="navigateTo('cafe')" class="btn-luxe-outline">Pesan Menu Café ☕</button>
                     </div>
                 </div>
             </div>
@@ -209,7 +221,7 @@
 
                         <div class="cafe-timing-bar" style="display: flex; justify-content: space-between; align-items: center; gap: 10px;">
                             <span>🕒 <strong>Jam Operasional:</strong> Setiap Hari 06.00 — 23.00 WIB</span>
-                            <a href="cafe-booking.html" class="btn-luxe-solid" style="padding: 6px 14px; font-size: 0.75rem;">Buka Café Order &rarr;</a>
+                            <button onclick="navigateTo('cafe')" class="btn-luxe-solid" style="padding: 6px 14px; font-size: 0.75rem;">Buka Café Order &rarr;</button>
                         </div>
                     </div>
 
@@ -306,14 +318,132 @@
         </section>
     </div>
 
-    <!-- LAYER 02: BOOKING ENGINE -->
+    <!-- LAYER 02: BOOKING ENGINE (Court Reservation) -->
     <div id="layer-booking" class="page-layer">
         <main class="booking-engine-wrapper">
-            <!-- Isi Booking Engine (Dihandle oleh booking.js) -->
+            <!-- Dikelola secara dinamis oleh booking.js -->
         </main>
     </div>
 
-    <!-- LAYER 03: DETAILED FOUNDER & INTERACTIVE MAPS -->
+    <!-- LAYER 03: CAFÉ & TABLE ORDER (Virtual Pager & Menu System) -->
+    <div id="layer-cafe" class="page-layer">
+        <main class="booking-engine-wrapper">
+            <div class="engine-steps-bar">
+                <div class="step-badge active"><span>01</span> Pilih Layanan & Tempat</div>
+                <div class="step-line"></div>
+                <div class="step-badge"><span>02</span> Pilih Menu & Minuman</div>
+                <div class="step-line"></div>
+                <div class="step-badge"><span>03</span> Konfirmasi & Pager Code</div>
+            </div>
+
+            <div class="engine-main-grid">
+                <div class="workspace-panel">
+                    <section class="panel-box">
+                        <div class="panel-head">
+                            <div class="head-left">
+                                <span class="step-indicator">STEP 01</span>
+                                <h2>Pilih Metode Penyerahan & Tempat Duduk</h2>
+                            </div>
+                        </div>
+
+                        <div class="cafe-mode-selector-grid">
+                            <div class="cafe-mode-card active" data-mode="dinein" onclick="setCafeMode('dinein')">
+                                <div class="cm-icon">🪑</div>
+                                <h3>Dine-In / Meja Café</h3>
+                                <p>Makan santai di area indoor/outdoor coffee shop. Mendapat nomor antrean <strong>Kode A</strong>.</p>
+                            </div>
+                            <div class="cafe-mode-card" data-mode="courtside" onclick="setCafeMode('courtside')">
+                                <div class="cm-icon">⚡</div>
+                                <h3>Courtside Delivery</h3>
+                                <p>Diantar langsung ke bench lapangan. Mendapat nomor antrean <strong>Kode B</strong>.</p>
+                            </div>
+                            <div class="cafe-mode-card" data-mode="pickup" onclick="setCafeMode('pickup')">
+                                <div class="cm-icon">🛍️</div>
+                                <h3>Quick Pickup</h3>
+                                <p>Ambil pesanan di counter bar sesaat setelah pager berdering.</p>
+                            </div>
+                        </div>
+
+                        <div id="tableSelectorWrapper" class="mt-4" style="margin-top: 16px;">
+                            <label class="input-stacked" style="margin-bottom: 6px;">Pilih Nomor Meja / Nomor Lapangan Pengantaran</label>
+                            <select id="selectLocationTarget" class="luxe-select-dropdown">
+                                <option value="Meja 01 (Indoor Lounge)">Meja 01 (Indoor Lounge)</option>
+                                <option value="Meja 02 (Indoor Window)">Meja 02 (Indoor Window)</option>
+                                <option value="Meja 03 (Outdoor Terrace)">Meja 03 (Outdoor Terrace)</option>
+                                <option value="Meja 04 (Bar High Stool)">Meja 04 (Bar High Stool)</option>
+                            </select>
+                        </div>
+                    </section>
+
+                    <section class="panel-box">
+                        <div class="panel-head">
+                            <div class="head-left">
+                                <span class="step-indicator">STEP 02</span>
+                                <h2>Katalog Menu TiTik Match Café</h2>
+                                <p class="panel-sub">Specialty coffee, recovery drinks, dan brunch bernutrisi tinggi.</p>
+                            </div>
+                            <div class="court-filter-toggle">
+                                <button class="filter-btn active" data-cafecat="all" onclick="filterCafeMenu('all')">Semua</button>
+                                <button class="filter-btn" data-cafecat="coffee" onclick="filterCafeMenu('coffee')">Coffee</button>
+                                <button class="filter-btn" data-cafecat="recovery" onclick="filterCafeMenu('recovery')">Recovery</button>
+                                <button class="filter-btn" data-cafecat="brunch" onclick="filterCafeMenu('brunch')">Brunch</button>
+                            </div>
+                        </div>
+
+                        <div class="cafe-menu-grid" id="cafeMenuGrid" style="display: flex; flex-direction: column; gap: 8px;">
+                            <!-- Render via JS -->
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="concierge-sidebar">
+                    <div class="concierge-card">
+                        <div class="concierge-header">
+                            <div class="concierge-badge">CAFÉ ORDER TICKET</div>
+                            <span class="live-pulse" id="ticketQueueType">KODE A-01</span>
+                        </div>
+
+                        <div class="manifest-table" id="cafeCartItemsList" style="max-height: 200px; overflow-y: auto;">
+                            <span class="placeholder-text">Keranjang pesanan masih kosong</span>
+                        </div>
+
+                        <div class="pricing-breakdown" style="margin-top: 14px;">
+                            <div class="price-line">
+                                <span>Subtotal Menu</span>
+                                <span id="cafeSubtotal">Rp 0</span>
+                            </div>
+                            <div class="price-line">
+                                <span>Pajak & Layanan (10%)</span>
+                                <span id="cafeTax">Rp 0</span>
+                            </div>
+                            <div class="price-line grand-total">
+                                <span>Total Pembayaran</span>
+                                <span class="grand-val" id="cafeGrandTotal">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <form class="guest-booking-form" onsubmit="event.preventDefault(); submitCafeOrder();">
+                            <div class="input-stacked">
+                                <label for="cafeGuestName">Nama Pemesan</label>
+                                <input type="text" id="cafeGuestName" placeholder="Contoh: Reyner Zelig" required>
+                            </div>
+                            <div class="input-stacked">
+                                <label for="cafeGuestPhone">Nomor WhatsApp Aktif</label>
+                                <input type="tel" id="cafeGuestPhone" placeholder="0812XXXXXXXX" required inputmode="numeric">
+                            </div>
+
+                            <button type="submit" id="btnSubmitCafeOrder" class="btn-submit-luxe" disabled>
+                                <span class="submit-txt">Kirim Pesanan & Dapatkan Pager</span>
+                                <span class="submit-arrow">&rarr;</span>
+                            </button>
+                        </form>
+                    </div>
+                </aside>
+            </div>
+        </main>
+    </div>
+
+    <!-- LAYER 04: DETAILED FOUNDER & INTERACTIVE MAPS -->
     <div id="layer-founder" class="page-layer">
         <main class="owner-page-container">
             <section class="founder-monograph">
@@ -500,6 +630,27 @@
         </div>
     </div>
 
+    <div id="pagerSuccessModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet" style="text-align: center; max-width: 380px;">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem" style="font-size: 2.2rem;">🔔</div>
+            <h3 class="modal-title">Pesanan Diterima!</h3>
+            <p class="modal-subtitle">Nomor antrean virtual Anda telah diaktifkan dengan sistem Pager Pintar.</p>
+            
+            <div class="pager-display-box" style="background: var(--c-surface-2); border: 1px solid var(--border-gold); padding: 18px; border-radius: 12px; margin: 16px 0;">
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--c-bronze-gold); display: block; margin-bottom: 4px;">NOMOR ANTREAN / PAGER CODE</span>
+                <strong id="modalPagerCode" style="font-size: 2rem; font-family: var(--font-mono); color: var(--c-court-green);">A-01</strong>
+                <p id="modalPagerDest" style="font-size: 0.78rem; color: var(--c-muted); margin-top: 6px;">Meja 01 (Indoor Lounge)</p>
+            </div>
+
+            <p style="font-size: 0.75rem; color: var(--c-ecru-dim); margin-bottom: 20px; line-height: 1.5;">
+                Virtual Pager Anda aktif. Anda akan menerima notifikasi berdering otomatis di layar saat makanan siap dihidangkan atau diantar.
+            </p>
+
+            <button type="button" class="btn-luxe-solid full" onclick="closePagerModalAndReset()">Selesai & Kembali</button>
+        </div>
+    </div>
+
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -512,10 +663,8 @@
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
             </div>
 
-            <!-- Playlist Tracks Container -->
             <div class="music-tracks-list" id="tracksContainer"></div>
 
-            <!-- Progress Bar & Waktu -->
             <div class="music-progress-wrap" id="progressWrap">
                 <div class="music-progress-bar" id="musicProgressBar"></div>
             </div>
@@ -524,7 +673,6 @@
                 <span id="totalDurationDisplay">00:00</span>
             </div>
 
-            <!-- Player Controls Bar -->
             <div class="player-controls-bar">
                 <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
                 <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
@@ -561,7 +709,7 @@
             <div class="footer-links">
                 <a href="javascript:void(0)" onclick="navigateTo('sanctuary')">Home</a>
                 <a href="javascript:void(0)" onclick="navigateTo('booking')">Direct Booking</a>
-                <a href="cafe-booking.html">Café & Table Order</a>
+                <a href="javascript:void(0)" onclick="navigateTo('cafe')">Café & Table Order</a>
                 <a href="javascript:void(0)" onclick="navigateTo('founder')">Founder & Locations</a>
                 <a href="https://www.instagram.com/titikpadel_id/" target="_blank" rel="noopener">Instagram</a>
             </div>
@@ -575,5 +723,6 @@
     <!-- ENGINE SCRIPTS -->
     <script src="app.js"></script>
     <script src="booking.js"></script>
+    <script src="cafe.js"></script>
 </body>
 </html>

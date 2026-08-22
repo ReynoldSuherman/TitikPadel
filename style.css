@@ -184,7 +184,7 @@ body.light-theme .luxury-navbar {
     text-decoration: none;
     min-width: 0;
     flex-shrink: 0;
-    margin-right: 24px;
+    margin-right: 20px;
 }
 
 .logo-wrapper {
@@ -222,43 +222,44 @@ body.light-theme .luxury-navbar {
     white-space: nowrap;
 }
 
-.nav-menu { display: flex; gap: 8px; }
+.nav-menu { display: flex; gap: 6px; align-items: center; }
 .nav-link, .nav-menu button {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
     color: var(--c-muted);
     background: transparent;
     border: none;
     font-weight: 500;
     cursor: pointer;
-    padding: 6px 12px;
+    padding: 6px 10px;
     border-radius: var(--radius-full);
     transition: var(--transition);
     font-family: inherit;
     text-decoration: none;
+    white-space: nowrap;
 }
 .nav-link span, .nav-menu button span {
     font-family: var(--font-mono);
-    font-size: 0.65rem;
+    font-size: 0.6rem;
     color: var(--c-bronze-gold);
-    margin-right: 3px;
+    margin-right: 2px;
 }
 .nav-link:hover, .nav-link.active, .nav-menu button:hover, .nav-menu button.active {
     color: var(--c-ecru);
     background: var(--c-surface-2);
 }
 
-.nav-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.nav-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 .btn-editorial {
-    padding: 6px 12px;
+    padding: 6px 10px;
     border: 1px solid var(--border-hairline);
     background: var(--c-surface-1);
     color: var(--c-ecru);
     border-radius: var(--radius-full);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 500;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     cursor: pointer;
     font-family: inherit;
     text-decoration: none;
@@ -270,8 +271,8 @@ body.light-theme .luxury-navbar {
 /* Tombol Menu Kotak (Hamburger) di Ujung Kanan Atas Baris Aksi */
 .mobile-floating-menu-btn {
     display: none;
-    width: 42px;
-    height: 42px;
+    width: 40px;
+    height: 40px;
     background: var(--c-surface-1);
     color: var(--c-ecru);
     border: 1px solid var(--border-gold);
@@ -279,7 +280,7 @@ body.light-theme .luxury-navbar {
     cursor: pointer;
     align-items: center;
     justify-content: center;
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     box-shadow: 0 4px 12px rgba(0,0,0,0.4);
     transition: var(--transition);
     flex-shrink: 0;
@@ -896,17 +897,18 @@ body.light-theme .luxury-navbar {
     
     .brand-signature {
         flex-shrink: 0;
-        max-width: 135px;
-        margin-right: 22px;
+        max-width: 125px;
+        margin-right: 12px;
     }
 
-    .brand-title { font-size: 0.88rem; }
+    .brand-title { font-size: 0.85rem; }
     .brand-tagline { display: none; }
     
+    /* Mengaktifkan geser (slide) horizontal pada aksi header mobile agar tidak bertumpuk */
     .nav-actions {
         display: flex;
         align-items: center;
-        gap: 6px;
+        gap: 4px;
         overflow-x: auto;
         white-space: nowrap;
         scrollbar-width: none;
@@ -922,12 +924,12 @@ body.light-theme .luxury-navbar {
     }
 
     #openMusicModalBtn {
-        max-width: 115px;
+        max-width: 95px;
         overflow: hidden;
         text-overflow: ellipsis;
         white-space: nowrap;
-        padding: 5px 8px;
-        font-size: 0.65rem;
+        padding: 5px 6px;
+        font-size: 0.62rem;
         flex-shrink: 0;
     }
 
@@ -935,13 +937,13 @@ body.light-theme .luxury-navbar {
         display: inline-block;
         overflow: hidden;
         text-overflow: ellipsis;
-        max-width: 70px;
+        max-width: 55px;
         vertical-align: middle;
     }
 
     .btn-editorial { 
         padding: 5px 8px; 
-        font-size: 0.68rem; 
+        font-size: 0.65rem; 
         flex-shrink: 0; 
     }
 }
