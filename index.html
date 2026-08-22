@@ -321,8 +321,411 @@
     <!-- LAYER 02: BOOKING ENGINE (Court Reservation) -->
     <div id="layer-booking" class="page-layer">
         <main class="booking-engine-wrapper">
-            <!-- Dikelola secara dinamis oleh booking.js -->
+            <div class="engine-steps-bar">
+                <div class="step-badge active" id="badgeStep1"><span>01</span> Tanggal & Lapangan</div>
+                <div class="step-line"></div>
+                <div class="step-badge" id="badgeStep2"><span>02</span> Jam Bermain</div>
+                <div class="step-line"></div>
+                <div class="step-badge" id="badgeStep3"><span>03</span> Pro Gear & Café</div>
+                <div class="step-line"></div>
+                <div class="step-badge" id="badgeStep4"><span>04</span> Checkout</div>
+            </div>
+
+            <div class="engine-main-grid">
+                <div class="workspace-panel">
+                    <section class="panel-box">
+                        <div class="panel-head">
+                            <div class="head-left">
+                                <span class="step-indicator">STEP 01</span>
+                                <h2>Pilih Tanggal Bermain</h2>
+                            </div>
+                            <div class="head-right">
+                                <span class="slot-counter-badge" id="availCountBadge">Memuat ketersediaan...</span>
+                            </div>
+                        </div>
+
+                        <div class="date-ribbon-wrapper">
+                            <button type="button" class="ribbon-arrow-btn prev hidden-mobile" id="dateScrollPrev" aria-label="Previous Day">&#8249;</button>
+                            <div class="date-ribbon-scroller" id="dateRibbon"></div>
+                            <button type="button" class="ribbon-arrow-btn next hidden-mobile" id="dateScrollNext" aria-label="Next Day">&#8250;</button>
+                        </div>
+                        <div class="swipe-hint mobile-only">⇄ Geser ke samping untuk ganti tanggal</div>
+                    </section>
+
+                    <section class="panel-box">
+                        <div class="panel-head">
+                            <div class="head-left">
+                                <span class="step-indicator">STEP 02</span>
+                                <h2>Pilih Arena Lapangan TiTik Tangerang (6 Courts)</h2>
+                            </div>
+                            <div class="court-filter-toggle">
+                                <button class="filter-btn active" data-filter="all">Semua</button>
+                                <button class="filter-btn" data-filter="indoor">Indoor</button>
+                                <button class="filter-btn" data-filter="outdoor">Semi-Outdoor</button>
+                            </div>
+                        </div>
+
+                        <div class="court-cards-container" id="courtContainer"></div>
+                    </section>
+
+                    <section class="panel-box">
+                        <div class="panel-head">
+                            <div class="head-left">
+                                <span class="step-indicator">STEP 03</span>
+                                <h2>Pilih Jam & Sesi Waktu</h2>
+                                <p class="panel-sub">Pilih satu atau beberapa slot berurutan untuk durasi lebih panjang.</p>
+                            </div>
+                            
+                            <div class="slot-legend-editorial">
+                                <span class="legend-chip"><i class="chip-dot dot-free"></i> Tersedia</span>
+                                <span class="legend-chip"><i class="chip-dot dot-chosen"></i> Dipilih</span>
+                                <span class="legend-chip"><i class="chip-dot dot-taken"></i> Terisi</span>
+                            </div>
+                        </div>
+
+                        <div class="period-cluster">
+                            <div class="period-label">
+                                <span>☕ MORNING SESSIONS</span>
+                                <small>06:00 — 11:00 WIB (Tarif Pagi)</small>
+                            </div>
+                            <div class="slot-matrix-grid" id="morningMatrix"></div>
+                        </div>
+
+                        <div class="period-cluster">
+                            <div class="period-label">
+                                <span>☀️ NOON & AFTERNOON</span>
+                                <small>11:00 — 17:00 WIB (Tarif Siang)</small>
+                            </div>
+                            <div class="slot-matrix-grid" id="afternoonMatrix"></div>
+                        </div>
+
+                        <div class="period-cluster">
+                            <div class="period-label">
+                                <span>🌙 PRIME NIGHT MATCHES</span>
+                                <small>17:00 — 23:00 WIB (Peak Match Atmosphere)</small>
+                            </div>
+                            <div class="slot-matrix-grid" id="nightMatrix"></div>
+                        </div>
+                    </section>
+
+                    <section class="panel-box">
+                        <div class="panel-head">
+                            <div class="head-left">
+                                <span class="step-indicator">STEP 04</span>
+                                <h2>Pilihan Sewa Raket (6 Brand Resmi)</h2>
+                                <p class="panel-sub">Sewa raket dari kategori Kuikma hingga Bullpadel Pro WPT standard.</p>
+                            </div>
+                        </div>
+
+                        <div class="addons-grid-luxe">
+                            <div class="luxe-addon-card" data-addon-id="racket_kuikma">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🎾</div>
+                                    <div class="addon-detail">
+                                        <h4>Kuikma PR 990 Precision Soft (Control)</h4>
+                                        <p>High modulus carbon, sweet spot luas, toleran untuk pemula.</p>
+                                        <span class="addon-fee">+Rp 40.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_kuikma">-</button>
+                                    <span class="qty-val" id="qty-racket_kuikma">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_kuikma">+</button>
+                                </div>
+                            </div>
+
+                            <div class="luxe-addon-card" data-addon-id="racket_dunlop">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">⚡</div>
+                                    <div class="addon-detail">
+                                        <h4>Dunlop Galactica Pro (Power / Control)</h4>
+                                        <p>Japanese Carbon 12K, Tri-Max, stabil untuk pukulan keras.</p>
+                                        <span class="addon-fee">+Rp 50.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_dunlop">-</button>
+                                    <span class="qty-val" id="qty-racket_dunlop">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_dunlop">+</button>
+                                </div>
+                            </div>
+
+                            <div class="luxe-addon-card" data-addon-id="racket_nox">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">⭐</div>
+                                    <div class="addon-detail">
+                                        <h4>Nox ML10 Pro Cup Luxury (Control)</h4>
+                                        <p>Miguel Lamperti model, HR3 Core, fleksibel & nyaman.</p>
+                                        <span class="addon-fee">+Rp 65.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_nox">-</button>
+                                    <span class="qty-val" id="qty-racket_nox">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_nox">+</button>
+                                </div>
+                            </div>
+
+                            <div class="luxe-addon-card" data-addon-id="racket_head">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🚀</div>
+                                    <div class="addon-detail">
+                                        <h4>Head Speed Pro X 2024 (Hybrid / Speed)</h4>
+                                        <p>Auxetic 2.0, 12K Carbon, ideal untuk permainan cepat.</p>
+                                        <span class="addon-fee">+Rp 85.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_head">-</button>
+                                    <span class="qty-val" id="qty-racket_head">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_head">+</button>
+                                </div>
+                            </div>
+
+                            <div class="luxe-addon-card" data-addon-id="racket_babolat">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🔥</div>
+                                    <div class="addon-detail">
+                                        <h4>Babolat Technical Viper 2024 (Explosive Power)</h4>
+                                        <p>3D Spin+, 12K Carbon, raket favorit pencetak smash tajam.</p>
+                                        <span class="addon-fee">+Rp 100.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_babolat">-</button>
+                                    <span class="qty-val" id="qty-racket_babolat">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_babolat">+</button>
+                                </div>
+                            </div>
+
+                            <div class="luxe-addon-card" data-addon-id="racket_bullpadel">
+                                <div class="addon-left-meta">
+                                    <div class="addon-icon-sym">🏆</div>
+                                    <div class="addon-detail">
+                                        <h4>Bullpadel Hack 03 / Vertex 04 Pro (Pro Attack)</h4>
+                                        <p>Tricarbon 3D, Air React Channel, standar WPT pemain pro.</p>
+                                        <span class="addon-fee">+Rp 125.000 / raket</span>
+                                    </div>
+                                </div>
+                                <div class="qty-counter">
+                                    <button type="button" class="btn-qty minus" data-target="racket_bullpadel">-</button>
+                                    <span class="qty-val" id="qty-racket_bullpadel">0</span>
+                                    <button type="button" class="btn-qty plus" data-target="racket_bullpadel">+</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="border-t border-slate-800 pt-5 mt-6">
+                            <div class="panel-head" style="margin-bottom: 12px;">
+                                <div class="head-left">
+                                    <span class="step-indicator">OFFICIAL PADDLE BALLS & CAFÉ</span>
+                                    <h3 style="font-size: 1.1rem; font-weight: 700;">Penjualan Bola Padel (Per Can isi 3 Pcs) & Paket</h3>
+                                </div>
+                            </div>
+
+                            <div class="addons-grid-luxe">
+                                <div class="luxe-addon-card" data-addon-id="ball_kuikma">
+                                    <div class="addon-left-meta">
+                                        <div class="addon-icon-sym">🎾</div>
+                                        <div class="addon-detail">
+                                            <h4>Kuikma PB 990 Control/Speed Edition (Can isi 3)</h4>
+                                            <p>Tahan lama, konsistensi pantulan tinggi untuk latihan rutin.</p>
+                                            <span class="addon-fee">+Rp 110.000 / can</span>
+                                        </div>
+                                    </div>
+                                    <div class="qty-counter">
+                                        <button type="button" class="btn-qty minus" data-target="ball_kuikma">-</button>
+                                        <span class="qty-val" id="qty-ball_kuikma">0</span>
+                                        <button type="button" class="btn-qty plus" data-target="ball_kuikma">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="luxe-addon-card" data-addon-id="ball_dunlop">
+                                    <div class="addon-left-meta">
+                                        <div class="addon-icon-sym">🥫</div>
+                                        <div class="addon-detail">
+                                            <h4>Dunlop Pro Padel Official Match (Can isi 3)</h4>
+                                            <p>Felt sintetis berkualitas tinggi, pantulan dinamis di lapangan.</p>
+                                            <span class="addon-fee">+Rp 125.000 / can</span>
+                                        </div>
+                                    </div>
+                                    <div class="qty-counter">
+                                        <button type="button" class="btn-qty minus" data-target="ball_dunlop">-</button>
+                                        <span class="qty-val" id="qty-ball_dunlop">0</span>
+                                        <button type="button" class="btn-qty plus" data-target="ball_dunlop">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="luxe-addon-card" data-addon-id="ball_head">
+                                    <div class="addon-left-meta">
+                                        <div class="addon-icon-sym">⭐</div>
+                                        <div class="addon-detail">
+                                            <h4>Head Padel Pro / Pro S WPT (Can isi 3)</h4>
+                                            <p>Varian Pro S memberikan kecepatan ekstra; standar turnamen.</p>
+                                            <span class="addon-fee">+Rp 145.000 / can</span>
+                                        </div>
+                                    </div>
+                                    <div class="qty-counter">
+                                        <button type="button" class="btn-qty minus" data-target="ball_head">-</button>
+                                        <span class="qty-val" id="qty-ball_head">0</span>
+                                        <button type="button" class="btn-qty plus" data-target="ball_head">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="luxe-addon-card" data-addon-id="ball_bullpadel">
+                                    <div class="addon-left-meta">
+                                        <div class="addon-icon-sym">🥇</div>
+                                        <div class="addon-detail">
+                                            <h4>Bullpadel Next Pro (Can isi 3)</h4>
+                                            <p>Durabilitas maksimal, serat kepadatan tinggi, pantulan stabil.</p>
+                                            <span class="addon-fee">+Rp 160.000 / can</span>
+                                        </div>
+                                    </div>
+                                    <div class="qty-counter">
+                                        <button type="button" class="btn-qty minus" data-target="ball_bullpadel">-</button>
+                                        <span class="qty-val" id="qty-ball_bullpadel">0</span>
+                                        <button type="button" class="btn-qty plus" data-target="ball_bullpadel">+</button>
+                                    </div>
+                                </div>
+
+                                <div class="luxe-addon-card" data-addon-id="cafepack">
+                                    <div class="addon-left-meta">
+                                        <div class="addon-icon-sym">☕</div>
+                                        <div class="addon-detail">
+                                            <h4>TiTik Café Recovery Perk (2 Drink + Snack)</h4>
+                                            <p>2 Iced Latte/Shake + 1 Energy Bar diantar ke bench lapangan.</p>
+                                            <span class="addon-fee">+Rp 75.000 / bundle</span>
+                                        </div>
+                                    </div>
+                                    <div class="qty-counter">
+                                        <button type="button" class="btn-qty minus" data-target="cafepack">-</button>
+                                        <span class="qty-val" id="qty-cafepack">0</span>
+                                        <button type="button" class="btn-qty plus" data-target="cafepack">+</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+
+                <aside class="concierge-sidebar" id="conciergeSidebar">
+                    <div class="concierge-card">
+                        <div class="concierge-header">
+                            <div class="concierge-badge">TITIK CONCIERGE TICKET</div>
+                            <span class="live-pulse">ARENA LIVE</span>
+                        </div>
+
+                        <div class="manifest-table">
+                            <div class="manifest-item">
+                                <span class="m-lbl">Tanggal Bermain</span>
+                                <span class="m-val" id="summaryDate">-</span>
+                            </div>
+                            <div class="manifest-item">
+                                <span class="m-lbl">Arena Lapangan</span>
+                                <span class="m-val" id="summaryCourt">-</span>
+                            </div>
+                            <div class="manifest-item">
+                                <span class="m-lbl">Durasi & Slot</span>
+                                <div class="m-val-block" id="summarySlots">
+                                    <span class="placeholder-text">Belum ada slot dipilih</span>
+                                </div>
+                            </div>
+                            <div class="manifest-item">
+                                <span class="m-lbl">Gear & Café Perks</span>
+                                <span class="m-val" id="summaryAddons">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <div class="promo-box">
+                            <div class="promo-input-group">
+                                <input type="text" id="inputPromo" placeholder="Kode Promo (TITIKFIRST)" uppercase autocomplete="off">
+                                <button type="button" id="btnApplyPromo">APPLY</button>
+                            </div>
+                            <p class="promo-feedback" id="promoFeedback"></p>
+                        </div>
+
+                        <div class="split-bill-widget">
+                            <div class="split-head">
+                                <span>👥 Split Bill per Pemain</span>
+                                <div class="split-counter">
+                                    <button type="button" class="btn-split" id="splitMinus">-</button>
+                                    <span id="splitPlayerCount">4</span> Orang
+                                    <button type="button" class="btn-split" id="splitPlus">+</button>
+                                </div>
+                            </div>
+                            <div class="split-result">
+                                <span>Estimasi per Orang:</span>
+                                <strong id="splitPerPerson">Rp 0</strong>
+                            </div>
+                        </div>
+
+                        <div class="pricing-breakdown">
+                            <div class="price-line">
+                                <span>Subtotal Lapangan</span>
+                                <span id="calcSubtotalCourt">Rp 0</span>
+                            </div>
+                            <div class="price-line">
+                                <span>Subtotal Gear & Café</span>
+                                <span id="calcSubtotalAddons">Rp 0</span>
+                            </div>
+                            <div class="price-line discount" id="discountLine" style="display: none;">
+                                <span>Diskon Promo</span>
+                                <span id="calcDiscount">- Rp 0</span>
+                            </div>
+                            <div class="price-line">
+                                <span>Facility & Locker Fee</span>
+                                <span id="calcFee">Rp 0</span>
+                            </div>
+                            <div class="price-line grand-total">
+                                <span>Total Pembayaran</span>
+                                <span class="grand-val" id="calcGrandTotal">Rp 0</span>
+                            </div>
+                        </div>
+
+                        <form class="guest-booking-form" id="mainBookingForm" onsubmit="event.preventDefault(); proceedBookingSubmission();">
+                            <div class="input-stacked">
+                                <label for="clientName">Nama Pemesan</label>
+                                <input type="text" id="clientName" placeholder="Contoh: Alexander Pratama" required>
+                            </div>
+
+                            <div class="input-stacked">
+                                <label for="clientWhatsapp">Nomor WhatsApp Aktif</label>
+                                <input type="tel" id="clientWhatsapp" placeholder="0812XXXXXXXX (Wajib aktif)" required inputmode="numeric">
+                            </div>
+
+                            <div class="input-stacked">
+                                <label for="clientEmail">Email Konfirmasi</label>
+                                <input type="email" id="clientEmail" placeholder="alexander@domain.com" required>
+                            </div>
+
+                            <div class="input-stacked">
+                                <label for="clientNotes">Catatan untuk TiTik Concierge</label>
+                                <input type="text" id="clientNotes" placeholder="Contoh: Siapkan raket Wilson Bela sebelum main">
+                            </div>
+
+                            <button type="submit" id="btnSubmitBooking" class="btn-submit-luxe" disabled>
+                                <span class="submit-txt">Kunci Slot & Bayar</span>
+                                <span class="submit-arrow">&rarr;</span>
+                            </button>
+                        </form>
+
+                        <div class="concierge-guarantee">
+                            <span>🔒 Transaksi aman & proteksi slot instan 15 menit</span>
+                        </div>
+                    </div>
+                </aside>
+            </div>
         </main>
+
+        <div class="mobile-booking-floating-bar" id="mobileFloatingBar">
+            <div class="floating-left">
+                <span class="floating-label">Total Tagihan (<span id="mobileSlotCount">0 Jam</span>)</span>
+                <span class="floating-price" id="mobileTotalPrice">Rp 0</span>
+            </div>
+            <button type="button" class="btn-luxe-solid btn-mobile-sheet-trigger" id="btnOpenMobileSheet" disabled>
+                Checkout &rarr;
+            </button>
+        </div>
     </div>
 
     <!-- LAYER 03: CAFÉ & TABLE ORDER (Virtual Pager & Menu System) -->
@@ -630,27 +1033,6 @@
         </div>
     </div>
 
-    <div id="pagerSuccessModal" class="luxe-modal-backdrop">
-        <div class="luxe-modal-sheet" style="text-align: center; max-width: 380px;">
-            <div class="sheet-indicator-bar"></div>
-            <div class="modal-emblem" style="font-size: 2.2rem;">🔔</div>
-            <h3 class="modal-title">Pesanan Diterima!</h3>
-            <p class="modal-subtitle">Nomor antrean virtual Anda telah diaktifkan dengan sistem Pager Pintar.</p>
-            
-            <div class="pager-display-box" style="background: var(--c-surface-2); border: 1px solid var(--border-gold); padding: 18px; border-radius: 12px; margin: 16px 0;">
-                <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--c-bronze-gold); display: block; margin-bottom: 4px;">NOMOR ANTREAN / PAGER CODE</span>
-                <strong id="modalPagerCode" style="font-size: 2rem; font-family: var(--font-mono); color: var(--c-court-green);">A-01</strong>
-                <p id="modalPagerDest" style="font-size: 0.78rem; color: var(--c-muted); margin-top: 6px;">Meja 01 (Indoor Lounge)</p>
-            </div>
-
-            <p style="font-size: 0.75rem; color: var(--c-ecru-dim); margin-bottom: 20px; line-height: 1.5;">
-                Virtual Pager Anda aktif. Anda akan menerima notifikasi berdering otomatis di layar saat makanan siap dihidangkan atau diantar.
-            </p>
-
-            <button type="button" class="btn-luxe-solid full" onclick="closePagerModalAndReset()">Selesai & Kembali</button>
-        </div>
-    </div>
-
     <div id="musicPlaylistModal" class="luxe-modal-backdrop">
         <div class="music-modal-sheet">
             <div class="sheet-indicator-bar"></div>
@@ -663,8 +1045,10 @@
                 <button onclick="closeMusicModal()" class="btn-link-dim" style="font-size: 1.1rem; cursor: pointer;">✕</button>
             </div>
 
+            <!-- Playlist Tracks Container -->
             <div class="music-tracks-list" id="tracksContainer"></div>
 
+            <!-- Progress Bar & Waktu -->
             <div class="music-progress-wrap" id="progressWrap">
                 <div class="music-progress-bar" id="musicProgressBar"></div>
             </div>
@@ -673,6 +1057,7 @@
                 <span id="totalDurationDisplay">00:00</span>
             </div>
 
+            <!-- Player Controls Bar -->
             <div class="player-controls-bar">
                 <button class="player-btn" id="btnPrevTrack" title="Previous Track">⏮</button>
                 <button class="player-btn play-pause" id="btnPlayPauseTrack" title="Play/Pause">▶</button>
@@ -696,6 +1081,20 @@
                 <div id="qrcode"></div>
             </div>
             <button type="button" class="btn-luxe-solid full" onclick="closeQRModal()">Tutup</button>
+        </div>
+    </div>
+
+    <div id="bookingModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem">✦</div>
+            <h3 class="modal-title">Reservasi TiTik Padel Diamankan</h3>
+            <p class="modal-subtitle">Detail booking Anda telah disiapkan. Lanjutkan konfirmasi ke WhatsApp Concierge.</p>
+            <div class="invoice-mini-receipt" id="modalReceiptContent"></div>
+            <div class="modal-action-buttons">
+                <button type="button" class="btn-luxe-solid full" id="btnSendWhatsApp">Kirim Konfirmasi WhatsApp &rarr;</button>
+                <button type="button" class="btn-link-dim" onclick="closeModalAndReset()">Tutup & Kembali</button>
+            </div>
         </div>
     </div>
 
