@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="id" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>TiTik Match Café & Dining Concierge — TiTik Padel</title>
+    
+    <link rel="icon" type="image/svg+xml" href="Logo/Logo_Padel.svg">
+    <link rel="alternate icon" type="image/png" href="Logo/Logo_Padel.svg">
+    <link rel="apple-touch-icon" href="Logo/Logo_Padel.svg">
+
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#090C0F">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('titik_theme_mode') || 'dark';
+            if (savedTheme === 'light') {
+                document.documentElement.classList.remove('dark');
+                document.documentElement.classList.add('light-theme');
+            }
+        })();
+    </script>
+</head>
+<body class="bg-obsidian text-ecru antialiased selection:bg-court-green selection:text-obsidian" data-music-theme="hiper">
+
+    <div class="noise-overlay" aria-hidden="true"></div>
+    <audio id="globalAudio" preload="auto"></audio>
+
+    <div id="toastNotification" class="toast-bubble" role="alert" aria-live="assertive">
+        <span class="toast-icon">⚡</span>
+        <span id="toastMsg" class="toast-text">Menu berhasil ditambahkan.</span>
+    </div>
+
+    <!-- Pager Notification Banner (Virtual Pager Simulation) -->
+    <div id="cafePagerBanner" class="cafe-pager-banner">
+        <div class="pager-content">
+            <span class="pager-icon">🔔</span>
+            <div>
+                <strong id="pagerTitle">TiTik Pager Active</strong>
+                <p id="pagerSub">Pesanan Anda sedang disiapkan oleh barista & chef.</p>
+            </div>
+        </div>
+        <span id="pagerQueueBadge" class="pager-code-pill">-</span>
+    </div>
+
+    <!-- NAVBAR -->
+    <header class="luxury-navbar">
+        <div class="nav-inner">
+            <a href="index.html" class="brand-signature">
+                <div class="logo-wrapper">
+                    <img src="Logo/Logo_Padel.svg" alt="TiTik Padel Logo" class="brand-svg-logo" onerror="this.onerror=null; this.src='Logo/Logo_Padel.svg';">
+                </div>
+                <div class="brand-text">
+                    <span class="brand-title">TiTik<span>.CAFÉ</span></span>
+                    <span class="brand-tagline">DINING & RECOVERY LOUNGE</span>
+                </div>
+            </a>
+
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-link"><span>01</span> Sanctuary & Café</a>
+                <a href="booking.html" class="nav-link"><span>02</span> Reserve Court</a>
+                <a href="cafe-booking.html" class="nav-link active"><span>03</span> Café & Table Order</a>
+            </nav>
+
+            <div class="nav-actions">
+                <button id="openMusicModalBtn" class="btn-editorial" style="padding: 7px 14px; cursor: pointer;">
+                    <span class="btn-dot" id="musicPulseDot"></span>
+                    <span id="navTrackTitle" class="btn-text">🎵 Shuffle Music</span>
+                </button>
+
+                <button id="themeToggle" class="btn-editorial" style="padding: 7px 12px; cursor: pointer;" title="Ganti Mode Warna">
+                    <span>🌓 Theme</span>
+                </button>
+
+                <a href="booking.html" class="btn-editorial hidden-mobile">
+                    <span class="btn-text">Book Court</span>
+                    <span class="btn-dot"></span>
+                </a>
+
+                <button class="mobile-floating-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">
+                    <span>☰</span>
+                </button>
+            </div>
+        </div>
+
+        <div class="mobile-nav-drawer" id="mobileDrawer">
+            <a href="index.html" class="mobile-nav-item">01. Sanctuary & Café</a>
+            <a href="booking.html" class="mobile-nav-item">02. Reserve Court</a>
+            <a href="cafe-booking.html" class="mobile-nav-item active">03. Café & Table Order</a>
+            <div class="mobile-drawer-socials">
+                <span>Direct Links:</span>
+                <div class="drawer-social-icons">
+                    <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
+                    <a href="https://wa.me/6281234567890" target="_blank">WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="booking-engine-wrapper">
+        <div class="engine-steps-bar">
+            <div class="step-badge active" id="cStep1"><span>01</span> Pilih Layanan & Tempat</div>
+            <div class="step-line"></div>
+            <div class="step-badge" id="cStep2"><span>02</span> Pilih Menu & Minuman</div>
+            <div class="step-line"></div>
+            <div class="step-badge" id="cStep3"><span>03</span> Konfirmasi & Pager Code</div>
+        </div>
+
+        <div class="engine-main-grid">
+            <div class="workspace-panel">
+                <!-- STEP 1: PILIH LAYANAN (DINE-IN VS COURTSIDE) -->
+                <section class="panel-box">
+                    <div class="panel-head">
+                        <div class="head-left">
+                            <span class="step-indicator">STEP 01</span>
+                            <h2>Pilih Metode Penyerahan & Tempat Duduk</h2>
+                        </div>
+                    </div>
+
+                    <div class="cafe-mode-selector-grid">
+                        <div class="cafe-mode-card active" data-mode="dinein" onclick="setCafeMode('dinein')">
+                            <div class="cm-icon">🪑</div>
+                            <h3>Dine-In / Meja Café</h3>
+                            <p>Makan santai di area indoor/outdoor coffee shop. Mendapat nomor antrean <strong>Kode A</strong>.</p>
+                        </div>
+                        <div class="cafe-mode-card" data-mode="courtside" onclick="setCafeMode('courtside')">
+                            <div class="cm-icon">⚡</div>
+                            <h3>Courtside Delivery (Antar ke Lapangan)</h3>
+                            <p>Diantar langsung ke bench pemain saat pertandingan. Mendapat nomor antrean <strong>Kode B</strong>.</p>
+                        </div>
+                        <div class="cafe-mode-card" data-mode="pickup" onclick="setCafeMode('pickup')">
+                            <div class="cm-icon">🛍️</div>
+                            <h3>Quick Pickup (Ambil Sendiri)</h3>
+                            <p>Ambil pesanan langsung di counter bar sesaat setelah pager berdering.</p>
+                        </div>
+                    </div>
+
+                    <div id="tableSelectorWrapper" class="mt-4" style="margin-top: 16px;">
+                        <label class="input-stacked" style="margin-bottom: 6px;">Pilih Nomor Meja / Nomor Lapangan Pengantaran</label>
+                        <select id="selectLocationTarget" class="luxe-select-dropdown">
+                            <option value="Meja 01 (Indoor Lounge)">Meja 01 (Indoor Lounge)</option>
+                            <option value="Meja 02 (Indoor Window)">Meja 02 (Indoor Window)</option>
+                            <option value="Meja 03 (Outdoor Terrace)">Meja 03 (Outdoor Terrace)</option>
+                            <option value="Meja 04 (Bar High Stool)">Meja 04 (Bar High Stool)</option>
+                        </select>
+                    </div>
+                </section>
+
+                <!-- STEP 2: KATALOG MENU KULINER -->
+                <section class="panel-box">
+                    <div class="panel-head">
+                        <div class="head-left">
+                            <span class="step-indicator">STEP 02</span>
+                            <h2>Katalog Menu TiTik Match Café</h2>
+                            <p class="panel-sub">Specialty coffee, recovery drinks, dan brunch bernutrisi tinggi.</p>
+                        </div>
+                        <div class="court-filter-toggle">
+                            <button class="filter-btn active" data-cafecat="all" onclick="filterCafeMenu('all')">Semua</button>
+                            <button class="filter-btn" data-cafecat="coffee" onclick="filterCafeMenu('coffee')">Coffee</button>
+                            <button class="filter-btn" data-cafecat="recovery" onclick="filterCafeMenu('recovery')">Recovery</button>
+                            <button class="filter-btn" data-cafecat="brunch" onclick="filterCafeMenu('brunch')">Brunch</button>
+                        </div>
+                    </div>
+
+                    <div class="cafe-menu-grid" id="cafeMenuGrid">
+                        <!-- Render via JS -->
+                    </div>
+                </section>
+            </div>
+
+            <!-- SIDEBAR: TICKET & CART SUMMARY -->
+            <aside class="concierge-sidebar">
+                <div class="concierge-card">
+                    <div class="concierge-header">
+                        <div class="concierge-badge">CAFÉ ORDER TICKET</div>
+                        <span class="live-pulse" id="ticketQueueType">KODE A-01</span>
+                    </div>
+
+                    <div class="manifest-table" id="cafeCartItemsList" style="max-height: 200px; overflow-y: auto;">
+                        <span class="placeholder-text">Keranjang pesanan masih kosong</span>
+                    </div>
+
+                    <div class="pricing-breakdown" style="margin-top: 14px;">
+                        <div class="price-line">
+                            <span>Subtotal Menu</span>
+                            <span id="cafeSubtotal">Rp 0</span>
+                        </div>
+                        <div class="price-line">
+                            <span>Pajak & Layanan (10%)</span>
+                            <span id="cafeTax">Rp 0</span>
+                        </div>
+                        <div class="price-line grand-total">
+                            <span>Total Pembayaran</span>
+                            <span class="grand-val" id="cafeGrandTotal">Rp 0</span>
+                        </div>
+                    </div>
+
+                    <form class="guest-booking-form" onsubmit="event.preventDefault(); submitCafeOrder();">
+                        <div class="input-stacked">
+                            <label for="cafeGuestName">Nama Pemesan</label>
+                            <input type="text" id="cafeGuestName" placeholder="Contoh: Reyner Zelig" required>
+                        </div>
+                        <div class="input-stacked">
+                            <label for="cafeGuestPhone">Nomor WhatsApp Aktif</label>
+                            <input type="tel" id="cafeGuestPhone" placeholder="0812XXXXXXXX" required inputmode="numeric">
+                        </div>
+
+                        <button type="submit" id="btnSubmitCafeOrder" class="btn-submit-luxe" disabled>
+                            <span class="submit-txt">Kirim Pesanan & Dapatkan Pager</span>
+                            <span class="submit-arrow">&rarr;</span>
+                        </button>
+                    </form>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- MODAL PAGER / ORDER SUCCESS -->
+    <div id="pagerSuccessModal" class="luxe-modal-backdrop">
+        <div class="luxe-modal-sheet" style="text-align: center; max-width: 380px;">
+            <div class="sheet-indicator-bar"></div>
+            <div class="modal-emblem" style="font-size: 2.2rem;">🔔</div>
+            <h3 class="modal-title">Pesanan Diterima!</h3>
+            <p class="modal-subtitle">Nomor antrean virtual Anda telah diaktifkan dengan sistem Pager Pintar.</p>
+            
+            <div class="pager-display-box" style="background: var(--c-surface-2); border: 1px solid var(--border-gold); padding: 18px; border-radius: 12px; margin: 16px 0;">
+                <span style="font-family: var(--font-mono); font-size: 0.7rem; color: var(--c-bronze-gold); display: block; margin-bottom: 4px;">NOMOR ANTREAN / PAGER CODE</span>
+                <strong id="modalPagerCode" style="font-size: 2rem; font-family: var(--font-mono); color: var(--c-court-green);">A-01</strong>
+                <p id="modalPagerDest" style="font-size: 0.78rem; color: var(--c-muted); margin-top: 6px;">Meja 01 (Indoor Lounge)</p>
+            </div>
+
+            <p style="font-size: 0.75rem; color: var(--c-ecru-dim); margin-bottom: 20px; line-height: 1.5;">
+                Virtual Pager Anda aktif. Anda akan menerima notifikasi berdering otomatis di layar saat makanan siap dihidangkan atau diantar.
+            </p>
+
+            <button type="button" class="btn-luxe-solid full" onclick="closePagerModalAndReset()">Selesai & Kembali</button>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer class="luxury-footer">
+        <div class="footer-top">
+            <div class="footer-brand">
+                <span class="f-title">TiTik Padel Match Café</span>
+                <span class="f-sub">Artisan Coffee & High-Performance Nutrition</span>
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Home</a>
+                <a href="booking.html">Direct Booking</a>
+                <a href="about-owner.html">Founder & Locations</a>
+                <a href="https://www.instagram.com/titikpadel_id/" target="_blank">Instagram</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span>&copy; 2026 TiTik Padel Club Indonesia. All Rights Reserved.</span>
+            <span>Crafted with Minimalist Architectural Restraint</span>
+        </div>
+    </footer>
+
+    <!-- ENGINE SCRIPTS -->
+    <script src="app.js"></script>
+    <script src="cafe.js"></script>
+</body>
+</html>

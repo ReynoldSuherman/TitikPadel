@@ -1,5 +1,5 @@
 /**
- * TiTik PADEL — ADVANCED BOOKING ENGINE & CONCIERGE LOGIC (6 COURTS)
+ * TiTik PADEL — ADVANCED BOOKING ENGINE & CONCIERGE LOGIC (6 COURTS & PRO INVENTORY)
  */
 
 const COURTS_DATA = [
@@ -18,13 +18,17 @@ const TIME_SLOTS_CONFIG = {
 };
 
 const ADDONS_CONFIG = {
-    racket_std: { name: 'Standard Club Racket', price: 40000 },
-    racket_vertex: { name: 'Bullpadel Vertex 04 Pro', price: 95000 },
-    racket_viper: { name: 'Babolat Technical Viper', price: 110000 },
-    racket_bela: { name: 'Wilson Bela Pro V2', price: 115000 },
-    balls_regular: { name: 'Bola Padel Reguler (3 Pcs)', price: 25000 },
-    balls_pro: { name: 'Head Padel Pro Can (Segel FIP)', price: 55000 },
-    cafepack: { name: 'TiTik Café Recovery Perk', price: 75000 }
+    racket_kuikma: { name: 'Kuikma PR 990 Precision Soft', price: 40000 },
+    racket_dunlop: { name: 'Dunlop Galactica Pro', price: 50000 },
+    racket_nox: { name: 'Nox ML10 Pro Cup Luxury', price: 65000 },
+    racket_head: { name: 'Head Speed Pro X 2024', price: 85000 },
+    racket_babolat: { name: 'Babolat Technical Viper 2024', price: 100000 },
+    racket_bullpadel: { name: 'Bullpadel Hack 03 / Vertex 04 Pro', price: 125000 },
+    ball_kuikma: { name: 'Kuikma PB 990 Control/Speed (Can 3 Pcs)', price: 110000 },
+    ball_dunlop: { name: 'Dunlop Pro Padel Official Match (Can 3 Pcs)', price: 125000 },
+    ball_head: { name: 'Head Padel Pro / Pro S WPT (Can 3 Pcs)', price: 145000 },
+    ball_bullpadel: { name: 'Bullpadel Next Pro (Can 3 Pcs)', price: 160000 },
+    cafepack: { name: 'TiTik Café Recovery Perk (2 Drink + Snack)', price: 75000 }
 };
 
 let bookingState = {
@@ -32,12 +36,16 @@ let bookingState = {
     selectedCourtId: COURTS_DATA[0].id,
     selectedSlots: [],
     addons: {
-        racket_std: 0,
-        racket_vertex: 0,
-        racket_viper: 0,
-        racket_bela: 0,
-        balls_regular: 0,
-        balls_pro: 0,
+        racket_kuikma: 0,
+        racket_dunlop: 0,
+        racket_nox: 0,
+        racket_head: 0,
+        racket_babolat: 0,
+        racket_bullpadel: 0,
+        ball_kuikma: 0,
+        ball_dunlop: 0,
+        ball_head: 0,
+        ball_bullpadel: 0,
         cafepack: 0
     },
     promoCode: '',
@@ -158,7 +166,6 @@ function initTimeMatrix() {
 
     const renderSlotsToGrid = (slotsArray, gridEl, periodName) => {
         slotsArray.forEach((timeStr, idx) => {
-            // Simulasi slot terisi acak berdasarkan tanggal & court agar dinamis
             const isBooked = (parseInt(bookingState.selectedDate.replace(/-/g, '')) + idx + currentCourt.name.length) % 7 === 0;
             const isSelected = bookingState.selectedSlots.includes(timeStr);
 
@@ -290,7 +297,6 @@ function updateConciergeSummary() {
     const splitPerPerson = document.getElementById('splitPerPerson');
 
     const btnSubmitBooking = document.getElementById('btnSubmitBooking');
-    const mobileFloatingBar = document.getElementById('mobileFloatingBar');
     const mobileTotalPrice = document.getElementById('mobileTotalPrice');
     const mobileSlotCount = document.getElementById('mobileSlotCount');
     const btnOpenMobileSheet = document.getElementById('btnOpenMobileSheet');

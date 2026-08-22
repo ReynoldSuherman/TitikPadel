@@ -365,6 +365,76 @@ body.light-theme .luxury-navbar {
 }
 
 /* ==========================================================================
+   CAFE & PAGER STYLES
+   ========================================================================== */
+.cafe-mode-selector-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 14px;
+}
+.cafe-mode-card {
+    background: var(--c-surface-2);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-sm);
+    padding: 14px;
+    cursor: pointer;
+    transition: var(--transition);
+    text-align: center;
+}
+.cafe-mode-card:hover {
+    border-color: var(--border-gold);
+    background: var(--c-surface-hover);
+}
+.cafe-mode-card.active {
+    border-color: var(--c-court-green);
+    background: var(--c-court-green-glow);
+    box-shadow: 0 0 15px rgba(196, 241, 53, 0.1);
+}
+.cafe-mode-card .cm-icon { font-size: 1.5rem; margin-bottom: 6px; }
+.cafe-mode-card h3 { font-size: 0.85rem; font-weight: 700; color: var(--c-ecru); margin-bottom: 4px; }
+.cafe-mode-card p { font-size: 0.68rem; color: var(--c-muted); line-height: 1.4; }
+
+.luxe-select-dropdown {
+    width: 100%;
+    background: var(--c-surface-2);
+    border: 1px solid var(--border-hairline);
+    border-radius: var(--radius-xs);
+    padding: 9px 12px;
+    color: var(--c-ecru);
+    font-size: 0.82rem;
+    outline: none;
+    font-family: inherit;
+}
+.luxe-select-dropdown:focus { border-color: var(--c-court-green); }
+
+.cafe-pager-banner {
+    position: fixed;
+    top: -80px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--c-surface-1);
+    border: 1px solid var(--c-court-green);
+    padding: 10px 20px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    z-index: 10000;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    transition: top 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    width: 90%;
+    max-width: 460px;
+}
+.cafe-pager-banner.show { top: 14px; }
+.pager-content { display: flex; align-items: center; gap: 10px; }
+.pager-icon { font-size: 1.2rem; }
+.cafe-pager-banner strong { font-size: 0.78rem; color: var(--c-ecru); display: block; }
+.cafe-pager-banner p { font-size: 0.68rem; color: var(--c-muted); }
+.pager-code-pill { font-family: var(--font-mono); font-size: 0.75rem; background: var(--c-court-green); color: var(--c-obsidian); padding: 4px 10px; border-radius: var(--radius-full); font-weight: 700; }
+
+/* ==========================================================================
    HERO & SECTIONS
    ========================================================================== */
 .container-luxury { max-width: 1240px; width: 100%; margin: 0 auto; padding: 0 16px; }
@@ -827,13 +897,12 @@ body.light-theme .luxury-navbar {
     .brand-signature {
         flex-shrink: 0;
         max-width: 135px;
-        margin-right: 22px; /* Spasi lebar aman untuk teks PADEL */
+        margin-right: 22px;
     }
 
     .brand-title { font-size: 0.88rem; }
     .brand-tagline { display: none; }
     
-    /* Mengaktifkan geser (slide) horizontal pada aksi header mobile */
     .nav-actions {
         display: flex;
         align-items: center;
